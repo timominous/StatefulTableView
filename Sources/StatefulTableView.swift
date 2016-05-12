@@ -115,6 +115,12 @@ final class StatefulTableView: UIView {
   func registerClass(cellClass: AnyClass?, forCellReuseIdentifier: String) {
     tableView.registerClass(cellClass, forCellReuseIdentifier: forCellReuseIdentifier)
   }
+  
+  func reloadData() {
+    dispatch_async(dispatch_get_main_queue()) { 
+      self.tableView.reloadData()
+    }
+  }
 }
 
 // MARK: Pull to refresh
@@ -134,10 +140,9 @@ extension StatefulTableView {
 
     self.setState(.LoadingFromPullToRefresh, updateView: false, error: nil)
 
-    if let statefulDelegate = statefulDelegate {
-      statefulDelegate.statefulTableViewWillBeginLoadingFromRefresh(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        guard let wself = self else { return }
-        wself.setHasFinishedLoadingFromPullToRefresh(tableIsEmpty, error: errorOrNil)
+    if let delegate = statefulDelegate {
+      delegate.statefulTableViewWillBeginLoadingFromRefresh(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
+        self?.setHasFinishedLoadingFromPullToRefresh(tableIsEmpty, error: errorOrNil)
       })
     }
 
@@ -152,6 +157,45 @@ extension StatefulTableView {
     }
 
     refreshControl.endRefreshing()
+
+    if tableIsEmpty {
+      self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
+    } else {
+      self.setState(.Idle)
+    }
+  }
+}
+
+// MARK: Initial load
+extension StatefulTableView {
+  func triggerInitialLoad() -> Bool {
+    return triggerInitialLoad(false)
+  }
+
+  func triggerInitialLoad(shouldShowTableView: Bool) -> Bool {
+    guard !state.isLoading else {
+      return false
+    }
+
+    if shouldShowTableView {
+      self.setState(.InitialLoadingTableView)
+    } else {
+      self.setState(.InitialLoading)
+    }
+
+    if let delegate = statefulDelegate {
+      delegate.statefulTableViewWillBeginInitialLoad(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
+        self?.setHasFinishedInitialLoad(tableIsEmpty, error: errorOrNil)
+      })
+    }
+
+    return true
+  }
+
+  func setHasFinishedInitialLoad(tableIsEmpty: Bool, error: NSError?) {
+    guard state == .InitialLoading || state == .InitialLoadingTableView else {
+      return
+    }
 
     if tableIsEmpty {
       self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
@@ -213,6 +257,9 @@ extension StatefulTableView {
     let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     activityIndicatorView.startAnimating()
 
+    activityIndicatorView.frame.origin.x = (staticContentView.bounds.width - activityIndicatorView.frame.width) * 0.5
+    activityIndicatorView.frame.origin.y = (staticContentView.bounds.height - activityIndicatorView.frame.height) * 0.5
+
     return activityIndicatorView
   }
 
@@ -232,9 +279,19 @@ extension StatefulTableView {
     label.text = error?.localizedDescription ?? "No records found"
     label.sizeToFit()
 
-    var labelFrame = label.frame
-    labelFrame.origin.x = (container.bounds.width - label.bounds.width) * 0.5
-    label.frame = labelFrame
+    label.frame.origin.x = (container.bounds.width - label.bounds.width) * 0.5
+
+    if let _ = error {
+      let button = UIButton(type: .System)
+      button.setTitle("Try Again", forState: .Normal)
+      button.addTarget(self, action: #selector(triggerPullToRefresh), forControlEvents: .TouchUpInside)
+
+      button.frame.size = CGSize(width: 130, height: 32)
+      button.frame.origin.x = (container.bounds.width - button.bounds.width) * 0.5
+      button.frame.origin.y = label.frame.maxY + 10
+
+      container.addSubview(button)
+    }
 
     container.addSubview(label)
 
