@@ -6,7 +6,8 @@ Pod::Spec.new do |s|
 		:file => 'LICENSE'
 	}
 	s.homepage = 'http://github.com/timominous/StatefulTableView'
-	s.summary = 'Custom UITableView container class that supports pull-to-refresh, load-more, initial load, and empty states. Swift port of SKStatefulTableViewController'
+	s.description = 'Custom UITableView container class that supports pull-to-refresh, load-more, initial load, and empty states. Swift port of SKStatefulTableViewController'
+	s.summary = 'Custom UITableView container class that supports pull-to-refresh, load-more, initial load, and empty states.'
 	s.author = {
 		'timominous' => 'timominous@gmail.com'
 	}
