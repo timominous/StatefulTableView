@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     statefulTableView.canPullToRefresh = true
     statefulTableView.canLoadMore = true
-    
+
     statefulTableView.statefulDelegate = self
     statefulTableView.tableDataSource = self
     statefulTableView.tableDelegate = self
@@ -62,27 +62,37 @@ extension ViewController: StatefulTableDelegate {
   }
 
   func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: LoadMoreCompletionHandler) {
-    items += Int(arc4random_uniform(20))
-    let loadMore = items < 50
-    
+//    items += Int(arc4random_uniform(20))
+//    let loadMore = items < 50
+    let loadMore = false
+
     let time = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * NSEC_PER_SEC))
     dispatch_after(time, dispatch_get_main_queue()) {
       let error = NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
       tvc.reloadData()
-      handler(canLoadMore: loadMore, errorOrNil: error, showErrorView: !loadMore)
+      handler(canLoadMore: true, errorOrNil: error, showErrorView: !loadMore)
     }
   }
 
   func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView? {
+//    let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+//    view.backgroundColor = .blueColor()
+//    return view
     return nil
   }
 
   func statefulTableViewView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
+//    let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+//    view.backgroundColor = .redColor()
+//    return view
     return nil
   }
 
   func statefulTableViewView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView? {
-    return nil
+    let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+    view.backgroundColor = .greenColor()
+    return view
+//    return nil
   }
 }
 

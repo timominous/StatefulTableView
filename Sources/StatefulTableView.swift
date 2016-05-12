@@ -250,6 +250,10 @@ extension StatefulTableView {
     self.canLoadMore = canLoadMore
     loadMoreViewIsErrorView = (error != nil) && showErrorView
     lastLoadMoreError = error
+    
+    if let _ = error {
+      updateLoadMoreView()
+    }
 
     setState(.Idle)
   }
