@@ -24,8 +24,7 @@ final class StatefulTableView: UIView {
       case .LoadingFromPullToRefresh: fallthrough
       case .LoadingMore:
         return true
-      default:
-        return false
+      default: return false
       }
     }
 
@@ -34,8 +33,7 @@ final class StatefulTableView: UIView {
       case .InitialLoading: fallthrough
       case .InitialLoadingTableView:
         return true
-      default:
-        return false
+      default: return false
       }
     }
   }
@@ -58,7 +56,11 @@ final class StatefulTableView: UIView {
 
   var canPullToRefresh = false
   var canLoadMore = false
-  var loadMoreTriggerThreshold = 64
+  var loadMoreTriggerThreshold: CGFloat = 64
+
+  private var loadMoreViewIsErrorView = false
+  private var lastLoadMoreError: NSError?
+  private var watchForLoadMore = false
 
   private var state: State = .Idle
 
@@ -66,10 +68,7 @@ final class StatefulTableView: UIView {
     didSet {
       let hidden = viewMode == .Table
 
-      guard staticContentView.hidden != hidden else {
-        return
-      }
-
+      guard staticContentView.hidden != hidden else { return }
       staticContentView.hidden = hidden
     }
   }
@@ -115,9 +114,9 @@ final class StatefulTableView: UIView {
   func registerClass(cellClass: AnyClass?, forCellReuseIdentifier: String) {
     tableView.registerClass(cellClass, forCellReuseIdentifier: forCellReuseIdentifier)
   }
-  
+
   func reloadData() {
-    dispatch_async(dispatch_get_main_queue()) { 
+    dispatch_async(dispatch_get_main_queue()) {
       self.tableView.reloadData()
     }
   }
@@ -134,9 +133,7 @@ extension StatefulTableView {
   }
 
   func triggerPullToRefresh() -> Bool {
-    guard !state.isLoading && canPullToRefresh else {
-      return false
-    }
+    guard !state.isLoading && canPullToRefresh else { return false }
 
     self.setState(.LoadingFromPullToRefresh, updateView: false, error: nil)
 
@@ -152,9 +149,7 @@ extension StatefulTableView {
   }
 
   func setHasFinishedLoadingFromPullToRefresh(tableIsEmpty: Bool, error: NSError?) {
-    guard state == .LoadingFromPullToRefresh else {
-      return
-    }
+    guard state == .LoadingFromPullToRefresh else { return }
 
     refreshControl.endRefreshing()
 
@@ -173,9 +168,7 @@ extension StatefulTableView {
   }
 
   func triggerInitialLoad(shouldShowTableView: Bool) -> Bool {
-    guard !state.isLoading else {
-      return false
-    }
+    guard !state.isLoading else { return false }
 
     if shouldShowTableView {
       self.setState(.InitialLoadingTableView)
@@ -193,14 +186,96 @@ extension StatefulTableView {
   }
 
   func setHasFinishedInitialLoad(tableIsEmpty: Bool, error: NSError?) {
-    guard state == .InitialLoading || state == .InitialLoadingTableView else {
-      return
-    }
+    guard state == .InitialLoading || state == .InitialLoadingTableView else { return }
 
     if tableIsEmpty {
       self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
     } else {
       self.setState(.Idle)
+    }
+  }
+}
+
+// MARK: Load more
+extension StatefulTableView {
+  func triggerLoadMore() {
+    guard !state.isLoading else { return }
+
+    loadMoreViewIsErrorView = false
+    lastLoadMoreError = nil
+    updateLoadMoreView()
+
+    setState(.LoadingMore)
+
+    if let delegate = statefulDelegate {
+      delegate.statefulTableViewWillBeginLoadingMore(self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
+        self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
+      })
+    }
+  }
+
+  func updateLoadMoreView() {
+    if watchForLoadMore {
+      tableView.tableFooterView = viewForLoadingMore(withError: (loadMoreViewIsErrorView ? lastLoadMoreError : nil))
+    } else {
+      tableView.tableFooterView = UIView()
+    }
+  }
+
+  func viewForLoadingMore(withError error: NSError?) -> UIView {
+    if let view = statefulDelegate?.statefulTableViewView(self, forLoadMoreError: error) { return view }
+
+    let container = UIView(frame: CGRect(origin: .zero, size: CGSize(width: tableView.bounds.width, height: 44)))
+
+    if let error = error {
+      let label = UILabel()
+      label.text = error.localizedDescription
+      label.font = UIFont.systemFontOfSize(12)
+      label.textAlignment = .Center
+      label.frame = container.bounds
+      container.addSubview(label)
+    } else {
+      let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+      activityIndicator.frame.centerInFrame(container.bounds)
+      activityIndicator.startAnimating()
+      container.addSubview(activityIndicator)
+    }
+
+    return container
+  }
+
+  func setHasFinishedLoadingMore(canLoadMore: Bool, error: NSError?, showErrorView: Bool) {
+    guard state == .LoadingMore else { return }
+
+    self.canLoadMore = canLoadMore
+    loadMoreViewIsErrorView = (error != nil) && showErrorView
+    lastLoadMoreError = error
+
+    setState(.Idle)
+  }
+
+  func watchForLoadMoreIfApplicable(watch: Bool) {
+    var watch = watch
+
+    if (watch && !canLoadMore) {
+      watch = false
+    }
+    watchForLoadMore = watch
+    updateLoadMoreView()
+    
+    triggerLoadMoreIfApplicable(tableView)
+  }
+  
+  func scrollViewDidScroll(scrollView: UIScrollView) {
+    triggerLoadMoreIfApplicable(scrollView)
+  }
+
+  func triggerLoadMoreIfApplicable(scrollView: UIScrollView) {
+    guard watchForLoadMore && !loadMoreViewIsErrorView else { return }
+
+    let scrollPosition = scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y
+    if scrollPosition < loadMoreTriggerThreshold {
+      triggerLoadMore()
     }
   }
 }
@@ -225,6 +300,14 @@ extension StatefulTableView {
       resetStaticContentView(withChildView: viewForEmptyInitialLoad(withError: error))
     default: break
     }
+    
+    switch state {
+    case .Idle:
+      watchForLoadMoreIfApplicable(true)
+    case .EmptyOrInitialLoadError:
+      watchForLoadMoreIfApplicable(false)
+    default: break
+    }
 
     if updateView {
       let mode: ViewMode
@@ -233,8 +316,7 @@ extension StatefulTableView {
       case .InitialLoading: fallthrough
       case .EmptyOrInitialLoadError:
         mode = .Static
-      default:
-        mode = .Table
+      default: mode = .Table
       }
 
       viewMode = mode
@@ -256,21 +338,16 @@ extension StatefulTableView {
 
     let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     activityIndicatorView.startAnimating()
-
-    activityIndicatorView.frame.origin.x = (staticContentView.bounds.width - activityIndicatorView.frame.width) * 0.5
-    activityIndicatorView.frame.origin.y = (staticContentView.bounds.height - activityIndicatorView.frame.height) * 0.5
+    activityIndicatorView.frame.centerInFrame(staticContentView.bounds)
 
     return activityIndicatorView
   }
 
   func viewForEmptyInitialLoad(withError error: NSError?) -> UIView {
-    if let view = statefulDelegate?.statefulTableViewView(self, forInitialLoadError: error) {
-      return view
-    }
+    if let view = statefulDelegate?.statefulTableViewView(self, forInitialLoadError: error) { return view }
 
     var frame = CGRect(origin: .zero, size: CGSize(width: staticContentView.bounds.width, height: 120))
-    frame.origin.x = (staticContentView.bounds.width - frame.width) * 0.5
-    frame.origin.y = (staticContentView.bounds.height - frame.height) * 0.5
+    frame.centerInFrame(staticContentView.bounds)
 
     let container = UIView(frame: frame)
 
