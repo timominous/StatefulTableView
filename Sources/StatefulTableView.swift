@@ -8,7 +8,7 @@
 
 import UIKit
 
-final class StatefulTableView: UIView {
+public final class StatefulTableView: UIView {
   enum State {
     case Idle
     case InitialLoading
@@ -54,9 +54,9 @@ final class StatefulTableView: UIView {
 
   private lazy var refreshControl = UIRefreshControl()
 
-  var canPullToRefresh = false
-  var canLoadMore = false
-  var loadMoreTriggerThreshold: CGFloat = 64
+  public var canPullToRefresh = false
+  public var canLoadMore = false
+  public var loadMoreTriggerThreshold: CGFloat = 64
 
   private var loadMoreViewIsErrorView = false
   private var lastLoadMoreError: NSError?
@@ -73,26 +73,26 @@ final class StatefulTableView: UIView {
     }
   }
 
-  @IBOutlet var statefulDelegate: StatefulTableDelegate?
+  @IBOutlet public var statefulDelegate: StatefulTableDelegate?
 
-  @IBOutlet var tableDataSource: UITableViewDataSource? {
+  @IBOutlet public var tableDataSource: UITableViewDataSource? {
     didSet {
       tableView.dataSource = tableDataSource
     }
   }
 
-  @IBOutlet var tableDelegate: UITableViewDelegate? {
+  @IBOutlet public var tableDelegate: UITableViewDelegate? {
     didSet {
       tableView.delegate = tableDelegate
     }
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  required public init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     commonInit()
   }
 
-  override init(frame: CGRect) {
+  public override init(frame: CGRect) {
     super.init(frame: frame)
     commonInit()
   }
@@ -105,17 +105,17 @@ final class StatefulTableView: UIView {
     tableView.addSubview(refreshControl)
   }
 
-  override func layoutSubviews() {
+  override public func layoutSubviews() {
     super.layoutSubviews()
     tableView.frame = bounds
     staticContentView.frame = bounds
   }
 
-  func registerClass(cellClass: AnyClass?, forCellReuseIdentifier: String) {
+  public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier: String) {
     tableView.registerClass(cellClass, forCellReuseIdentifier: forCellReuseIdentifier)
   }
 
-  func reloadData() {
+  public func reloadData() {
     dispatch_async(dispatch_get_main_queue()) {
       self.tableView.reloadData()
     }
@@ -132,7 +132,7 @@ extension StatefulTableView {
     }
   }
 
-  func triggerPullToRefresh() -> Bool {
+  public func triggerPullToRefresh() -> Bool {
     guard !state.isLoading && canPullToRefresh else { return false }
 
     self.setState(.LoadingFromPullToRefresh, updateView: false, error: nil)
@@ -163,11 +163,11 @@ extension StatefulTableView {
 
 // MARK: Initial load
 extension StatefulTableView {
-  func triggerInitialLoad() -> Bool {
+  public func triggerInitialLoad() -> Bool {
     return triggerInitialLoad(false)
   }
 
-  func triggerInitialLoad(shouldShowTableView: Bool) -> Bool {
+  public func triggerInitialLoad(shouldShowTableView: Bool) -> Bool {
     guard !state.isLoading else { return false }
 
     if shouldShowTableView {
@@ -198,7 +198,7 @@ extension StatefulTableView {
 
 // MARK: Load more
 extension StatefulTableView {
-  func triggerLoadMore() {
+  public func triggerLoadMore() {
     guard !state.isLoading else { return }
 
     loadMoreViewIsErrorView = false
@@ -250,7 +250,7 @@ extension StatefulTableView {
     self.canLoadMore = canLoadMore
     loadMoreViewIsErrorView = (error != nil) && showErrorView
     lastLoadMoreError = error
-    
+
     if let _ = error {
       updateLoadMoreView()
     }
@@ -266,11 +266,11 @@ extension StatefulTableView {
     }
     watchForLoadMore = watch
     updateLoadMoreView()
-    
+
     triggerLoadMoreIfApplicable(tableView)
   }
-  
-  func scrollViewDidScroll(scrollView: UIScrollView) {
+
+  public func scrollViewDidScroll(scrollView: UIScrollView) {
     triggerLoadMoreIfApplicable(scrollView)
   }
 
@@ -304,7 +304,7 @@ extension StatefulTableView {
       resetStaticContentView(withChildView: viewForEmptyInitialLoad(withError: error))
     default: break
     }
-    
+
     switch state {
     case .Idle:
       watchForLoadMoreIfApplicable(true)

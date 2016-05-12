@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import StatefulTableView
 
 class ViewController: UIViewController {
 

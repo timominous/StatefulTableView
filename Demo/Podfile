@@ -1,0 +1,17 @@
+platform :ios, '8.0'
+use_frameworks!
+
+target 'Demo' do
+
+  pod 'StatefulTableView', :path => '../'
+
+end
+
+target 'DemoTests' do
+
+end
+
+target 'DemoUITests' do
+
+end
+

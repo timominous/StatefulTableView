@@ -1,0 +1,6 @@
+framework module StatefulTableView {
+  umbrella header "StatefulTableView-umbrella.h"
+
+  export *
+  module * { export * }
+}

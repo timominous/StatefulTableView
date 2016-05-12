@@ -1,0 +1,14 @@
+PODS:
+  - StatefulTableView (0.0.1)
+
+DEPENDENCIES:
+  - StatefulTableView (from `../`)
+
+EXTERNAL SOURCES:
+  StatefulTableView:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  StatefulTableView: 3dd6378978b0f1e31efd7da694573aa7f94c3987
+
+COCOAPODS: 0.39.0

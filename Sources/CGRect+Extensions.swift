@@ -8,7 +8,7 @@
 
 import CoreGraphics
 
-extension CGRect {
+public extension CGRect {
   mutating func centerInFrame(bounds: CGRect) {
     origin.x = (bounds.width - width) * 0.5
     origin.y = (bounds.height - height) * 0.5
