@@ -110,15 +110,29 @@ public final class StatefulTableView: UIView {
     tableView.frame = bounds
     staticContentView.frame = bounds
   }
+}
 
-  public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier: String) {
-    tableView.registerClass(cellClass, forCellReuseIdentifier: forCellReuseIdentifier)
-  }
-
+extension StatefulTableView {
   public func reloadData() {
     dispatch_async(dispatch_get_main_queue()) {
       self.tableView.reloadData()
     }
+  }
+  
+  public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
+    tableView.registerClass(cellClass, forCellReuseIdentifier: identifier)
+  }
+  
+  public func registerNib(nib: UINib?, forCellReuseIdentifier identifier: String) {
+    tableView.registerNib(nib, forCellReuseIdentifier: identifier)
+  }
+  
+  public func registerClass(aClass: AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
+    tableView.registerClass(aClass, forHeaderFooterViewReuseIdentifier: identifier)
+  }
+  
+  public func registerNib(nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
+    tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
   }
 }
 
