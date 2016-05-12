@@ -12,7 +12,7 @@ typealias InitialLoadCompletionHandler = (tableIsEmpty: Bool, errorOrNil: NSErro
 typealias LoadMoreCompletionHandler = (canLoadMore: Bool, errorOrNil: NSError?, showErrorView: Bool) -> Void
 
 @objc protocol StatefulTableDelegate {
-  func statefulTableControllerWillBeginInitialLoad(tvc: StatefulTableView, handler: InitialLoadCompletionHandler)
+  func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: InitialLoadCompletionHandler)
   func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: InitialLoadCompletionHandler)
   func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: LoadMoreCompletionHandler)
 

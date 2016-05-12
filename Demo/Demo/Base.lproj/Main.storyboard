@@ -30,9 +30,13 @@
                             <constraint firstItem="KNY-LE-d9n" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="hmP-xU-5uv"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="statefulTableView" destination="KNY-LE-d9n" id="s6t-a2-8Jr"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="125" y="264"/>
         </scene>
     </scenes>
 </document>
