@@ -351,13 +351,6 @@ extension StatefulTableView {
   func resetStaticContentView(withChildView childView: UIView) {
     staticContentView.subviews.forEach { $0.removeFromSuperview() }
     staticContentView.addSubview(childView)
-
-    var attributes: [NSLayoutAttribute] = [.Top, .Bottom, .Leading, .Trailing]
-    let constraints: [NSLayoutConstraint] = attributes.map {
-      return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .Equal, toItem: staticContentView, attribute: $0, multiplier: 1, constant: 0)
-    }
-
-    staticContentView.addConstraints(constraints)
   }
 
   var viewForInitialLoad: UIView {
