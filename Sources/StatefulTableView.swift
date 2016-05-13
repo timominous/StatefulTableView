@@ -73,18 +73,16 @@ public final class StatefulTableView: UIView {
     }
   }
 
-  @IBOutlet public var statefulDelegate: StatefulTableDelegate?
+  public var statefulDelegate: StatefulTableDelegate?
 
-  @IBOutlet public var tableDataSource: UITableViewDataSource? {
-    didSet {
-      tableView.dataSource = tableDataSource
-    }
+  public var tableDataSource: UITableViewDataSource? {
+    set { tableView.dataSource = newValue }
+    get { return tableView.dataSource }
   }
 
-  @IBOutlet public var tableDelegate: UITableViewDelegate? {
-    didSet {
-      tableView.delegate = tableDelegate
-    }
+  public var tableDelegate: UITableViewDelegate? {
+    set { tableView.delegate = newValue }
+    get { return tableView.delegate }
   }
 
   required public init?(coder aDecoder: NSCoder) {
@@ -118,19 +116,19 @@ extension StatefulTableView {
       self.tableView.reloadData()
     }
   }
-  
+
   public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
     tableView.registerClass(cellClass, forCellReuseIdentifier: identifier)
   }
-  
+
   public func registerNib(nib: UINib?, forCellReuseIdentifier identifier: String) {
     tableView.registerNib(nib, forCellReuseIdentifier: identifier)
   }
-  
+
   public func registerClass(aClass: AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
     tableView.registerClass(aClass, forHeaderFooterViewReuseIdentifier: identifier)
   }
-  
+
   public func registerNib(nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
     tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
   }

@@ -1,5 +1,5 @@
 PODS:
-  - StatefulTableView (0.0.1)
+  - StatefulTableView (0.0.3)
 
 DEPENDENCIES:
   - StatefulTableView (from `../`)
@@ -9,6 +9,6 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  StatefulTableView: 3dd6378978b0f1e31efd7da694573aa7f94c3987
+  StatefulTableView: 274baa0f0b2272a6035fc548635c171aca1948d5
 
 COCOAPODS: 0.39.0
