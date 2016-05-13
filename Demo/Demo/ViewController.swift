@@ -21,8 +21,8 @@ class ViewController: UIViewController {
     statefulTableView.canLoadMore = true
 
     statefulTableView.statefulDelegate = self
-    statefulTableView.tableDataSource = self
-    statefulTableView.tableDelegate = self
+    statefulTableView.dataSource = self
+    statefulTableView.delegate = self
     statefulTableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "identifier")
   }
 

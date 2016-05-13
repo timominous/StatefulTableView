@@ -44,6 +44,9 @@ public final class StatefulTableView: UIView {
   }
 
   private lazy var tableView = UITableView()
+  public var internalTable: UITableView {
+    return tableView
+  }
 
   private lazy var staticContentView: UIView = { [unowned self] in
     let view = UIView(frame: self.bounds)
@@ -75,16 +78,6 @@ public final class StatefulTableView: UIView {
 
   public var statefulDelegate: StatefulTableDelegate?
 
-  public var tableDataSource: UITableViewDataSource? {
-    set { tableView.dataSource = newValue }
-    get { return tableView.dataSource }
-  }
-
-  public var tableDelegate: UITableViewDelegate? {
-    set { tableView.delegate = newValue }
-    get { return tableView.delegate }
-  }
-
   required public init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     commonInit()
@@ -107,6 +100,19 @@ public final class StatefulTableView: UIView {
     super.layoutSubviews()
     tableView.frame = bounds
     staticContentView.frame = bounds
+  }
+}
+
+// MARK: Accessors
+extension StatefulTableView {
+  public var dataSource: UITableViewDataSource? {
+    set { tableView.dataSource = newValue }
+    get { return tableView.dataSource }
+  }
+
+  public var delegate: UITableViewDelegate? {
+    set { tableView.delegate = newValue }
+    get { return tableView.delegate }
   }
 }
 
@@ -345,6 +351,13 @@ extension StatefulTableView {
   func resetStaticContentView(withChildView childView: UIView) {
     staticContentView.subviews.forEach { $0.removeFromSuperview() }
     staticContentView.addSubview(childView)
+
+    var attributes: [NSLayoutAttribute] = [.Top, .Bottom, .Leading, .Trailing]
+    let constraints: [NSLayoutConstraint] = attributes.map {
+      return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .Equal, toItem: staticContentView, attribute: $0, multiplier: 1, constant: 0)
+    }
+
+    staticContentView.addConstraints(constraints)
   }
 
   var viewForInitialLoad: UIView {
