@@ -152,7 +152,7 @@ extension StatefulTableView {
     set { tableView.estimatedSectionFooterHeight = newValue }
     get { return tableView.estimatedSectionHeaderHeight }
   }
-  
+
   public var separatorInset: UIEdgeInsets {
     set { tableView.separatorInset = newValue }
     get { return tableView.separatorInset }
@@ -170,6 +170,72 @@ extension StatefulTableView {
     dispatch_async(dispatch_get_main_queue()) {
       self.tableView.reloadSectionIndexTitles()
     }
+  }
+
+  /// Info
+
+  public var numberOfSections: Int {
+    return tableView.numberOfSections
+  }
+
+  public func numberOfRowsInSection(section: Int) -> Int {
+    return tableView.numberOfRowsInSection(section)
+  }
+
+  public func rectForSection(section: Int) -> CGRect {
+    return tableView.rectForSection(section)
+  }
+
+  public func rectFotHeaderInSection(section: Int) -> CGRect {
+    return tableView.rectForHeaderInSection(section)
+  }
+
+  public func rectForFooterInSection(section: Int) -> CGRect {
+    return tableView.rectForFooterInSection(section)
+  }
+
+  public func rectForRowRowAtIndexPath(indexPath: NSIndexPath) -> CGRect {
+    return tableView.rectForRowAtIndexPath(indexPath)
+  }
+
+  public func indexPathForRowAtPoint(point: CGPoint) -> NSIndexPath? {
+    return tableView.indexPathForRowAtPoint(point)
+  }
+
+  public func indexPathForCell(cell: UITableViewCell) -> NSIndexPath? {
+    return tableView.indexPathForCell(cell)
+  }
+
+  public func indexPathsForRowsInRect(rect: CGRect) -> [NSIndexPath]? {
+    return tableView.indexPathsForRowsInRect(rect)
+  }
+
+  public func cellForRowAtIndexPath(indexPath: NSIndexPath) -> UITableViewCell? {
+    return tableView.cellForRowAtIndexPath(indexPath)
+  }
+
+  public var visibleCells: [UITableViewCell] {
+    return tableView.visibleCells
+  }
+
+  public var indexPathsForVisibleRows: [NSIndexPath]? {
+    return tableView.indexPathsForVisibleRows;
+  }
+
+  public func headerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
+    return tableView.headerViewForSection(section)
+  }
+
+  public func footerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
+    return tableView.footerViewForSection(section)
+  }
+
+  public func scrollToRowAtIndexPath(indexPath: NSIndexPath, atScrollPosition scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: scrollPosition, animated: animated)
+  }
+
+  public func scrollToNearestSelectedRowAtScrollPosition(scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    tableView.scrollToNearestSelectedRowAtScrollPosition(scrollPosition, animated: animated)
   }
 
   public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
