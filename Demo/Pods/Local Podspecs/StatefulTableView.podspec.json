@@ -1,6 +1,6 @@
 {
   "name": "StatefulTableView",
-  "version": "0.0.3",
+  "version": "0.0.6",
   "license": {
     "type": "MIT",
     "file": "LICENSE"
@@ -13,7 +13,7 @@
   },
   "source": {
     "git": "https://github.com/timominous/StatefulTableView.git",
-    "tag": "0.0.3"
+    "tag": "0.0.6"
   },
   "platforms": {
     "ios": "8.0"
