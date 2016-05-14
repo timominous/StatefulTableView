@@ -91,6 +91,7 @@ public final class StatefulTableView: UIView {
   func commonInit() {
     addSubview(tableView)
     addSubview(staticContentView)
+    
     refreshControl.addTarget(self,
       action: #selector(refreshControlValueChanged), forControlEvents: .ValueChanged)
     tableView.addSubview(refreshControl)
@@ -351,6 +352,16 @@ extension StatefulTableView {
   func resetStaticContentView(withChildView childView: UIView) {
     staticContentView.subviews.forEach { $0.removeFromSuperview() }
     staticContentView.addSubview(childView)
+
+    childView.translatesAutoresizingMaskIntoConstraints = false
+
+    let attributes: [NSLayoutAttribute] = [.Top, .Bottom, .Leading, .Trailing]
+    let constraints = attributes.map {
+      return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .Equal,
+        toItem: staticContentView, attribute: $0, multiplier: 1, constant: 0)
+    }
+    
+    staticContentView.addConstraints(constraints)
   }
 
   var viewForInitialLoad: UIView {
