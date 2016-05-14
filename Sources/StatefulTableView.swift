@@ -67,10 +67,16 @@ public final class StatefulTableView: UIView {
 
   private lazy var refreshControl = UIRefreshControl()
 
+  /// Enables the user to pull down on the tableView to initiate a refresh
   public var canPullToRefresh = false
+
+  /// Enables the user to control whether to trigger loading of more objects or not
   public var canLoadMore = false
+
+  /// Distance from the bottom  of the tableView's vertical content offset where load more will be triggered
   public var loadMoreTriggerThreshold: CGFloat = 64
 
+  /// Determines if the load more view is for an error or not
   private var loadMoreViewIsErrorView = false
   private var lastLoadMoreError: NSError?
   private var watchForLoadMore = false
@@ -87,6 +93,15 @@ public final class StatefulTableView: UIView {
   }
 
   public var statefulDelegate: StatefulTableDelegate?
+  public var dataSource: UITableViewDataSource? {
+    set { tableView.dataSource = newValue }
+    get { return tableView.dataSource }
+  }
+
+  public var delegate: UITableViewDelegate? {
+    set { tableView.delegate = newValue }
+    get { return tableView.delegate }
+  }
 
   func commonInit() {
     addSubview(tableView)
@@ -104,23 +119,17 @@ public final class StatefulTableView: UIView {
   }
 }
 
-// MARK: Accessors
-extension StatefulTableView {
-  public var dataSource: UITableViewDataSource? {
-    set { tableView.dataSource = newValue }
-    get { return tableView.dataSource }
-  }
-
-  public var delegate: UITableViewDelegate? {
-    set { tableView.delegate = newValue }
-    get { return tableView.delegate }
-  }
-}
-
+// MARK: - UITableView bridge
 extension StatefulTableView {
   public func reloadData() {
     dispatch_async(dispatch_get_main_queue()) {
       self.tableView.reloadData()
+    }
+  }
+
+  public func reloadSectionIndexTitles() {
+    dispatch_async(dispatch_get_main_queue()) {
+      self.tableView.reloadSectionIndexTitles()
     }
   }
 
@@ -139,9 +148,10 @@ extension StatefulTableView {
   public func registerNib(nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
     tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
   }
+
 }
 
-// MARK: Pull to refresh
+// MARK: - Pull to refresh
 extension StatefulTableView {
   func refreshControlValueChanged() {
     if state != .LoadingFromPullToRefresh && !state.isLoading {
@@ -180,7 +190,7 @@ extension StatefulTableView {
   }
 }
 
-// MARK: Initial load
+// MARK: - Initial load
 extension StatefulTableView {
   public func triggerInitialLoad() -> Bool {
     return triggerInitialLoad(false)
@@ -215,7 +225,7 @@ extension StatefulTableView {
   }
 }
 
-// MARK: Load more
+// MARK: - Load more
 extension StatefulTableView {
   public func triggerLoadMore() {
     guard !state.isLoading else { return }
@@ -303,7 +313,7 @@ extension StatefulTableView {
   }
 }
 
-// MARK: States
+// MARK: - States
 extension StatefulTableView {
   private func setState(newState: State) {
     setState(newState, updateView: true, error: nil)
@@ -347,7 +357,7 @@ extension StatefulTableView {
   }
 }
 
-// MARK: Views
+// MARK: - Views
 extension StatefulTableView {
   func resetStaticContentView(withChildView childView: UIView) {
     staticContentView.subviews.forEach { $0.removeFromSuperview() }
