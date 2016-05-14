@@ -9,7 +9,7 @@
 import UIKit
 
 public final class StatefulTableView: UIView {
-  enum State {
+  private enum State {
     case Idle
     case InitialLoading
     case InitialLoadingTableView
@@ -38,9 +38,19 @@ public final class StatefulTableView: UIView {
     }
   }
 
-  enum ViewMode {
+  private enum ViewMode {
     case Table
     case Static
+  }
+
+  required public init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    commonInit()
+  }
+
+  public override init(frame: CGRect) {
+    super.init(frame: frame)
+    commonInit()
   }
 
   private lazy var tableView = UITableView()
@@ -78,20 +88,10 @@ public final class StatefulTableView: UIView {
 
   public var statefulDelegate: StatefulTableDelegate?
 
-  required public init?(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    commonInit()
-  }
-
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
-    commonInit()
-  }
-
   func commonInit() {
     addSubview(tableView)
     addSubview(staticContentView)
-    
+
     refreshControl.addTarget(self,
       action: #selector(refreshControlValueChanged), forControlEvents: .ValueChanged)
     tableView.addSubview(refreshControl)
@@ -305,15 +305,15 @@ extension StatefulTableView {
 
 // MARK: States
 extension StatefulTableView {
-  func setState(newState: State) {
+  private func setState(newState: State) {
     setState(newState, updateView: true, error: nil)
   }
 
-  func setState(newState: State, error: NSError?) {
+  private func setState(newState: State, error: NSError?) {
     setState(newState, updateView: true, error: error)
   }
 
-  func setState(newState: State, updateView: Bool, error: NSError?) {
+  private func setState(newState: State, updateView: Bool, error: NSError?) {
     state = newState
 
     switch state {
@@ -360,7 +360,7 @@ extension StatefulTableView {
       return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .Equal,
         toItem: staticContentView, attribute: $0, multiplier: 1, constant: 0)
     }
-    
+
     staticContentView.addConstraints(constraints)
   }
 
