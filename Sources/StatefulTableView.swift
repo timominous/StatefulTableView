@@ -238,6 +238,48 @@ extension StatefulTableView {
     tableView.scrollToNearestSelectedRowAtScrollPosition(scrollPosition, animated: animated)
   }
 
+  /// Row insertion/deletion/reloading
+
+  public func beginUpdates() {
+    tableView.beginUpdates()
+  }
+
+  public func endUpdates() {
+    tableView.endUpdates()
+  }
+
+  public func insertSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.insertSections(sections, withRowAnimation: animation)
+  }
+
+  public func deleteSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.deleteSections(sections, withRowAnimation: animation)
+  }
+
+  public func reloadSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.reloadSections(sections, withRowAnimation: animation)
+  }
+
+  public func moveSection(section: Int, toSection newSection: Int) {
+    tableView.moveSection(section, toSection: newSection)
+  }
+
+  public func insertRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+  }
+
+  public func deleteRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+  }
+
+  public func reloadRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+  }
+
+  public func moveRowAtIndexPath(indexPath: NSIndexPath, toIndexPath newIndexPath: NSIndexPath) {
+    tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+  }
+
   public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
     tableView.registerClass(cellClass, forCellReuseIdentifier: identifier)
   }
