@@ -121,6 +121,45 @@ public final class StatefulTableView: UIView {
 
 // MARK: - UITableView bridge
 extension StatefulTableView {
+  /// Bridge for UITableivew methods. Read UITableView documentation for more details
+
+  public var rowHeight: CGFloat {
+    set { tableView.rowHeight = newValue }
+    get { return tableView.rowHeight }
+  }
+
+  public var sectionHeaderHeight: CGFloat {
+    set { tableView.sectionHeaderHeight = newValue }
+    get { return tableView.sectionHeaderHeight }
+  }
+
+  public var sectionFooterHeight: CGFloat {
+    set { tableView.sectionFooterHeight = newValue }
+    get { return tableView.sectionFooterHeight }
+  }
+
+  public var estimatedRowHeight: CGFloat {
+    set { tableView.estimatedRowHeight = newValue }
+    get { return tableView.estimatedRowHeight }
+  }
+
+  public var estimatedSectionHeaderHeight: CGFloat {
+    set { tableView.estimatedSectionHeaderHeight = newValue }
+    get { return tableView.estimatedSectionHeaderHeight }
+  }
+
+  public var estimatedSectionFooterHeight: CGFloat {
+    set { tableView.estimatedSectionFooterHeight = newValue }
+    get { return tableView.estimatedSectionHeaderHeight }
+  }
+  
+  public var separatorInset: UIEdgeInsets {
+    set { tableView.separatorInset = newValue }
+    get { return tableView.separatorInset }
+  }
+
+  /// Data
+
   public func reloadData() {
     dispatch_async(dispatch_get_main_queue()) {
       self.tableView.reloadData()
