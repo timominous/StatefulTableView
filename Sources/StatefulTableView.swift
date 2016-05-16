@@ -310,7 +310,7 @@ extension StatefulTableView {
     set { tableView.allowsMultipleSelectionDuringEditing = newValue }
     get { return tableView.allowsMultipleSelectionDuringEditing }
   }
-  
+
   /// Selection
 
   public var indexPathForSelectedRow: NSIndexPath? {
@@ -327,6 +327,71 @@ extension StatefulTableView {
 
   public func deselectRowAtIndexPath(indexPath: NSIndexPath, animated: Bool) {
     tableView.deselectRowAtIndexPath(indexPath, animated: animated)
+  }
+
+  /// Appearance
+
+  public var sectionIndexMinimumDisplayRowCount: Int {
+    set { tableView.sectionIndexMinimumDisplayRowCount = newValue }
+    get { return tableView.sectionIndexMinimumDisplayRowCount }
+  }
+  
+  public var sectionIndexColor: UIColor? {
+    set { tableView.sectionIndexColor = newValue }
+    get { return tableView.sectionIndexColor }
+  }
+  
+  public var sectionIndexBackgroundColor: UIColor? {
+    set { tableView.sectionIndexBackgroundColor = newValue }
+    get { return tableView.sectionIndexBackgroundColor }
+  }
+  
+  public var sectionIndexTrackingBackgroundColor: UIColor? {
+    set { tableView.sectionIndexTrackingBackgroundColor = newValue }
+    get { return tableView.sectionIndexTrackingBackgroundColor }
+  }
+
+  public var separatorStyle: UITableViewCellSeparatorStyle {
+    set { tableView.separatorStyle = newValue }
+    get { return tableView.separatorStyle }
+  }
+  
+  public var separatorColor: UIColor? {
+    set { tableView.separatorColor = newValue }
+    get { return tableView.separatorColor }
+  }
+  
+  public var separatorEffect: UIVisualEffect? {
+    set { tableView.separatorEffect = newValue }
+    get { return tableView.separatorEffect }
+  }
+
+  @available(iOS 9.0, *)
+  public var cellLayoutMarginsFollowReadableWidth: Bool {
+    set { tableView.cellLayoutMarginsFollowReadableWidth = newValue }
+    get { return tableView.cellLayoutMarginsFollowReadableWidth }
+  }
+
+  public var tableHeaderView: UIView? {
+    set { tableView.tableHeaderView = newValue }
+    get { return tableView.tableHeaderView }
+  }
+  
+  public var tableFooterView: UIView? {
+    set { tableView.tableFooterView = newValue }
+    get { return tableView.tableFooterView }
+  }
+
+  public func dequeueReusableCellWithIdentifier(identifier: String) -> UITableViewCell? {
+    return tableView.dequeueReusableCellWithIdentifier(identifier)
+  }
+  
+  public func dequeueReusableCellWithIdentifier(identifier: String, forIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    return tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
+  }
+
+  public func dequeueReusableHeaderFooterViewWithIdentifier(identifier: String) -> UITableViewHeaderFooterView? {
+    return tableView.dequeueReusableHeaderFooterViewWithIdentifier(identifier)
   }
 
   public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
