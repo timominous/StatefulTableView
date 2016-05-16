@@ -138,21 +138,25 @@ extension StatefulTableView {
     get { return tableView.sectionFooterHeight }
   }
 
+  @available(iOS 7.0, *)
   public var estimatedRowHeight: CGFloat {
     set { tableView.estimatedRowHeight = newValue }
     get { return tableView.estimatedRowHeight }
   }
 
+  @available(iOS 7.0, *)
   public var estimatedSectionHeaderHeight: CGFloat {
     set { tableView.estimatedSectionHeaderHeight = newValue }
     get { return tableView.estimatedSectionHeaderHeight }
   }
 
+  @available(iOS 7.0, *)
   public var estimatedSectionFooterHeight: CGFloat {
     set { tableView.estimatedSectionFooterHeight = newValue }
     get { return tableView.estimatedSectionHeaderHeight }
   }
 
+  @available(iOS 7.0, *)
   public var separatorInset: UIEdgeInsets {
     set { tableView.separatorInset = newValue }
     get { return tableView.separatorInset }
@@ -166,6 +170,7 @@ extension StatefulTableView {
     }
   }
 
+  @available(iOS 3.0, *)
   public func reloadSectionIndexTitles() {
     dispatch_async(dispatch_get_main_queue()) {
       self.tableView.reloadSectionIndexTitles()
@@ -222,10 +227,12 @@ extension StatefulTableView {
     return tableView.indexPathsForVisibleRows;
   }
 
+  @available(iOS 6.0, *)
   public func headerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
     return tableView.headerViewForSection(section)
   }
 
+  @available(iOS 6.0, *)
   public func footerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
     return tableView.footerViewForSection(section)
   }
@@ -256,10 +263,12 @@ extension StatefulTableView {
     tableView.deleteSections(sections, withRowAnimation: animation)
   }
 
+  @available(iOS 3.0, *)
   public func reloadSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
     tableView.reloadSections(sections, withRowAnimation: animation)
   }
 
+  @available(iOS 5.0, *)
   public func moveSection(section: Int, toSection newSection: Int) {
     tableView.moveSection(section, toSection: newSection)
   }
@@ -272,10 +281,12 @@ extension StatefulTableView {
     tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
   }
 
+  @available(iOS 3.0, *)
   public func reloadRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
     tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
   }
 
+  @available(iOS 5.0, *)
   public func moveRowAtIndexPath(indexPath: NSIndexPath, toIndexPath newIndexPath: NSIndexPath) {
     tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
   }
@@ -291,6 +302,7 @@ extension StatefulTableView {
     tableView.setEditing(editing, animated: animated)
   }
 
+  @available(iOS 3.0, *)
   public var allowsSelection: Bool {
     set { tableView.allowsSelection = newValue }
     get { return tableView.allowsSelection }
@@ -301,11 +313,13 @@ extension StatefulTableView {
     get { return tableView.allowsSelectionDuringEditing }
   }
 
+  @available(iOS 5.0, *)
   public var allowsMultipleSelection: Bool {
     set { tableView.allowsMultipleSelection = newValue }
     get { return tableView.allowsMultipleSelection }
   }
 
+  @available(iOS 5.0, *)
   public var allowsMultipleSelectionDuringEditing: Bool {
     set { tableView.allowsMultipleSelectionDuringEditing = newValue }
     get { return tableView.allowsMultipleSelectionDuringEditing }
@@ -317,6 +331,7 @@ extension StatefulTableView {
     return tableView.indexPathForSelectedRow
   }
 
+  @available(iOS 5.0, *)
   public var indexPathsForSelectedRows: [NSIndexPath]? {
     return tableView.indexPathsForSelectedRows
   }
@@ -336,16 +351,19 @@ extension StatefulTableView {
     get { return tableView.sectionIndexMinimumDisplayRowCount }
   }
 
+  @available(iOS 6.0, *)
   public var sectionIndexColor: UIColor? {
     set { tableView.sectionIndexColor = newValue }
     get { return tableView.sectionIndexColor }
   }
 
+  @available(iOS 7.0, *)
   public var sectionIndexBackgroundColor: UIColor? {
     set { tableView.sectionIndexBackgroundColor = newValue }
     get { return tableView.sectionIndexBackgroundColor }
   }
 
+  @available(iOS 6.0, *)
   public var sectionIndexTrackingBackgroundColor: UIColor? {
     set { tableView.sectionIndexTrackingBackgroundColor = newValue }
     get { return tableView.sectionIndexTrackingBackgroundColor }
@@ -361,6 +379,7 @@ extension StatefulTableView {
     get { return tableView.separatorColor }
   }
 
+  @available(iOS 8.0, *)
   public var separatorEffect: UIVisualEffect? {
     set { tableView.separatorEffect = newValue }
     get { return tableView.separatorEffect }
@@ -386,10 +405,12 @@ extension StatefulTableView {
     return tableView.dequeueReusableCellWithIdentifier(identifier)
   }
 
+  @available(iOS 6.0, *)
   public func dequeueReusableCellWithIdentifier(identifier: String, forIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     return tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
   }
 
+  @available(iOS 6.0, *)
   public func dequeueReusableHeaderFooterViewWithIdentifier(identifier: String) -> UITableViewHeaderFooterView? {
     return tableView.dequeueReusableHeaderFooterViewWithIdentifier(identifier)
   }
