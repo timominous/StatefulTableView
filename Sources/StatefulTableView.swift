@@ -458,6 +458,11 @@ extension StatefulTableView {
     }
   }
 
+  /**
+   Triggers pull to refresh programatically. Also called when the user pulls down to refresh on the tableView.
+
+   - returns: Boolean for success status.
+   */
   public func triggerPullToRefresh() -> Bool {
     guard !state.isLoading && canPullToRefresh else { return false }
 
@@ -489,10 +494,23 @@ extension StatefulTableView {
 
 // MARK: - Initial load
 extension StatefulTableView {
+
+  /**
+   Triggers initial load of data programatically. Defaults to hiding the tableView.
+
+   - returns: Boolean for success status.
+   */
   public func triggerInitialLoad() -> Bool {
     return triggerInitialLoad(false)
   }
 
+  /**
+   Triggers initial load of data programatically.
+
+   - parameter shouldShowTableView: Control if the container should show the tableView or not.
+
+   - returns: Boolean for success status.
+   */
   public func triggerInitialLoad(shouldShowTableView: Bool) -> Bool {
     guard !state.isLoading else { return false }
 
@@ -524,6 +542,9 @@ extension StatefulTableView {
 
 // MARK: - Load more
 extension StatefulTableView {
+  /**
+   Tiggers loading more of data. Also called when the scroll content offset reaches the `loadMoreTriggerThreshold`.
+   */
   public func triggerLoadMore() {
     guard !state.isLoading else { return }
 
@@ -596,6 +617,11 @@ extension StatefulTableView {
     triggerLoadMoreIfApplicable(tableView)
   }
 
+  /**
+   Should be called when scrolling the tableView. This determines when to call `triggerLoadMore`
+
+   - parameter scrollView: The scrolling view.
+   */
   public func scrollViewDidScroll(scrollView: UIScrollView) {
     triggerLoadMoreIfApplicable(scrollView)
   }
