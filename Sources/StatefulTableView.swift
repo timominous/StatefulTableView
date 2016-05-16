@@ -280,6 +280,37 @@ extension StatefulTableView {
     tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
   }
 
+  /// Editing. When set, rows show insert/delete/reorder control based on data source queries
+
+  public var editing: Bool {
+    set { tableView.editing = newValue }
+    get { return tableView.editing }
+  }
+
+  public func setEditing(editing: Bool, animated: Bool) {
+    tableView.setEditing(editing, animated: animated)
+  }
+
+  public var allowsSelection: Bool {
+    set { tableView.allowsSelection = newValue }
+    get { return tableView.allowsSelection }
+  }
+
+  public var allowsSelectionDuringEditing: Bool {
+    set { tableView.allowsSelectionDuringEditing = newValue }
+    get { return tableView.allowsSelectionDuringEditing }
+  }
+
+  public var allowsMultipleSelection: Bool {
+    set { tableView.allowsMultipleSelection = newValue }
+    get { return tableView.allowsMultipleSelection }
+  }
+
+  public var allowsMultipleSelectionDuringEditing: Bool {
+    set { tableView.allowsMultipleSelectionDuringEditing = newValue }
+    get { return tableView.allowsMultipleSelectionDuringEditing }
+  }
+
   public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
     tableView.registerClass(cellClass, forCellReuseIdentifier: identifier)
   }
