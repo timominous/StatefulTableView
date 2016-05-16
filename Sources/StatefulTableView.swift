@@ -418,6 +418,13 @@ extension StatefulTableView {
     tableView.registerClass(aClass, forHeaderFooterViewReuseIdentifier: identifier)
   }
 
+  /// Focus
+
+  @available(iOS 9.0, *)
+  public var remembersLastFocusedIndexPath: Bool {
+    set { tableView.remembersLastFocusedIndexPath = newValue }
+    get { return tableView.remembersLastFocusedIndexPath }
+  }
 }
 
 // MARK: - Pull to refresh
