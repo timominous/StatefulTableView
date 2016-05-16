@@ -310,6 +310,24 @@ extension StatefulTableView {
     set { tableView.allowsMultipleSelectionDuringEditing = newValue }
     get { return tableView.allowsMultipleSelectionDuringEditing }
   }
+  
+  /// Selection
+
+  public var indexPathForSelectedRow: NSIndexPath? {
+    return tableView.indexPathForSelectedRow
+  }
+
+  public var indexPathsForSelectedRows: [NSIndexPath]? {
+    return tableView.indexPathsForSelectedRows
+  }
+
+  public func selectRowAtIndexPath(indexPath: NSIndexPath?, animated: Bool, scrollPosition: UITableViewScrollPosition) {
+    tableView.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
+  }
+
+  public func deselectRowAtIndexPath(indexPath: NSIndexPath, animated: Bool) {
+    tableView.deselectRowAtIndexPath(indexPath, animated: animated)
+  }
 
   public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
     tableView.registerClass(cellClass, forCellReuseIdentifier: identifier)
