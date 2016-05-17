@@ -530,7 +530,7 @@ extension StatefulTableView {
   }
 
   func setHasFinishedInitialLoad(tableIsEmpty: Bool, error: NSError?) {
-    guard state == .InitialLoading || state == .InitialLoadingTableView else { return }
+    guard state.isInitialLoading else { return }
 
     if tableIsEmpty {
       self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
