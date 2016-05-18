@@ -467,7 +467,9 @@ extension StatefulTableView {
 
     if let delegate = statefulDelegate {
       delegate.statefulTableViewWillBeginLoadingFromRefresh(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        self?.setHasFinishedLoadingFromPullToRefresh(tableIsEmpty, error: errorOrNil)
+        dispatch_async(dispatch_get_main_queue(), { 
+          self?.setHasFinishedLoadingFromPullToRefresh(tableIsEmpty, error: errorOrNil)
+        })
       })
     }
 
@@ -519,7 +521,9 @@ extension StatefulTableView {
 
     if let delegate = statefulDelegate {
       delegate.statefulTableViewWillBeginInitialLoad(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        self?.setHasFinishedInitialLoad(tableIsEmpty, error: errorOrNil)
+        dispatch_async(dispatch_get_main_queue(), { 
+          self?.setHasFinishedInitialLoad(tableIsEmpty, error: errorOrNil)
+        })
       })
     }
 
@@ -553,7 +557,9 @@ extension StatefulTableView {
 
     if let delegate = statefulDelegate {
       delegate.statefulTableViewWillBeginLoadingMore(self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
-        self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
+        dispatch_async(dispatch_get_main_queue(), { 
+          self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
+        })
       })
     }
   }
