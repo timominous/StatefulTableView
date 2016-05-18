@@ -467,7 +467,7 @@ extension StatefulTableView {
 
     if let delegate = statefulDelegate {
       delegate.statefulTableViewWillBeginLoadingFromRefresh(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        dispatch_async(dispatch_get_main_queue(), { 
+        dispatch_async(dispatch_get_main_queue(), {
           self?.setHasFinishedLoadingFromPullToRefresh(tableIsEmpty, error: errorOrNil)
         })
       })
@@ -521,7 +521,7 @@ extension StatefulTableView {
 
     if let delegate = statefulDelegate {
       delegate.statefulTableViewWillBeginInitialLoad(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        dispatch_async(dispatch_get_main_queue(), { 
+        dispatch_async(dispatch_get_main_queue(), {
           self?.setHasFinishedInitialLoad(tableIsEmpty, error: errorOrNil)
         })
       })
@@ -557,7 +557,7 @@ extension StatefulTableView {
 
     if let delegate = statefulDelegate {
       delegate.statefulTableViewWillBeginLoadingMore(self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
-        dispatch_async(dispatch_get_main_queue(), { 
+        dispatch_async(dispatch_get_main_queue(), {
           self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
         })
       })
@@ -565,7 +565,7 @@ extension StatefulTableView {
   }
 
   func updateLoadMoreView() {
-    if watchForLoadMore {
+    if watchForLoadMore || lastLoadMoreError != nil {
       tableView.tableFooterView = viewForLoadingMore(withError: (loadMoreViewIsErrorView ? lastLoadMoreError : nil))
     } else {
       tableView.tableFooterView = UIView()
@@ -577,19 +577,25 @@ extension StatefulTableView {
 
     let container = UIView(frame: CGRect(origin: .zero, size: CGSize(width: tableView.bounds.width, height: 44)))
 
+    let sub: UIView
+
     if let error = error {
       let label = UILabel()
+      label.translatesAutoresizingMaskIntoConstraints = false
       label.text = error.localizedDescription
       label.font = UIFont.systemFontOfSize(12)
       label.textAlignment = .Center
-      label.frame = container.bounds
-      container.addSubview(label)
+      sub = label
     } else {
       let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+      activityIndicator.translatesAutoresizingMaskIntoConstraints = false
       activityIndicator.frame.centerInFrame(container.bounds)
       activityIndicator.startAnimating()
-      container.addSubview(activityIndicator)
+      sub = activityIndicator
     }
+
+    container.addSubview(sub)
+    centerView(sub, inContainer: container)
 
     return container
   }
@@ -600,10 +606,6 @@ extension StatefulTableView {
     self.canLoadMore = canLoadMore
     loadMoreViewIsErrorView = (error != nil) && showErrorView
     lastLoadMoreError = error
-
-    if let _ = error {
-      updateLoadMoreView()
-    }
 
     setState(.Idle)
   }
@@ -725,8 +727,6 @@ extension StatefulTableView {
     label.setWidthConstraintToCurrent()
     label.setHeightConstraintToCurrent()
 
-    label.frame.origin.x = (centered.bounds.width - centered.bounds.width) * 0.5
-
     centered.addSubview(label)
 
     apply([.Top, .CenterX], ofView: label, toView: centered)
@@ -738,7 +738,7 @@ extension StatefulTableView {
       let button = UIButton(type: .System)
       button.translatesAutoresizingMaskIntoConstraints = false
       button.setTitle("Try Again", forState: .Normal)
-      button.addTarget(self, action: #selector(triggerPullToRefresh), forControlEvents: .TouchUpInside)
+      button.addTarget(self, action: "triggerInitialLoad", forControlEvents: .TouchUpInside)
       button.sizeToFit()
 
       button.setWidthConstraintToCurrent()
@@ -746,9 +746,9 @@ extension StatefulTableView {
 
       centeredSize.width = max(centeredSize.width, button.bounds.width)
       centeredSize.height = label.bounds.height + button.bounds.height + 5
-      
+
       centered.addSubview(button)
-      
+
       apply([.Bottom, .CenterX], ofView: button, toView: centered)
     }
 
