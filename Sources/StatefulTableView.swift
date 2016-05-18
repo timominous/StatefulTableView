@@ -685,13 +685,7 @@ extension StatefulTableView {
 
     childView.translatesAutoresizingMaskIntoConstraints = false
 
-    let attributes: [NSLayoutAttribute] = [.Top, .Bottom, .Leading, .Trailing]
-    let constraints = attributes.map {
-      return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .Equal,
-        toItem: staticContentView, attribute: $0, multiplier: 1, constant: 0)
-    }
-
-    staticContentView.addConstraints(constraints)
+    pinView(childView, toContainer: staticContentView)
   }
 
   var viewForInitialLoad: UIView {
@@ -709,32 +703,106 @@ extension StatefulTableView {
   func viewForEmptyInitialLoad(withError error: NSError?) -> UIView {
     if let view = statefulDelegate?.statefulTableViewView(self, forInitialLoadError: error) { return view }
 
-    var frame = CGRect(origin: .zero, size: CGSize(width: staticContentView.bounds.width, height: 120))
-    frame.centerInFrame(staticContentView.bounds)
+    let container = UIView(frame: .zero)
 
-    let container = UIView(frame: frame)
+    var centeredSize: CGSize = .zero
+
+    let centered = UIView(frame: .zero)
+    centered.translatesAutoresizingMaskIntoConstraints = false
 
     let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
     label.textAlignment = .Center
     label.text = error?.localizedDescription ?? "No records found"
     label.sizeToFit()
 
-    label.frame.origin.x = (container.bounds.width - label.bounds.width) * 0.5
+    label.setWidthConstraintToCurrent()
+    label.setHeightConstraintToCurrent()
+
+    label.frame.origin.x = (centered.bounds.width - centered.bounds.width) * 0.5
+
+    centered.addSubview(label)
+
+    apply([.Top, .CenterX], ofView: label, toView: centered)
+
+    centeredSize.width = label.bounds.width
+    centeredSize.height = label.bounds.height
 
     if let _ = error {
       let button = UIButton(type: .System)
+      button.translatesAutoresizingMaskIntoConstraints = false
       button.setTitle("Try Again", forState: .Normal)
       button.addTarget(self, action: #selector(triggerPullToRefresh), forControlEvents: .TouchUpInside)
+      button.sizeToFit()
 
-      button.frame.size = CGSize(width: 130, height: 32)
-      button.frame.origin.x = (container.bounds.width - button.bounds.width) * 0.5
-      button.frame.origin.y = label.frame.maxY + 10
+      button.setWidthConstraintToCurrent()
+      button.setHeightConstraintToCurrent()
 
-      container.addSubview(button)
+      centeredSize.width = max(centeredSize.width, button.bounds.width)
+      centeredSize.height = label.bounds.height + button.bounds.height + 5
+      
+      centered.addSubview(button)
+      
+      apply([.Bottom, .CenterX], ofView: button, toView: centered)
     }
 
-    container.addSubview(label)
+    centered.setWidthConstraint(centeredSize.width)
+    centered.setHeightConstraint(centeredSize.height)
+
+    container.addSubview(centered)
+
+    centerView(centered, inContainer: container)
 
     return container
+  }
+}
+
+// MARK: - Helpers
+extension StatefulTableView {
+  func pinView(view: UIView, toContainer container: UIView) {
+    let attributes: [NSLayoutAttribute] = [.Top, .Bottom, .Leading, .Trailing]
+    apply(attributes, ofView: view, toView: container)
+  }
+
+  func centerView(view: UIView, inContainer container: UIView) {
+    let attributes: [NSLayoutAttribute] = [.CenterX, .CenterY]
+    apply(attributes, ofView: view, toView: container)
+  }
+
+  func centerViewHorizontally(view: UIView, inContainer container: UIView) {
+    apply([.CenterX], ofView: view, toView: container)
+  }
+
+  func centerViewVertically(view: UIView, inContainer container: UIView) {
+    apply([.CenterY], ofView: view, toView: container)
+  }
+
+  func apply(attributes: [NSLayoutAttribute], ofView childView: UIView, toView containerView: UIView) {
+    let constraints = attributes.map {
+      return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .Equal,
+        toItem: containerView, attribute: $0, multiplier: 1, constant: 0)
+    }
+
+    containerView.addConstraints(constraints)
+  }
+}
+
+extension UIView {
+  func setWidthConstraintToCurrent() {
+    setWidthConstraint(bounds.width)
+  }
+
+  func setHeightConstraintToCurrent() {
+    setHeightConstraint(bounds.height)
+  }
+
+  func setWidthConstraint(width: CGFloat) {
+    addConstraint(NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal, toItem: nil,
+      attribute: .NotAnAttribute, multiplier: 1, constant: width))
+  }
+
+  func setHeightConstraint(height: CGFloat) {
+    addConstraint(NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal, toItem: nil,
+      attribute: .NotAnAttribute, multiplier: 1, constant: height))
   }
 }
