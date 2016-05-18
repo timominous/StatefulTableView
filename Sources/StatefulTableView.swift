@@ -54,9 +54,6 @@ public final class StatefulTableView: UIView {
   }
 
   private lazy var tableView = UITableView()
-  public var internalTable: UITableView {
-    return tableView
-  }
 
   private lazy var staticContentView: UIView = { [unowned self] in
     let view = UIView(frame: self.bounds)
