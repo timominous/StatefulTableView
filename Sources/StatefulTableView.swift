@@ -738,7 +738,7 @@ extension StatefulTableView {
       let button = UIButton(type: .System)
       button.translatesAutoresizingMaskIntoConstraints = false
       button.setTitle("Try Again", forState: .Normal)
-      button.addTarget(self, action: "triggerInitialLoad", forControlEvents: .TouchUpInside)
+      button.addTarget(self, action: #selector(triggerInitialLoad(_:)), forControlEvents: .TouchUpInside)
       button.sizeToFit()
 
       button.setWidthConstraintToCurrent()
