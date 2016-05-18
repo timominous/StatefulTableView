@@ -11,7 +11,7 @@ This is a *work in progress*. A lot of things may break as of the moment.
 Add this to your Podfile.
 
 ```ruby
-pod 'StatefulTableView', '0.0.8'
+pod 'StatefulTableView', '0.0.9'
 ```
 
 ### Credits
