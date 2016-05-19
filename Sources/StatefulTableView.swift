@@ -589,7 +589,6 @@ extension StatefulTableView {
     } else {
       let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
       activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-      activityIndicator.frame.centerInFrame(container.bounds)
       activityIndicator.startAnimating()
       sub = activityIndicator
     }
@@ -703,7 +702,6 @@ extension StatefulTableView {
 
     let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
     activityIndicatorView.startAnimating()
-    activityIndicatorView.frame.centerInFrame(staticContentView.bounds)
 
     return activityIndicatorView
   }
