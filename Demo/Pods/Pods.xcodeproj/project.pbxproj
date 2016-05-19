@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0E36B00605783AE35801FA8BC2696DA6 /* StatefulTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 66E0F451469F15360D21A33B3D797686 /* StatefulTableView.swift */; };
+		34DA1CACBFB5CDA8BCBDEA2BDF4B10C1 /* StatefulTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B2770566FAD7E0E3C2D57617A54BA39 /* StatefulTableDelegate.swift */; };
+		36B9FD5AB63CB12C14D310737A8490D9 /* StatefulTableView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 2F77FE92E7D243F9B9B2D7ECD07B6D06 /* StatefulTableView-dummy.m */; };
 		4C012D74EEB3B8E39B3EB083663682D1 /* Pods-DemoTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = B1569C6DCF82AA7CF84D8B811006EB33 /* Pods-DemoTests-dummy.m */; };
 		610807D5B787A45F792AE0C1F3058C40 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
 		63144331CDA950C7800E5CF3A24218FC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */; };
@@ -17,9 +18,8 @@
 		BB8C27D3E07B8DC70F9F639BB5D28AFB /* Pods-DemoUITests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 0CEC47EDB22CABC7FC768BE2FDC1F67F /* Pods-DemoUITests-dummy.m */; };
 		C72A9B187CFD607B707A3404779F18F1 /* Pods-Demo-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 0A3FE8CA3DA43E2F10B028673F8ECA69 /* Pods-Demo-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C840C63721979B78DB8B6FAE70C4D4C2 /* Pods-DemoTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 36C2719E1B3FB525DB5CBD9D1A2B829D /* Pods-DemoTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E5A5EEF58648374957BAE1B094F635E8 /* StatefulTableView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = BB085B26DF5668529C5A82D189954D93 /* StatefulTableView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		E7172898F84D90362818805E8345BD85 /* StatefulTableView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9CF8DFA1EC8BE2C78588018241C7B1 /* StatefulTableView-dummy.m */; };
-		EC7F8733FF00448ED303F7B23EC0CDB0 /* StatefulTableDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 072A5BA0BB37C1C638496D3ECDB2B9B6 /* StatefulTableDelegate.swift */; };
+		E5A5EEF58648374957BAE1B094F635E8 /* StatefulTableView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = B32CD3EA705CD6CD58AC6A4FF5C1DB9E /* StatefulTableView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		E62724B6C75CFEFCBF3E8ED6514BD69F /* StatefulTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8747CED52FA324A1467AE684C28DC7F4 /* StatefulTableView.swift */; };
 		EFC35CF09F980A3A57BC142B91FA922B /* Pods-DemoUITests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = CF945E41BAA9B8CD56288EE504797E2F /* Pods-DemoUITests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
@@ -35,9 +35,9 @@
 
 /* Begin PBXFileReference section */
 		00C4AAB18A3BE1C869CD3AF547E3A3A6 /* Pods-DemoUITests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DemoUITests-resources.sh"; sourceTree = "<group>"; };
-		072A5BA0BB37C1C638496D3ECDB2B9B6 /* StatefulTableDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatefulTableDelegate.swift; sourceTree = "<group>"; };
 		0A3FE8CA3DA43E2F10B028673F8ECA69 /* Pods-Demo-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Demo-umbrella.h"; sourceTree = "<group>"; };
 		0CEC47EDB22CABC7FC768BE2FDC1F67F /* Pods-DemoUITests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DemoUITests-dummy.m"; sourceTree = "<group>"; };
+		11F938B018A305003DE045A8222E4372 /* StatefulTableView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = StatefulTableView.xcconfig; sourceTree = "<group>"; };
 		1DE0CED7B7ADB6D7FA8A2262C29A3AA3 /* Pods-DemoTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DemoTests-resources.sh"; sourceTree = "<group>"; };
 		1DF3F60EBCC277BC5E7370D1D3646D5F /* Pods-DemoUITests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DemoUITests-frameworks.sh"; sourceTree = "<group>"; };
 		23452F029D36A3CAD8679DCB236D55FD /* Pods-DemoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DemoTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -45,37 +45,37 @@
 		2924EA9BBAE30808335B493A129B031D /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		2D40D87A4E8ED69B0CB65F92F9963743 /* Pods-DemoUITests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DemoUITests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		2F3F7702BE7C307C5C057AFB0C32E858 /* Pods_DemoUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DemoUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F77FE92E7D243F9B9B2D7ECD07B6D06 /* StatefulTableView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "StatefulTableView-dummy.m"; sourceTree = "<group>"; };
 		36C2719E1B3FB525DB5CBD9D1A2B829D /* Pods-DemoTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DemoTests-umbrella.h"; sourceTree = "<group>"; };
 		3725C8454A52223A8C1118E2779986C3 /* Pods-Demo-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Demo-acknowledgements.markdown"; sourceTree = "<group>"; };
 		3B412D224F2BBF29E39898AD2DD3BB37 /* Pods_DemoTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DemoTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		404E5B1C8D78FFF68D183DAA0BE5852D /* Pods-DemoTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DemoTests.modulemap"; sourceTree = "<group>"; };
 		414DD768A9F987AB6357C878B93FBD60 /* Pods-DemoTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-DemoTests-frameworks.sh"; sourceTree = "<group>"; };
+		41A4F57D781E7870D8565C855D2D0BD7 /* StatefulTableView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "StatefulTableView-prefix.pch"; sourceTree = "<group>"; };
 		43DA6EB65A515B09514580F4AE3199EE /* Pods-Demo-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Demo-resources.sh"; sourceTree = "<group>"; };
 		449152E5920E5F6A192DE5E9EBEF752E /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		477EB4BA59F5F90F179B503D933CC2C8 /* Pods-DemoTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DemoTests-acknowledgements.plist"; sourceTree = "<group>"; };
-		5F9CF8DFA1EC8BE2C78588018241C7B1 /* StatefulTableView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "StatefulTableView-dummy.m"; sourceTree = "<group>"; };
-		66E0F451469F15360D21A33B3D797686 /* StatefulTableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatefulTableView.swift; sourceTree = "<group>"; };
+		6D8054EA48E342691122C79BF57E45E3 /* StatefulTableView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = StatefulTableView.modulemap; sourceTree = "<group>"; };
 		73E00041EFF493EC7874D5568045C518 /* Pods-Demo-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Demo-acknowledgements.plist"; sourceTree = "<group>"; };
 		7AAFBDEF67D6CCF650CBEC8EAE2262F8 /* StatefulTableView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StatefulTableView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7B2770566FAD7E0E3C2D57617A54BA39 /* StatefulTableDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatefulTableDelegate.swift; sourceTree = "<group>"; };
 		7C9EB40DED8019B446FED95A34D662F5 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7F5D0CE63FFE75DAD13A6F9CA0008834 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		811B9D28A9DD26F441992FA2CEF4D2F8 /* Pods-Demo-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-Demo-frameworks.sh"; sourceTree = "<group>"; };
 		857ED152383374E1A48906A22162E08F /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8723937E63A08BA7C079E319EEF55233 /* Pods-DemoTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DemoTests.debug.xcconfig"; sourceTree = "<group>"; };
+		8747CED52FA324A1467AE684C28DC7F4 /* StatefulTableView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = StatefulTableView.swift; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A6015D2D5CA7CEF78BA84D7D44C04FAE /* Pods-DemoUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DemoUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		A671FE86FDF46B9B96363CCD555EF468 /* StatefulTableView.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = StatefulTableView.xcconfig; sourceTree = "<group>"; };
 		ABE8D144B0D86287A665FAA581D438B5 /* Pods-DemoTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-DemoTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		B1569C6DCF82AA7CF84D8B811006EB33 /* Pods-DemoTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-DemoTests-dummy.m"; sourceTree = "<group>"; };
 		B2965FDD73768E96B7AA9AA94792F051 /* Pods-Demo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Demo.debug.xcconfig"; sourceTree = "<group>"; };
-		BB085B26DF5668529C5A82D189954D93 /* StatefulTableView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "StatefulTableView-umbrella.h"; sourceTree = "<group>"; };
+		B32CD3EA705CD6CD58AC6A4FF5C1DB9E /* StatefulTableView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "StatefulTableView-umbrella.h"; sourceTree = "<group>"; };
 		BE72B85B034BD5F0B586EF2ACA21698F /* Pods-DemoUITests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = "Pods-DemoUITests.modulemap"; sourceTree = "<group>"; };
 		C68BCEBA269DA3436883DEDA35184BDC /* Pods-DemoUITests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-DemoUITests-acknowledgements.plist"; sourceTree = "<group>"; };
-		CA80BAE59278C00FE0C0CF82F7F8D512 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CEC22C73C1608DFA5D5D78BDCB218219 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS9.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		CF945E41BAA9B8CD56288EE504797E2F /* Pods-DemoUITests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-DemoUITests-umbrella.h"; sourceTree = "<group>"; };
-		D13AA07D45D9B98CA6C538095CCA7B6B /* StatefulTableView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "StatefulTableView-prefix.pch"; sourceTree = "<group>"; };
 		D5BB793669D989DF955F53AE43448A23 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
-		DD3E16589C2E8084D4C4F6914B34DE47 /* StatefulTableView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "sourcecode.module-map"; path = StatefulTableView.modulemap; sourceTree = "<group>"; };
 		EE429CDECFF71C9B17B7581C29E09289 /* Pods-Demo-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Demo-dummy.m"; sourceTree = "<group>"; };
 		F0E1AEB035E705E526843792E79F16D0 /* Pods-DemoUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-DemoUITests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -119,23 +119,9 @@
 		363659F9FB2D216820FA7470F853EA05 /* Development Pods */ = {
 			isa = PBXGroup;
 			children = (
-				708565B2C346FE9FCFBCE4FCCD3702EF /* StatefulTableView */,
+				F8A3CF287F427771963BD1EB26D61ADC /* StatefulTableView */,
 			);
 			name = "Development Pods";
-			sourceTree = "<group>";
-		};
-		3A7CE78D01A05AF4985FFE471D8BA17B /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				CA80BAE59278C00FE0C0CF82F7F8D512 /* Info.plist */,
-				DD3E16589C2E8084D4C4F6914B34DE47 /* StatefulTableView.modulemap */,
-				A671FE86FDF46B9B96363CCD555EF468 /* StatefulTableView.xcconfig */,
-				5F9CF8DFA1EC8BE2C78588018241C7B1 /* StatefulTableView-dummy.m */,
-				D13AA07D45D9B98CA6C538095CCA7B6B /* StatefulTableView-prefix.pch */,
-				BB085B26DF5668529C5A82D189954D93 /* StatefulTableView-umbrella.h */,
-			);
-			name = "Support Files";
-			path = "Demo/Pods/Target Support Files/StatefulTableView";
 			sourceTree = "<group>";
 		};
 		3DCAB2B7CDE207B3958B6CB957FCC758 /* iOS */ = {
@@ -157,14 +143,13 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		708565B2C346FE9FCFBCE4FCCD3702EF /* StatefulTableView */ = {
+		6D40483EEFE827B6F5D0E0878CD76E32 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				A530C6B414AFA4102E8C21613562A07B /* Sources */,
-				3A7CE78D01A05AF4985FFE471D8BA17B /* Support Files */,
+				7B2770566FAD7E0E3C2D57617A54BA39 /* StatefulTableDelegate.swift */,
+				8747CED52FA324A1467AE684C28DC7F4 /* StatefulTableView.swift */,
 			);
-			name = StatefulTableView;
-			path = ../..;
+			path = Sources;
 			sourceTree = "<group>";
 		};
 		76A1E3B812C2E79DF0A4B0E391521FFD /* Targets Support Files */ = {
@@ -206,6 +191,20 @@
 			path = "Target Support Files/Pods-DemoUITests";
 			sourceTree = "<group>";
 		};
+		938E861B22D30A784CA335D0939EA069 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				7F5D0CE63FFE75DAD13A6F9CA0008834 /* Info.plist */,
+				6D8054EA48E342691122C79BF57E45E3 /* StatefulTableView.modulemap */,
+				11F938B018A305003DE045A8222E4372 /* StatefulTableView.xcconfig */,
+				2F77FE92E7D243F9B9B2D7ECD07B6D06 /* StatefulTableView-dummy.m */,
+				41A4F57D781E7870D8565C855D2D0BD7 /* StatefulTableView-prefix.pch */,
+				B32CD3EA705CD6CD58AC6A4FF5C1DB9E /* StatefulTableView-umbrella.h */,
+			);
+			name = "Support Files";
+			path = "Demo/Pods/Target Support Files/StatefulTableView";
+			sourceTree = "<group>";
+		};
 		9D7934768530B40EE7605AA8CEB70AE9 /* Pods-Demo */ = {
 			isa = PBXGroup;
 			children = (
@@ -222,15 +221,6 @@
 			);
 			name = "Pods-Demo";
 			path = "Target Support Files/Pods-Demo";
-			sourceTree = "<group>";
-		};
-		A530C6B414AFA4102E8C21613562A07B /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				072A5BA0BB37C1C638496D3ECDB2B9B6 /* StatefulTableDelegate.swift */,
-				66E0F451469F15360D21A33B3D797686 /* StatefulTableView.swift */,
-			);
-			path = Sources;
 			sourceTree = "<group>";
 		};
 		BC3CA7F9E30CC8F7E2DD044DD34432FC /* Frameworks */ = {
@@ -257,6 +247,16 @@
 			);
 			name = "Pods-DemoTests";
 			path = "Target Support Files/Pods-DemoTests";
+			sourceTree = "<group>";
+		};
+		F8A3CF287F427771963BD1EB26D61ADC /* StatefulTableView */ = {
+			isa = PBXGroup;
+			children = (
+				6D40483EEFE827B6F5D0E0878CD76E32 /* Sources */,
+				938E861B22D30A784CA335D0939EA069 /* Support Files */,
+			);
+			name = StatefulTableView;
+			path = ../..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -301,7 +301,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B6A94B253EE97A011AD54B563369556D /* Build configuration list for PBXNativeTarget "StatefulTableView" */;
 			buildPhases = (
-				BA3C8656FBE003BB4BD04CCE7F814E66 /* Sources */,
+				833DA22B507762BA77125D50318EA7F1 /* Sources */,
 				87760712E3D448FD54E3EA985F26BB1E /* Frameworks */,
 				207FD4D94C6FEAC3ED48EA552AF0B764 /* Headers */,
 			);
@@ -412,13 +412,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		BA3C8656FBE003BB4BD04CCE7F814E66 /* Sources */ = {
+		833DA22B507762BA77125D50318EA7F1 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EC7F8733FF00448ED303F7B23EC0CDB0 /* StatefulTableDelegate.swift in Sources */,
-				E7172898F84D90362818805E8345BD85 /* StatefulTableView-dummy.m in Sources */,
-				0E36B00605783AE35801FA8BC2696DA6 /* StatefulTableView.swift in Sources */,
+				34DA1CACBFB5CDA8BCBDEA2BDF4B10C1 /* StatefulTableDelegate.swift in Sources */,
+				36B9FD5AB63CB12C14D310737A8490D9 /* StatefulTableView-dummy.m in Sources */,
+				E62724B6C75CFEFCBF3E8ED6514BD69F /* StatefulTableView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -690,7 +690,7 @@
 		};
 		EAA95C1B5BC8741ADB999C8307E0607E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A671FE86FDF46B9B96363CCD555EF468 /* StatefulTableView.xcconfig */;
+			baseConfigurationReference = 11F938B018A305003DE045A8222E4372 /* StatefulTableView.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
@@ -720,7 +720,7 @@
 		};
 		F982FA552139A988ADC2953024A4C469 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A671FE86FDF46B9B96363CCD555EF468 /* StatefulTableView.xcconfig */;
+			baseConfigurationReference = 11F938B018A305003DE045A8222E4372 /* StatefulTableView.xcconfig */;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
