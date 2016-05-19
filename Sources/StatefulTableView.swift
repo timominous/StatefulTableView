@@ -8,6 +8,9 @@
 
 import UIKit
 
+/**
+ Drop-in replacement for `UITableView` that supports pull-to-refresh, load-more, initial load, and empty states.
+ */
 public final class StatefulTableView: UIView {
   private enum State {
     case Idle
@@ -43,11 +46,25 @@ public final class StatefulTableView: UIView {
     case Static
   }
 
+  /**
+   Returns an object initialized from data in a given unarchiver.
+
+   - Parameter aDecoder: An unarchiver object.
+
+   - Returns: An initialized StatefulTableView object.
+   */
   required public init?(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     commonInit()
   }
 
+  /**
+   Initializes and returns a newly allocatied view object with the specified frame rectangle.
+
+   - Parameter frame: The frame rectangle for the view, measured in points. The origin of the frame is relative to the superview in which you plan to add it. this method uses the frame rectangle to set the center and bounds properties accordingly.
+
+   - Returns: An initialized StatefulTableView object.
+   */
   public override init(frame: CGRect) {
     super.init(frame: frame)
     commonInit()
@@ -64,16 +81,21 @@ public final class StatefulTableView: UIView {
 
   private lazy var refreshControl = UIRefreshControl()
 
-  /// Enables the user to pull down on the tableView to initiate a refresh
+  /**
+   Enables the user to pull down on the tableView to initiate a refresh
+   */
   public var canPullToRefresh = false
 
-  /// Enables the user to control whether to trigger loading of more objects or not
+  /**
+   Enables the user to control whether to trigger loading of more objects or not
+   */
   public var canLoadMore = false
 
-  /// Distance from the bottom  of the tableView's vertical content offset where load more will be triggered
+  /**
+   Distance from the bottom  of the tableView's vertical content offset where load more will be triggered
+   */
   public var loadMoreTriggerThreshold: CGFloat = 64
 
-  /// Determines if the load more view is for an error or not
   private var loadMoreViewIsErrorView = false
   private var lastLoadMoreError: NSError?
   private var watchForLoadMore = false
@@ -89,12 +111,28 @@ public final class StatefulTableView: UIView {
     }
   }
 
-  public var statefulDelegate: StatefulTableDelegate?
+  /**
+   The object that acts as the stateful delegate of the table view.
+
+   - Discussion: The stateful delegate must adopt the `StatefulTableDelegate` protocol. The stateful delegate is not retained.
+   */
+  weak public var statefulDelegate: StatefulTableDelegate?
+
+  /**
+   The object that acts as the data source of the table view.
+
+   - Discussion: The data souce must adopt the `UITableViewDataSource` protocol. The data source is not retained.
+   */
   public var dataSource: UITableViewDataSource? {
     set { tableView.dataSource = newValue }
     get { return tableView.dataSource }
   }
 
+  /**
+   The object that acts as the delegate of the table view.
+
+   - Discussion: The delegate must adopt the `UITableViewDelegate` protocol. The delegate is not retained.
+   */
   public var delegate: UITableViewDelegate? {
     set { tableView.delegate = newValue }
     get { return tableView.delegate }
@@ -109,6 +147,11 @@ public final class StatefulTableView: UIView {
     tableView.addSubview(refreshControl)
   }
 
+  /**
+   Lays out subviews.
+
+   - Discussion: The default implementation of this method does
+   */
   override public func layoutSubviews() {
     super.layoutSubviews()
     tableView.frame = bounds
@@ -120,6 +163,11 @@ public final class StatefulTableView: UIView {
 extension StatefulTableView {
   /// Bridge for UITableivew methods. Read UITableView documentation for more details
 
+  /**
+   The height of each row (that is, table cell) in the table view.
+
+   - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/rowHeight) for more details
+   */
   public var rowHeight: CGFloat {
     set { tableView.rowHeight = newValue }
     get { return tableView.rowHeight }

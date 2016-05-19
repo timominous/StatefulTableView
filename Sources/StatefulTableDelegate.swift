@@ -11,7 +11,7 @@ import UIKit
 public typealias InitialLoadCompletionHandler = (tableIsEmpty: Bool, errorOrNil: NSError?) -> Void
 public typealias LoadMoreCompletionHandler = (canLoadMore: Bool, errorOrNil: NSError?, showErrorView: Bool) -> Void
 
-public protocol StatefulTableDelegate {
+public protocol StatefulTableDelegate: class {
   /**
    This delegate method will be called when the tableView is triggered to load data initially.
 
