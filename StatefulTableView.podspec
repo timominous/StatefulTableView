@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 	s.name = 'StatefulTableView'
-	s.version = '0.0.10'
+	s.version = '0.0.11'
 	s.license = {
 		:type => 'MIT',
 		:file => 'LICENSE'
@@ -16,6 +16,6 @@ Pod::Spec.new do |s|
 		:tag => s.version.to_s
 	}
 	s.ios.deployment_target = "8.0"
-	s.source_files = 'Sources/*.swift'
+	s.source_files = 'sources/*.swift'
 	s.requires_arc = true
 end
