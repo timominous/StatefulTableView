@@ -29,7 +29,33 @@ Load more error:
 
 <img src="Screenshots/ss-load-more-error.png" width=320>
 
-## Installation 
+## Usage
+
+Currently, you can only assign the delegates and data source through code.
+
+```swift
+tableView.dataSource = self // Confofrms to UITableViewDataSource
+tableView.delegate = self // Conforms to UITableViewDelegate
+tableView.statefulDelegate = self // Conforms to StatefulTableDelegate
+```
+
+For initial loading, pull-to-refresh, and load more, you have to implement the following statefulDelegate methods:
+
+```swift
+func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: InitialLoadCompletionHandler)
+func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: InitialLoadCompletionHandler)
+func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: LoadMoreCompletionHandler)
+```
+
+To show custom views, return them through the following statefulDelegate methods. Otherwise, return `nil`.
+
+```swift
+func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView?
+func statefulTableViewView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView?
+func statefulTableViewView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
+```
+
+## Installation
 
 ### Cocoapods
 
