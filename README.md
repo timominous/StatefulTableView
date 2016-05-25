@@ -7,6 +7,28 @@ Custom UITableView container class that supports pull-to-refresh, load-more, ini
 
 This is a *work in progress*. A lot of things may break as of the moment.
 
+## Screenshots
+
+Initial loading:
+
+<img src="Screenshots/ss-initial-loading.png" width=320>
+
+Pull-to-refresh:
+
+<img src="Screenshots/ss-pull-to-refresh.png" width=320>
+
+Load more:
+
+<img src="Screenshots/ss-load-more.png" width=320>
+
+Initial load error:
+
+<img src="Screenshots/ss-initial-load-error.png" width=320>
+
+Load more error:
+
+<img src="Screenshots/ss-load-more-error.png" width=320>
+
 ## Installation 
 
 ### Cocoapods
