@@ -163,16 +163,6 @@ public final class StatefulTableView: UIView {
 extension StatefulTableView {
   /// Bridge for UITableivew methods. Read UITableView documentation for more details
 
-  public var sectionHeaderHeight: CGFloat {
-    set { tableView.sectionHeaderHeight = newValue }
-    get { return tableView.sectionHeaderHeight }
-  }
-
-  public var sectionFooterHeight: CGFloat {
-    set { tableView.sectionFooterHeight = newValue }
-    get { return tableView.sectionFooterHeight }
-  }
-
   @available(iOS 7.0, *)
   public var estimatedRowHeight: CGFloat {
     set { tableView.estimatedRowHeight = newValue }
@@ -246,16 +236,6 @@ extension StatefulTableView {
 
   public var indexPathsForVisibleRows: [NSIndexPath]? {
     return tableView.indexPathsForVisibleRows;
-  }
-
-  @available(iOS 6.0, *)
-  public func headerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
-    return tableView.headerViewForSection(section)
-  }
-
-  @available(iOS 6.0, *)
-  public func footerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
-    return tableView.footerViewForSection(section)
   }
 
   public func scrollToRowAtIndexPath(indexPath: NSIndexPath, atScrollPosition scrollPosition: UITableViewScrollPosition, animated: Bool) {
@@ -390,34 +370,9 @@ extension StatefulTableView {
     get { return tableView.sectionIndexTrackingBackgroundColor }
   }
 
-  public var tableHeaderView: UIView? {
-    set { tableView.tableHeaderView = newValue }
-    get { return tableView.tableHeaderView }
-  }
-
-  public var tableFooterView: UIView? {
-    set { tableView.tableFooterView = newValue }
-    get { return tableView.tableFooterView }
-  }
-
-  @available(iOS 6.0, *)
-  public func dequeueReusableHeaderFooterViewWithIdentifier(identifier: String) -> UITableViewHeaderFooterView? {
-    return tableView.dequeueReusableHeaderFooterViewWithIdentifier(identifier)
-  }
-
   /// Beginning in iOS 6, clients can register a nib or class for each cell.
   /// If all reuse identifiers are registered, use the newer -dequeueReusableCellWithIdentifier:forIndexPath: to guarantee that a cell instance is returned.
   /// Instances returned from the new dequeue method will also be properly sized when they are returned.
-
-  @available(iOS 6.0, *)
-  public func registerNib(nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
-    tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
-  }
-
-  @available(iOS 6.0, *)
-  public func registerClass(aClass: AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
-    tableView.registerClass(aClass, forHeaderFooterViewReuseIdentifier: identifier)
-  }
 
   /// Focus
 
@@ -496,6 +451,54 @@ extension StatefulTableView {
 
   public func dequeueReusableCellWithIdentifier(identifier: String) -> UITableViewCell? {
     return tableView.dequeueReusableCellWithIdentifier(identifier)
+  }
+}
+
+// MARK: - Accessing Header and Footer Views
+extension StatefulTableView {
+  @available(iOS 6.0, *)
+  public func registerNib(nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
+    tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
+  }
+
+  @available(iOS 6.0, *)
+  public func registerClass(aClass: AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
+    tableView.registerClass(aClass, forHeaderFooterViewReuseIdentifier: identifier)
+  }
+
+  @available(iOS 6.0, *)
+  public func dequeueReusableHeaderFooterViewWithIdentifier(identifier: String) -> UITableViewHeaderFooterView? {
+    return tableView.dequeueReusableHeaderFooterViewWithIdentifier(identifier)
+  }
+
+  public var tableHeaderView: UIView? {
+    set { tableView.tableHeaderView = newValue }
+    get { return tableView.tableHeaderView }
+  }
+
+  public var tableFooterView: UIView? {
+    set { tableView.tableFooterView = newValue }
+    get { return tableView.tableFooterView }
+  }
+
+  public var sectionHeaderHeight: CGFloat {
+    set { tableView.sectionHeaderHeight = newValue }
+    get { return tableView.sectionHeaderHeight }
+  }
+
+  public var sectionFooterHeight: CGFloat {
+    set { tableView.sectionFooterHeight = newValue }
+    get { return tableView.sectionFooterHeight }
+  }
+
+  @available(iOS 6.0, *)
+  public func headerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
+    return tableView.headerViewForSection(section)
+  }
+
+  @available(iOS 6.0, *)
+  public func footerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
+    return tableView.footerViewForSection(section)
   }
 }
 
