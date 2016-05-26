@@ -163,16 +163,6 @@ public final class StatefulTableView: UIView {
 extension StatefulTableView {
   /// Bridge for UITableivew methods. Read UITableView documentation for more details
 
-  /**
-   The height of each row (that is, table cell) in the table view.
-
-   - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/rowHeight) for more details
-   */
-  public var rowHeight: CGFloat {
-    set { tableView.rowHeight = newValue }
-    get { return tableView.rowHeight }
-  }
-
   public var sectionHeaderHeight: CGFloat {
     set { tableView.sectionHeaderHeight = newValue }
     get { return tableView.sectionHeaderHeight }
@@ -201,12 +191,6 @@ extension StatefulTableView {
     get { return tableView.estimatedSectionHeaderHeight }
   }
 
-  @available(iOS 7.0, *)
-  public var separatorInset: UIEdgeInsets {
-    set { tableView.separatorInset = newValue }
-    get { return tableView.separatorInset }
-  }
-
   /// Data
 
   public func reloadData() {
@@ -223,14 +207,6 @@ extension StatefulTableView {
   }
 
   /// Info
-
-  public var numberOfSections: Int {
-    return tableView.numberOfSections
-  }
-
-  public func numberOfRowsInSection(section: Int) -> Int {
-    return tableView.numberOfRowsInSection(section)
-  }
 
   public func rectForSection(section: Int) -> CGRect {
     return tableView.rectForSection(section)
@@ -414,28 +390,6 @@ extension StatefulTableView {
     get { return tableView.sectionIndexTrackingBackgroundColor }
   }
 
-  public var separatorStyle: UITableViewCellSeparatorStyle {
-    set { tableView.separatorStyle = newValue }
-    get { return tableView.separatorStyle }
-  }
-
-  public var separatorColor: UIColor? {
-    set { tableView.separatorColor = newValue }
-    get { return tableView.separatorColor }
-  }
-
-  @available(iOS 8.0, *)
-  public var separatorEffect: UIVisualEffect? {
-    set { tableView.separatorEffect = newValue }
-    get { return tableView.separatorEffect }
-  }
-
-  @available(iOS 9.0, *)
-  public var cellLayoutMarginsFollowReadableWidth: Bool {
-    set { tableView.cellLayoutMarginsFollowReadableWidth = newValue }
-    get { return tableView.cellLayoutMarginsFollowReadableWidth }
-  }
-
   public var tableHeaderView: UIView? {
     set { tableView.tableHeaderView = newValue }
     get { return tableView.tableHeaderView }
@@ -490,6 +444,55 @@ extension StatefulTableView {
   public var remembersLastFocusedIndexPath: Bool {
     set { tableView.remembersLastFocusedIndexPath = newValue }
     get { return tableView.remembersLastFocusedIndexPath }
+  }
+}
+
+// MARK: - Configuring a Table View
+extension StatefulTableView {
+  public func numberOfRowsInSection(section: Int) -> Int {
+    return tableView.numberOfRowsInSection(section)
+  }
+
+  public var numberOfSections: Int {
+    return tableView.numberOfSections
+  }
+
+  /**
+   The height of each row (that is, table cell) in the table view.
+
+   - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/rowHeight) for more details
+   */
+  public var rowHeight: CGFloat {
+    set { tableView.rowHeight = newValue }
+    get { return tableView.rowHeight }
+  }
+
+  public var separatorStyle: UITableViewCellSeparatorStyle {
+    set { tableView.separatorStyle = newValue }
+    get { return tableView.separatorStyle }
+  }
+
+  public var separatorColor: UIColor? {
+    set { tableView.separatorColor = newValue }
+    get { return tableView.separatorColor }
+  }
+
+  @available(iOS 8.0, *)
+  public var separatorEffect: UIVisualEffect? {
+    set { tableView.separatorEffect = newValue }
+    get { return tableView.separatorEffect }
+  }
+
+  @available(iOS 7.0, *)
+  public var separatorInset: UIEdgeInsets {
+    set { tableView.separatorInset = newValue }
+    get { return tableView.separatorInset }
+  }
+
+  @available(iOS 9.0, *)
+  public var cellLayoutMarginsFollowReadableWidth: Bool {
+    set { tableView.cellLayoutMarginsFollowReadableWidth = newValue }
+    get { return tableView.cellLayoutMarginsFollowReadableWidth }
   }
 }
 
