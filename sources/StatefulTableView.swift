@@ -253,47 +253,7 @@ extension StatefulTableView {
     tableView.setEditing(editing, animated: animated)
   }
 
-  @available(iOS 3.0, *)
-  public var allowsSelection: Bool {
-    set { tableView.allowsSelection = newValue }
-    get { return tableView.allowsSelection }
-  }
-
-  public var allowsSelectionDuringEditing: Bool {
-    set { tableView.allowsSelectionDuringEditing = newValue }
-    get { return tableView.allowsSelectionDuringEditing }
-  }
-
-  @available(iOS 5.0, *)
-  public var allowsMultipleSelection: Bool {
-    set { tableView.allowsMultipleSelection = newValue }
-    get { return tableView.allowsMultipleSelection }
-  }
-
-  @available(iOS 5.0, *)
-  public var allowsMultipleSelectionDuringEditing: Bool {
-    set { tableView.allowsMultipleSelectionDuringEditing = newValue }
-    get { return tableView.allowsMultipleSelectionDuringEditing }
-  }
-
   /// Selection
-
-  public var indexPathForSelectedRow: NSIndexPath? {
-    return tableView.indexPathForSelectedRow
-  }
-
-  @available(iOS 5.0, *)
-  public var indexPathsForSelectedRows: [NSIndexPath]? {
-    return tableView.indexPathsForSelectedRows
-  }
-
-  public func selectRowAtIndexPath(indexPath: NSIndexPath?, animated: Bool, scrollPosition: UITableViewScrollPosition) {
-    tableView.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
-  }
-
-  public func deselectRowAtIndexPath(indexPath: NSIndexPath, animated: Bool) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: animated)
-  }
 
   /// Appearance
 
@@ -508,6 +468,49 @@ extension StatefulTableView {
 
   public func scrollToNearestSelectedRowAtScrollPosition(scrollPosition: UITableViewScrollPosition, animated: Bool) {
     tableView.scrollToNearestSelectedRowAtScrollPosition(scrollPosition, animated: animated)
+  }
+}
+
+// MARK: - Managing Selections
+extension StatefulTableView {
+  public var indexPathForSelectedRow: NSIndexPath? {
+    return tableView.indexPathForSelectedRow
+  }
+
+  @available(iOS 5.0, *)
+  public var indexPathsForSelectedRows: [NSIndexPath]? {
+    return tableView.indexPathsForSelectedRows
+  }
+
+  public func selectRowAtIndexPath(indexPath: NSIndexPath?, animated: Bool, scrollPosition: UITableViewScrollPosition) {
+    tableView.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
+  }
+
+  public func deselectRowAtIndexPath(indexPath: NSIndexPath, animated: Bool) {
+    tableView.deselectRowAtIndexPath(indexPath, animated: animated)
+  }
+
+  @available(iOS 3.0, *)
+  public var allowsSelection: Bool {
+    set { tableView.allowsSelection = newValue }
+    get { return tableView.allowsSelection }
+  }
+
+  @available(iOS 5.0, *)
+  public var allowsMultipleSelection: Bool {
+    set { tableView.allowsMultipleSelection = newValue }
+    get { return tableView.allowsMultipleSelection }
+  }
+
+  public var allowsSelectionDuringEditing: Bool {
+    set { tableView.allowsSelectionDuringEditing = newValue }
+    get { return tableView.allowsSelectionDuringEditing }
+  }
+
+  @available(iOS 5.0, *)
+  public var allowsMultipleSelectionDuringEditing: Bool {
+    set { tableView.allowsMultipleSelectionDuringEditing = newValue }
+    get { return tableView.allowsMultipleSelectionDuringEditing }
   }
 }
 
