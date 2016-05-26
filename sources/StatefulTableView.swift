@@ -163,24 +163,6 @@ public final class StatefulTableView: UIView {
 extension StatefulTableView {
   /// Bridge for UITableivew methods. Read UITableView documentation for more details
 
-  @available(iOS 7.0, *)
-  public var estimatedRowHeight: CGFloat {
-    set { tableView.estimatedRowHeight = newValue }
-    get { return tableView.estimatedRowHeight }
-  }
-
-  @available(iOS 7.0, *)
-  public var estimatedSectionHeaderHeight: CGFloat {
-    set { tableView.estimatedSectionHeaderHeight = newValue }
-    get { return tableView.estimatedSectionHeaderHeight }
-  }
-
-  @available(iOS 7.0, *)
-  public var estimatedSectionFooterHeight: CGFloat {
-    set { tableView.estimatedSectionFooterHeight = newValue }
-    get { return tableView.estimatedSectionHeaderHeight }
-  }
-
   /// Data
 
   public func reloadData() {
@@ -502,6 +484,27 @@ extension StatefulTableView {
 
   public var indexPathsForVisibleRows: [NSIndexPath]? {
     return tableView.indexPathsForVisibleRows;
+  }
+}
+
+// MARK: - Estimating Element Heights
+extension StatefulTableView {
+  @available(iOS 7.0, *)
+  public var estimatedRowHeight: CGFloat {
+    set { tableView.estimatedRowHeight = newValue }
+    get { return tableView.estimatedRowHeight }
+  }
+
+  @available(iOS 7.0, *)
+  public var estimatedSectionHeaderHeight: CGFloat {
+    set { tableView.estimatedSectionHeaderHeight = newValue }
+    get { return tableView.estimatedSectionHeaderHeight }
+  }
+
+  @available(iOS 7.0, *)
+  public var estimatedSectionFooterHeight: CGFloat {
+    set { tableView.estimatedSectionFooterHeight = newValue }
+    get { return tableView.estimatedSectionHeaderHeight }
   }
 }
 
