@@ -118,26 +118,6 @@ public final class StatefulTableView: UIView {
    */
   weak public var statefulDelegate: StatefulTableDelegate?
 
-  /**
-   The object that acts as the data source of the table view.
-
-   - Discussion: The data souce must adopt the `UITableViewDataSource` protocol. The data source is not retained.
-   */
-  public var dataSource: UITableViewDataSource? {
-    set { tableView.dataSource = newValue }
-    get { return tableView.dataSource }
-  }
-
-  /**
-   The object that acts as the delegate of the table view.
-
-   - Discussion: The delegate must adopt the `UITableViewDelegate` protocol. The delegate is not retained.
-   */
-  public var delegate: UITableViewDelegate? {
-    set { tableView.delegate = newValue }
-    get { return tableView.delegate }
-  }
-
   func commonInit() {
     addSubview(tableView)
     addSubview(staticContentView)
@@ -523,6 +503,29 @@ extension StatefulTableView {
 
   public func rectFotHeaderInSection(section: Int) -> CGRect {
     return tableView.rectForHeaderInSection(section)
+  }
+}
+
+// MARK: - Managing the Delegate and the Data Source
+extension StatefulTableView {
+  /**
+   The object that acts as the data source of the table view.
+
+   - Discussion: The data souce must adopt the `UITableViewDataSource` protocol. The data source is not retained.
+   */
+  public var dataSource: UITableViewDataSource? {
+    set { tableView.dataSource = newValue }
+    get { return tableView.dataSource }
+  }
+
+  /**
+   The object that acts as the delegate of the table view.
+
+   - Discussion: The delegate must adopt the `UITableViewDelegate` protocol. The delegate is not retained.
+   */
+  public var delegate: UITableViewDelegate? {
+    set { tableView.delegate = newValue }
+    get { return tableView.delegate }
   }
 }
 
