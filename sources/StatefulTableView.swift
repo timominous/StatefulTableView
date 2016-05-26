@@ -214,30 +214,6 @@ extension StatefulTableView {
     return tableView.rectForRowAtIndexPath(indexPath)
   }
 
-  public func indexPathForRowAtPoint(point: CGPoint) -> NSIndexPath? {
-    return tableView.indexPathForRowAtPoint(point)
-  }
-
-  public func indexPathForCell(cell: UITableViewCell) -> NSIndexPath? {
-    return tableView.indexPathForCell(cell)
-  }
-
-  public func indexPathsForRowsInRect(rect: CGRect) -> [NSIndexPath]? {
-    return tableView.indexPathsForRowsInRect(rect)
-  }
-
-  public func cellForRowAtIndexPath(indexPath: NSIndexPath) -> UITableViewCell? {
-    return tableView.cellForRowAtIndexPath(indexPath)
-  }
-
-  public var visibleCells: [UITableViewCell] {
-    return tableView.visibleCells
-  }
-
-  public var indexPathsForVisibleRows: [NSIndexPath]? {
-    return tableView.indexPathsForVisibleRows;
-  }
-
   public func scrollToRowAtIndexPath(indexPath: NSIndexPath, atScrollPosition scrollPosition: UITableViewScrollPosition, animated: Bool) {
     tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: scrollPosition, animated: animated)
   }
@@ -499,6 +475,33 @@ extension StatefulTableView {
   @available(iOS 6.0, *)
   public func footerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
     return tableView.footerViewForSection(section)
+  }
+}
+
+// MARK: - Accessing Cells and Sections
+extension StatefulTableView {
+  public func cellForRowAtIndexPath(indexPath: NSIndexPath) -> UITableViewCell? {
+    return tableView.cellForRowAtIndexPath(indexPath)
+  }
+
+  public func indexPathForCell(cell: UITableViewCell) -> NSIndexPath? {
+    return tableView.indexPathForCell(cell)
+  }
+
+  public func indexPathForRowAtPoint(point: CGPoint) -> NSIndexPath? {
+    return tableView.indexPathForRowAtPoint(point)
+  }
+
+  public func indexPathsForRowsInRect(rect: CGRect) -> [NSIndexPath]? {
+    return tableView.indexPathsForRowsInRect(rect)
+  }
+
+  public var visibleCells: [UITableViewCell] {
+    return tableView.visibleCells
+  }
+
+  public var indexPathsForVisibleRows: [NSIndexPath]? {
+    return tableView.indexPathsForVisibleRows;
   }
 }
 
