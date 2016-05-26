@@ -400,15 +400,6 @@ extension StatefulTableView {
     get { return tableView.tableFooterView }
   }
 
-  public func dequeueReusableCellWithIdentifier(identifier: String) -> UITableViewCell? {
-    return tableView.dequeueReusableCellWithIdentifier(identifier)
-  }
-
-  @available(iOS 6.0, *)
-  public func dequeueReusableCellWithIdentifier(identifier: String, forIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    return tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
-  }
-
   @available(iOS 6.0, *)
   public func dequeueReusableHeaderFooterViewWithIdentifier(identifier: String) -> UITableViewHeaderFooterView? {
     return tableView.dequeueReusableHeaderFooterViewWithIdentifier(identifier)
@@ -417,16 +408,6 @@ extension StatefulTableView {
   /// Beginning in iOS 6, clients can register a nib or class for each cell.
   /// If all reuse identifiers are registered, use the newer -dequeueReusableCellWithIdentifier:forIndexPath: to guarantee that a cell instance is returned.
   /// Instances returned from the new dequeue method will also be properly sized when they are returned.
-
-  @available(iOS 5.0, *)
-  public func registerNib(nib: UINib?, forCellReuseIdentifier identifier: String) {
-    tableView.registerNib(nib, forCellReuseIdentifier: identifier)
-  }
-
-  @available(iOS 6.0, *)
-  public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
-    tableView.registerClass(cellClass, forCellReuseIdentifier: identifier)
-  }
 
   @available(iOS 6.0, *)
   public func registerNib(nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
@@ -493,6 +474,28 @@ extension StatefulTableView {
   public var cellLayoutMarginsFollowReadableWidth: Bool {
     set { tableView.cellLayoutMarginsFollowReadableWidth = newValue }
     get { return tableView.cellLayoutMarginsFollowReadableWidth }
+  }
+}
+
+// MARK: - Creating Table View Cells
+extension StatefulTableView {
+  @available(iOS 5.0, *)
+  public func registerNib(nib: UINib?, forCellReuseIdentifier identifier: String) {
+    tableView.registerNib(nib, forCellReuseIdentifier: identifier)
+  }
+
+  @available(iOS 6.0, *)
+  public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
+    tableView.registerClass(cellClass, forCellReuseIdentifier: identifier)
+  }
+
+  @available(iOS 6.0, *)
+  public func dequeueReusableCellWithIdentifier(identifier: String, forIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    return tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
+  }
+
+  public func dequeueReusableCellWithIdentifier(identifier: String) -> UITableViewCell? {
+    return tableView.dequeueReusableCellWithIdentifier(identifier)
   }
 }
 
