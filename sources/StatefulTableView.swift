@@ -161,11 +161,6 @@ extension StatefulTableView {
 
   /// Focus
 
-  @available(iOS 9.0, *)
-  public var remembersLastFocusedIndexPath: Bool {
-    set { tableView.remembersLastFocusedIndexPath = newValue }
-    get { return tableView.remembersLastFocusedIndexPath }
-  }
 }
 
 // MARK: - Configuring a Table View
@@ -529,6 +524,15 @@ extension StatefulTableView {
   public var sectionIndexTrackingBackgroundColor: UIColor? {
     set { tableView.sectionIndexTrackingBackgroundColor = newValue }
     get { return tableView.sectionIndexTrackingBackgroundColor }
+  }
+}
+
+// MARK: - Managing Focus
+extension StatefulTableView {
+  @available(iOS 9.0, *)
+  public var remembersLastFocusedIndexPath: Bool {
+    set { tableView.remembersLastFocusedIndexPath = newValue }
+    get { return tableView.remembersLastFocusedIndexPath }
   }
 }
 
