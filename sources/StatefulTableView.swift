@@ -155,29 +155,6 @@ extension StatefulTableView {
 
   /// Appearance
 
-  public var sectionIndexMinimumDisplayRowCount: Int {
-    set { tableView.sectionIndexMinimumDisplayRowCount = newValue }
-    get { return tableView.sectionIndexMinimumDisplayRowCount }
-  }
-
-  @available(iOS 6.0, *)
-  public var sectionIndexColor: UIColor? {
-    set { tableView.sectionIndexColor = newValue }
-    get { return tableView.sectionIndexColor }
-  }
-
-  @available(iOS 7.0, *)
-  public var sectionIndexBackgroundColor: UIColor? {
-    set { tableView.sectionIndexBackgroundColor = newValue }
-    get { return tableView.sectionIndexBackgroundColor }
-  }
-
-  @available(iOS 6.0, *)
-  public var sectionIndexTrackingBackgroundColor: UIColor? {
-    set { tableView.sectionIndexTrackingBackgroundColor = newValue }
-    get { return tableView.sectionIndexTrackingBackgroundColor }
-  }
-
   /// Beginning in iOS 6, clients can register a nib or class for each cell.
   /// If all reuse identifiers are registered, use the newer -dequeueReusableCellWithIdentifier:forIndexPath: to guarantee that a cell instance is returned.
   /// Instances returned from the new dequeue method will also be properly sized when they are returned.
@@ -526,6 +503,32 @@ extension StatefulTableView {
   public var delegate: UITableViewDelegate? {
     set { tableView.delegate = newValue }
     get { return tableView.delegate }
+  }
+}
+
+// MARK: - Configuring the Table Index
+extension StatefulTableView {
+  public var sectionIndexMinimumDisplayRowCount: Int {
+    set { tableView.sectionIndexMinimumDisplayRowCount = newValue }
+    get { return tableView.sectionIndexMinimumDisplayRowCount }
+  }
+
+  @available(iOS 6.0, *)
+  public var sectionIndexColor: UIColor? {
+    set { tableView.sectionIndexColor = newValue }
+    get { return tableView.sectionIndexColor }
+  }
+
+  @available(iOS 7.0, *)
+  public var sectionIndexBackgroundColor: UIColor? {
+    set { tableView.sectionIndexBackgroundColor = newValue }
+    get { return tableView.sectionIndexBackgroundColor }
+  }
+
+  @available(iOS 6.0, *)
+  public var sectionIndexTrackingBackgroundColor: UIColor? {
+    set { tableView.sectionIndexTrackingBackgroundColor = newValue }
+    get { return tableView.sectionIndexTrackingBackgroundColor }
   }
 }
 
