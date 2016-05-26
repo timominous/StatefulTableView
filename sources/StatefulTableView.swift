@@ -167,22 +167,6 @@ extension StatefulTableView {
 
   /// Info
 
-  public func rectForSection(section: Int) -> CGRect {
-    return tableView.rectForSection(section)
-  }
-
-  public func rectFotHeaderInSection(section: Int) -> CGRect {
-    return tableView.rectForHeaderInSection(section)
-  }
-
-  public func rectForFooterInSection(section: Int) -> CGRect {
-    return tableView.rectForFooterInSection(section)
-  }
-
-  public func rectForRowRowAtIndexPath(indexPath: NSIndexPath) -> CGRect {
-    return tableView.rectForRowAtIndexPath(indexPath)
-  }
-
   /// Row insertion/deletion/reloading
 
   /// Editing. When set, rows show insert/delete/reorder control based on data source queries
@@ -520,6 +504,25 @@ extension StatefulTableView {
     dispatch_async(dispatch_get_main_queue()) {
       self.tableView.reloadSectionIndexTitles()
     }
+  }
+}
+
+// MARK: - Accessing Drawing Areas of the Table View
+extension StatefulTableView {
+  public func rectForSection(section: Int) -> CGRect {
+    return tableView.rectForSection(section)
+  }
+
+  public func rectForRowRowAtIndexPath(indexPath: NSIndexPath) -> CGRect {
+    return tableView.rectForRowAtIndexPath(indexPath)
+  }
+
+  public func rectForFooterInSection(section: Int) -> CGRect {
+    return tableView.rectForFooterInSection(section)
+  }
+
+  public func rectFotHeaderInSection(section: Int) -> CGRect {
+    return tableView.rectForHeaderInSection(section)
   }
 }
 
