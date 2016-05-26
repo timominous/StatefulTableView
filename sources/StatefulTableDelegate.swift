@@ -8,9 +8,26 @@
 
 import UIKit
 
+/**
+ A closure declaration describing if the table is empty and has an optional error.
+
+ - parameter tableIsEmpty: Describes if the table is empty.
+ - parameter errorOrNil:   Describes the error received from loading. May be nil.
+ */
 public typealias InitialLoadCompletionHandler = (tableIsEmpty: Bool, errorOrNil: NSError?) -> Void
+
+/**
+ A closure declaration describing if the table can load more, received an error, and should show an error view.
+
+ - parameter canLoadMore:   Describes if the table can loa dmore data.
+ - parameter errorOrNil:    Describes the error received from loading. May be nil.
+ - parameter showErrorView: Describes if an error view should be shown.
+ */
 public typealias LoadMoreCompletionHandler = (canLoadMore: Bool, errorOrNil: NSError?, showErrorView: Bool) -> Void
 
+/**
+ This protocol represents the loading behavior of the `StatefulTableView`.
+ */
 public protocol StatefulTableDelegate: class {
   /**
    This delegate method will be called when the tableView is triggered to load data initially.
