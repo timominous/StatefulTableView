@@ -70,6 +70,24 @@ public final class StatefulTableView: UIView {
     commonInit()
   }
 
+  func commonInit() {
+    addSubview(tableView)
+    addSubview(staticContentView)
+
+    refreshControl.addTarget(self,
+      action: #selector(refreshControlValueChanged), forControlEvents: .ValueChanged)
+    tableView.addSubview(refreshControl)
+  }
+
+  /**
+   Lays out subviews.
+   */
+  override public func layoutSubviews() {
+    super.layoutSubviews()
+    tableView.frame = bounds
+    staticContentView.frame = bounds
+  }
+
   private lazy var tableView = UITableView()
 
   private lazy var staticContentView: UIView = { [unowned self] in
@@ -80,6 +98,8 @@ public final class StatefulTableView: UIView {
   }()
 
   private lazy var refreshControl = UIRefreshControl()
+
+  // MARK: - Properties
 
   /**
    Enables the user to pull down on the tableView to initiate a refresh
@@ -111,6 +131,8 @@ public final class StatefulTableView: UIView {
     }
   }
 
+  // MARK: - Stateful Delegate
+
   /**
    The object that acts as the stateful delegate of the table view.
 
@@ -118,29 +140,11 @@ public final class StatefulTableView: UIView {
    */
   weak public var statefulDelegate: StatefulTableDelegate?
 
-  func commonInit() {
-    addSubview(tableView)
-    addSubview(staticContentView)
-
-    refreshControl.addTarget(self,
-      action: #selector(refreshControlValueChanged), forControlEvents: .ValueChanged)
-    tableView.addSubview(refreshControl)
-  }
-
-  /**
-   Lays out subviews.
-
-   - Discussion: The default implementation of this method does
-   */
-  override public func layoutSubviews() {
-    super.layoutSubviews()
-    tableView.frame = bounds
-    staticContentView.frame = bounds
-  }
 }
 
-// MARK: - Pull to refresh
 extension StatefulTableView {
+  // MARK: - Pull to refresh
+
   func refreshControlValueChanged() {
     if state != .LoadingFromPullToRefresh && !state.isLoading {
       if (!triggerPullToRefresh()) {
@@ -185,8 +189,8 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Initial load
 extension StatefulTableView {
+  // MARK: - Initial load
 
   /**
    Triggers initial load of data programatically. Defaults to hiding the tableView.
@@ -235,8 +239,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Load more
 extension StatefulTableView {
+  // MARK: - Load more
+
   /**
    Tiggers loading more of data. Also called when the scroll content offset reaches the `loadMoreTriggerThreshold`.
    */
@@ -455,8 +460,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Configuring a Table View
 extension StatefulTableView {
+  // MARK: - Configuring a Table View
+
   public func numberOfRowsInSection(section: Int) -> Int {
     return tableView.numberOfRowsInSection(section)
   }
@@ -504,8 +510,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Creating Table View Cells
 extension StatefulTableView {
+  // MARK: - Creating Table View Cells
+
   @available(iOS 5.0, *)
   public func registerNib(nib: UINib?, forCellReuseIdentifier identifier: String) {
     tableView.registerNib(nib, forCellReuseIdentifier: identifier)
@@ -526,8 +533,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Accessing Header and Footer Views
 extension StatefulTableView {
+  // MARK: - Accessing Header and Footer Views
+
   @available(iOS 6.0, *)
   public func registerNib(nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
     tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
@@ -574,8 +582,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Accessing Cells and Sections
 extension StatefulTableView {
+  // MARK: - Accessing Cells and Sections
+
   public func cellForRowAtIndexPath(indexPath: NSIndexPath) -> UITableViewCell? {
     return tableView.cellForRowAtIndexPath(indexPath)
   }
@@ -601,8 +610,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Estimating Element Heights
 extension StatefulTableView {
+  // MARK: - Estimating Element Heights
+
   @available(iOS 7.0, *)
   public var estimatedRowHeight: CGFloat {
     set { tableView.estimatedRowHeight = newValue }
@@ -622,8 +632,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Scrolling the Table View
 extension StatefulTableView {
+  // MARK: - Scrolling the Table View
+
   public func scrollToRowAtIndexPath(indexPath: NSIndexPath, atScrollPosition scrollPosition: UITableViewScrollPosition, animated: Bool) {
     tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: scrollPosition, animated: animated)
   }
@@ -633,8 +644,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Managing Selections
 extension StatefulTableView {
+  // MARK: - Managing Selections
+
   public var indexPathForSelectedRow: NSIndexPath? {
     return tableView.indexPathForSelectedRow
   }
@@ -676,8 +688,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Inserting, Deleting, and Moving Rows and Sections
 extension StatefulTableView {
+  // MARK: - Inserting, Deleting, and Moving Rows and Sections
+
   public func beginUpdates() {
     tableView.beginUpdates()
   }
@@ -713,8 +726,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Managing the Editing of Table Cells
 extension StatefulTableView {
+  // MARK: - Managing the Editing of Table Cells
+
   public var editing: Bool {
     set { tableView.editing = newValue }
     get { return tableView.editing }
@@ -725,8 +739,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Reloading the Table View
 extension StatefulTableView {
+  // MARK: - Reloading the Table View
+
   public func reloadData() {
     dispatch_async(dispatch_get_main_queue()) {
       self.tableView.reloadData()
@@ -751,8 +766,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Accessing Drawing Areas of the Table View
 extension StatefulTableView {
+  // MARK: - Accessing Drawing Areas of the Table View
+
   public func rectForSection(section: Int) -> CGRect {
     return tableView.rectForSection(section)
   }
@@ -770,8 +786,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Managing the Delegate and the Data Source
 extension StatefulTableView {
+  // MARK: - Managing the Delegate and the Data Source
+
   /**
    The object that acts as the data source of the table view.
 
@@ -793,8 +810,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Configuring the Table Index
 extension StatefulTableView {
+  // MARK: - Configuring the Table Index
+
   public var sectionIndexMinimumDisplayRowCount: Int {
     set { tableView.sectionIndexMinimumDisplayRowCount = newValue }
     get { return tableView.sectionIndexMinimumDisplayRowCount }
@@ -819,8 +837,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Managing Focus
 extension StatefulTableView {
+  // MARK: - Managing Focus
+
   @available(iOS 9.0, *)
   public var remembersLastFocusedIndexPath: Bool {
     set { tableView.remembersLastFocusedIndexPath = newValue }

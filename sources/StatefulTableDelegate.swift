@@ -29,6 +29,8 @@ public typealias LoadMoreCompletionHandler = (canLoadMore: Bool, errorOrNil: NSE
  This protocol represents the loading behavior of the `StatefulTableView`.
  */
 public protocol StatefulTableDelegate: class {
+  // MARK: - Managing Loading
+
   /**
    This delegate method will be called when the tableView is triggered to load data initially.
 
@@ -53,7 +55,7 @@ public protocol StatefulTableDelegate: class {
    */
   func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: LoadMoreCompletionHandler)
 
-  /// Views
+  // MARK: - Using Custom Views
 
   /**
    This delegate method will be called when the tableView is in need of a view to show when it is loading data initially.
