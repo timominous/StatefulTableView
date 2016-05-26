@@ -165,19 +165,6 @@ extension StatefulTableView {
 
   /// Data
 
-  public func reloadData() {
-    dispatch_async(dispatch_get_main_queue()) {
-      self.tableView.reloadData()
-    }
-  }
-
-  @available(iOS 3.0, *)
-  public func reloadSectionIndexTitles() {
-    dispatch_async(dispatch_get_main_queue()) {
-      self.tableView.reloadSectionIndexTitles()
-    }
-  }
-
   /// Info
 
   public func rectForSection(section: Int) -> CGRect {
@@ -197,16 +184,6 @@ extension StatefulTableView {
   }
 
   /// Row insertion/deletion/reloading
-
-  @available(iOS 3.0, *)
-  public func reloadSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.reloadSections(sections, withRowAnimation: animation)
-  }
-
-  @available(iOS 3.0, *)
-  public func reloadRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-  }
 
   /// Editing. When set, rows show insert/delete/reorder control based on data source queries
 
@@ -517,6 +494,32 @@ extension StatefulTableView {
 
   public func setEditing(editing: Bool, animated: Bool) {
     tableView.setEditing(editing, animated: animated)
+  }
+}
+
+// MARK: - Reloading the Table View
+extension StatefulTableView {
+  public func reloadData() {
+    dispatch_async(dispatch_get_main_queue()) {
+      self.tableView.reloadData()
+    }
+  }
+
+  @available(iOS 3.0, *)
+  public func reloadRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+  }
+
+  @available(iOS 3.0, *)
+  public func reloadSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.reloadSections(sections, withRowAnimation: animation)
+  }
+
+  @available(iOS 3.0, *)
+  public func reloadSectionIndexTitles() {
+    dispatch_async(dispatch_get_main_queue()) {
+      self.tableView.reloadSectionIndexTitles()
+    }
   }
 }
 
