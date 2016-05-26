@@ -198,48 +198,14 @@ extension StatefulTableView {
 
   /// Row insertion/deletion/reloading
 
-  public func beginUpdates() {
-    tableView.beginUpdates()
-  }
-
-  public func endUpdates() {
-    tableView.endUpdates()
-  }
-
-  public func insertSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.insertSections(sections, withRowAnimation: animation)
-  }
-
-  public func deleteSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.deleteSections(sections, withRowAnimation: animation)
-  }
-
   @available(iOS 3.0, *)
   public func reloadSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
     tableView.reloadSections(sections, withRowAnimation: animation)
   }
 
-  @available(iOS 5.0, *)
-  public func moveSection(section: Int, toSection newSection: Int) {
-    tableView.moveSection(section, toSection: newSection)
-  }
-
-  public func insertRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-  }
-
-  public func deleteRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-  }
-
   @available(iOS 3.0, *)
   public func reloadRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
     tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
-  }
-
-  @available(iOS 5.0, *)
-  public func moveRowAtIndexPath(indexPath: NSIndexPath, toIndexPath newIndexPath: NSIndexPath) {
-    tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
   }
 
   /// Editing. When set, rows show insert/delete/reorder control based on data source queries
@@ -511,6 +477,43 @@ extension StatefulTableView {
   public var allowsMultipleSelectionDuringEditing: Bool {
     set { tableView.allowsMultipleSelectionDuringEditing = newValue }
     get { return tableView.allowsMultipleSelectionDuringEditing }
+  }
+}
+
+// MARK: - Inserting, Deleting, and Moving Rows and Sections
+extension StatefulTableView {
+  public func beginUpdates() {
+    tableView.beginUpdates()
+  }
+
+  public func endUpdates() {
+    tableView.endUpdates()
+  }
+
+  public func insertRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+  }
+
+  public func deleteRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+  }
+
+  @available(iOS 5.0, *)
+  public func moveRowAtIndexPath(indexPath: NSIndexPath, toIndexPath newIndexPath: NSIndexPath) {
+    tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+  }
+
+  public func insertSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.insertSections(sections, withRowAnimation: animation)
+  }
+
+  public func deleteSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.deleteSections(sections, withRowAnimation: animation)
+  }
+
+  @available(iOS 5.0, *)
+  public func moveSection(section: Int, toSection newSection: Int) {
+    tableView.moveSection(section, toSection: newSection)
   }
 }
 
