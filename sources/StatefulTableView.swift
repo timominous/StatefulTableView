@@ -210,15 +210,6 @@ extension StatefulTableView {
 
   /// Editing. When set, rows show insert/delete/reorder control based on data source queries
 
-  public var editing: Bool {
-    set { tableView.editing = newValue }
-    get { return tableView.editing }
-  }
-
-  public func setEditing(editing: Bool, animated: Bool) {
-    tableView.setEditing(editing, animated: animated)
-  }
-
   /// Selection
 
   /// Appearance
@@ -514,6 +505,18 @@ extension StatefulTableView {
   @available(iOS 5.0, *)
   public func moveSection(section: Int, toSection newSection: Int) {
     tableView.moveSection(section, toSection: newSection)
+  }
+}
+
+// MARK: - Managing the Editing of Table Cells
+extension StatefulTableView {
+  public var editing: Bool {
+    set { tableView.editing = newValue }
+    get { return tableView.editing }
+  }
+
+  public func setEditing(editing: Bool, animated: Bool) {
+    tableView.setEditing(editing, animated: animated)
   }
 }
 
