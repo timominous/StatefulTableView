@@ -196,14 +196,6 @@ extension StatefulTableView {
     return tableView.rectForRowAtIndexPath(indexPath)
   }
 
-  public func scrollToRowAtIndexPath(indexPath: NSIndexPath, atScrollPosition scrollPosition: UITableViewScrollPosition, animated: Bool) {
-    tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: scrollPosition, animated: animated)
-  }
-
-  public func scrollToNearestSelectedRowAtScrollPosition(scrollPosition: UITableViewScrollPosition, animated: Bool) {
-    tableView.scrollToNearestSelectedRowAtScrollPosition(scrollPosition, animated: animated)
-  }
-
   /// Row insertion/deletion/reloading
 
   public func beginUpdates() {
@@ -505,6 +497,17 @@ extension StatefulTableView {
   public var estimatedSectionFooterHeight: CGFloat {
     set { tableView.estimatedSectionFooterHeight = newValue }
     get { return tableView.estimatedSectionHeaderHeight }
+  }
+}
+
+// MARK: - Scrolling the Table View
+extension StatefulTableView {
+  public func scrollToRowAtIndexPath(indexPath: NSIndexPath, atScrollPosition scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: scrollPosition, animated: animated)
+  }
+
+  public func scrollToNearestSelectedRowAtScrollPosition(scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    tableView.scrollToNearestSelectedRowAtScrollPosition(scrollPosition, animated: animated)
   }
 }
 
