@@ -139,28 +139,320 @@ public final class StatefulTableView: UIView {
   }
 }
 
-// MARK: - UITableView bridge
+// MARK: - Pull to refresh
 extension StatefulTableView {
-  /// Bridge for UITableivew methods. Read UITableView documentation for more details
+  func refreshControlValueChanged() {
+    if state != .LoadingFromPullToRefresh && !state.isLoading {
+      if (!triggerPullToRefresh()) {
+        refreshControl.endRefreshing()
+      }
+    }
+  }
 
-  /// Data
+  /**
+   Triggers pull to refresh programatically. Also called when the user pulls down to refresh on the tableView.
 
-  /// Info
+   - returns: Boolean for success status.
+   */
+  public func triggerPullToRefresh() -> Bool {
+    guard !state.isLoading && canPullToRefresh else { return false }
 
-  /// Row insertion/deletion/reloading
+    self.setState(.LoadingFromPullToRefresh, updateView: false, error: nil)
 
-  /// Editing. When set, rows show insert/delete/reorder control based on data source queries
+    if let delegate = statefulDelegate {
+      delegate.statefulTableViewWillBeginLoadingFromRefresh(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
+        dispatch_async(dispatch_get_main_queue(), {
+          self?.setHasFinishedLoadingFromPullToRefresh(tableIsEmpty, error: errorOrNil)
+        })
+      })
+    }
 
-  /// Selection
+    refreshControl.beginRefreshing()
 
-  /// Appearance
+    return true
+  }
 
-  /// Beginning in iOS 6, clients can register a nib or class for each cell.
-  /// If all reuse identifiers are registered, use the newer -dequeueReusableCellWithIdentifier:forIndexPath: to guarantee that a cell instance is returned.
-  /// Instances returned from the new dequeue method will also be properly sized when they are returned.
+  func setHasFinishedLoadingFromPullToRefresh(tableIsEmpty: Bool, error: NSError?) {
+    guard state == .LoadingFromPullToRefresh else { return }
 
-  /// Focus
+    refreshControl.endRefreshing()
 
+    if tableIsEmpty {
+      self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
+    } else {
+      self.setState(.Idle)
+    }
+  }
+}
+
+// MARK: - Initial load
+extension StatefulTableView {
+
+  /**
+   Triggers initial load of data programatically. Defaults to hiding the tableView.
+
+   - returns: Boolean for success status.
+   */
+  public func triggerInitialLoad() -> Bool {
+    return triggerInitialLoad(false)
+  }
+
+  /**
+   Triggers initial load of data programatically.
+
+   - parameter shouldShowTableView: Control if the container should show the tableView or not.
+
+   - returns: Boolean for success status.
+   */
+  public func triggerInitialLoad(shouldShowTableView: Bool) -> Bool {
+    guard !state.isLoading else { return false }
+
+    if shouldShowTableView {
+      self.setState(.InitialLoadingTableView)
+    } else {
+      self.setState(.InitialLoading)
+    }
+
+    if let delegate = statefulDelegate {
+      delegate.statefulTableViewWillBeginInitialLoad(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
+        dispatch_async(dispatch_get_main_queue(), {
+          self?.setHasFinishedInitialLoad(tableIsEmpty, error: errorOrNil)
+        })
+      })
+    }
+
+    return true
+  }
+
+  func setHasFinishedInitialLoad(tableIsEmpty: Bool, error: NSError?) {
+    guard state.isInitialLoading else { return }
+
+    if tableIsEmpty {
+      self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
+    } else {
+      self.setState(.Idle)
+    }
+  }
+}
+
+// MARK: - Load more
+extension StatefulTableView {
+  /**
+   Tiggers loading more of data. Also called when the scroll content offset reaches the `loadMoreTriggerThreshold`.
+   */
+  public func triggerLoadMore() {
+    guard !state.isLoading else { return }
+
+    loadMoreViewIsErrorView = false
+    lastLoadMoreError = nil
+    updateLoadMoreView()
+
+    setState(.LoadingMore)
+
+    if let delegate = statefulDelegate {
+      delegate.statefulTableViewWillBeginLoadingMore(self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
+        dispatch_async(dispatch_get_main_queue(), {
+          self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
+        })
+      })
+    }
+  }
+
+  func updateLoadMoreView() {
+    if watchForLoadMore || lastLoadMoreError != nil {
+      tableView.tableFooterView = viewForLoadingMore(withError: (loadMoreViewIsErrorView ? lastLoadMoreError : nil))
+    } else {
+      tableView.tableFooterView = UIView()
+    }
+  }
+
+  func viewForLoadingMore(withError error: NSError?) -> UIView {
+    if let view = statefulDelegate?.statefulTableViewView(self, forLoadMoreError: error) { return view }
+
+    let container = UIView(frame: CGRect(origin: .zero, size: CGSize(width: tableView.bounds.width, height: 44)))
+
+    let sub: UIView
+
+    if let error = error {
+      let label = UILabel()
+      label.translatesAutoresizingMaskIntoConstraints = false
+      label.text = error.localizedDescription
+      label.font = UIFont.systemFontOfSize(12)
+      label.textAlignment = .Center
+      sub = label
+    } else {
+      let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+      activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+      activityIndicator.startAnimating()
+      sub = activityIndicator
+    }
+
+    container.addSubview(sub)
+    centerView(sub, inContainer: container)
+
+    return container
+  }
+
+  func setHasFinishedLoadingMore(canLoadMore: Bool, error: NSError?, showErrorView: Bool) {
+    guard state == .LoadingMore else { return }
+
+    self.canLoadMore = canLoadMore
+    loadMoreViewIsErrorView = (error != nil) && showErrorView
+    lastLoadMoreError = error
+
+    setState(.Idle)
+  }
+
+  func watchForLoadMoreIfApplicable(watch: Bool) {
+    var watch = watch
+
+    if (watch && !canLoadMore) {
+      watch = false
+    }
+    watchForLoadMore = watch
+    updateLoadMoreView()
+
+    triggerLoadMoreIfApplicable(tableView)
+  }
+
+  /**
+   Should be called when scrolling the tableView. This determines when to call `triggerLoadMore`
+
+   - parameter scrollView: The scrolling view.
+   */
+  public func scrollViewDidScroll(scrollView: UIScrollView) {
+    triggerLoadMoreIfApplicable(scrollView)
+  }
+
+  func triggerLoadMoreIfApplicable(scrollView: UIScrollView) {
+    guard watchForLoadMore && !loadMoreViewIsErrorView else { return }
+
+    let scrollPosition = scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y
+    if scrollPosition < loadMoreTriggerThreshold {
+      triggerLoadMore()
+    }
+  }
+}
+
+// MARK: - States
+extension StatefulTableView {
+  private func setState(newState: State) {
+    setState(newState, updateView: true, error: nil)
+  }
+
+  private func setState(newState: State, error: NSError?) {
+    setState(newState, updateView: true, error: error)
+  }
+
+  private func setState(newState: State, updateView: Bool, error: NSError?) {
+    state = newState
+
+    switch state {
+    case .InitialLoading:
+      resetStaticContentView(withChildView: viewForInitialLoad)
+    case .EmptyOrInitialLoadError:
+      resetStaticContentView(withChildView: viewForEmptyInitialLoad(withError: error))
+    default: break
+    }
+
+    switch state {
+    case .Idle:
+      watchForLoadMoreIfApplicable(true)
+    case .EmptyOrInitialLoadError:
+      watchForLoadMoreIfApplicable(false)
+    default: break
+    }
+
+    if updateView {
+      let mode: ViewMode
+
+      switch state {
+      case .InitialLoading: fallthrough
+      case .EmptyOrInitialLoadError:
+        mode = .Static
+      default: mode = .Table
+      }
+
+      viewMode = mode
+    }
+  }
+}
+
+// MARK: - Views
+extension StatefulTableView {
+  func resetStaticContentView(withChildView childView: UIView) {
+    staticContentView.subviews.forEach { $0.removeFromSuperview() }
+    staticContentView.addSubview(childView)
+
+    childView.translatesAutoresizingMaskIntoConstraints = false
+
+    pinView(childView, toContainer: staticContentView)
+  }
+
+  var viewForInitialLoad: UIView {
+    if let view = statefulDelegate?.statefulTableViewViewForInitialLoad(self) {
+      return view
+    }
+
+    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    activityIndicatorView.startAnimating()
+
+    return activityIndicatorView
+  }
+
+  func viewForEmptyInitialLoad(withError error: NSError?) -> UIView {
+    if let view = statefulDelegate?.statefulTableViewView(self, forInitialLoadError: error) { return view }
+
+    let container = UIView(frame: .zero)
+
+    var centeredSize: CGSize = .zero
+
+    let centered = UIView(frame: .zero)
+    centered.translatesAutoresizingMaskIntoConstraints = false
+
+    let label = UILabel()
+    label.translatesAutoresizingMaskIntoConstraints = false
+    label.textAlignment = .Center
+    label.text = error?.localizedDescription ?? "No records found"
+    label.sizeToFit()
+
+    label.setWidthConstraintToCurrent()
+    label.setHeightConstraintToCurrent()
+
+    centered.addSubview(label)
+
+    apply([.Top, .CenterX], ofView: label, toView: centered)
+
+    centeredSize.width = label.bounds.width
+    centeredSize.height = label.bounds.height
+
+    if let _ = error {
+      let button = UIButton(type: .System)
+      button.translatesAutoresizingMaskIntoConstraints = false
+      button.setTitle("Try Again", forState: .Normal)
+      button.addTarget(self, action: #selector(triggerInitialLoad(_:)), forControlEvents: .TouchUpInside)
+      button.sizeToFit()
+
+      button.setWidthConstraintToCurrent()
+      button.setHeightConstraintToCurrent()
+
+      centeredSize.width = max(centeredSize.width, button.bounds.width)
+      centeredSize.height = label.bounds.height + button.bounds.height + 5
+
+      centered.addSubview(button)
+
+      apply([.Bottom, .CenterX], ofView: button, toView: centered)
+    }
+
+    centered.setWidthConstraint(centeredSize.width)
+    centered.setHeightConstraint(centeredSize.height)
+
+    container.addSubview(centered)
+
+    centerView(centered, inContainer: container)
+
+    return container
+  }
 }
 
 // MARK: - Configuring a Table View
@@ -536,343 +828,27 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Pull to refresh
-extension StatefulTableView {
-  func refreshControlValueChanged() {
-    if state != .LoadingFromPullToRefresh && !state.isLoading {
-      if (!triggerPullToRefresh()) {
-        refreshControl.endRefreshing()
-      }
-    }
-  }
-
-  /**
-   Triggers pull to refresh programatically. Also called when the user pulls down to refresh on the tableView.
-
-   - returns: Boolean for success status.
-   */
-  public func triggerPullToRefresh() -> Bool {
-    guard !state.isLoading && canPullToRefresh else { return false }
-
-    self.setState(.LoadingFromPullToRefresh, updateView: false, error: nil)
-
-    if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginLoadingFromRefresh(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        dispatch_async(dispatch_get_main_queue(), {
-          self?.setHasFinishedLoadingFromPullToRefresh(tableIsEmpty, error: errorOrNil)
-        })
-      })
-    }
-
-    refreshControl.beginRefreshing()
-
-    return true
-  }
-
-  func setHasFinishedLoadingFromPullToRefresh(tableIsEmpty: Bool, error: NSError?) {
-    guard state == .LoadingFromPullToRefresh else { return }
-
-    refreshControl.endRefreshing()
-
-    if tableIsEmpty {
-      self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
-    } else {
-      self.setState(.Idle)
-    }
-  }
-}
-
-// MARK: - Initial load
-extension StatefulTableView {
-
-  /**
-   Triggers initial load of data programatically. Defaults to hiding the tableView.
-
-   - returns: Boolean for success status.
-   */
-  public func triggerInitialLoad() -> Bool {
-    return triggerInitialLoad(false)
-  }
-
-  /**
-   Triggers initial load of data programatically.
-
-   - parameter shouldShowTableView: Control if the container should show the tableView or not.
-
-   - returns: Boolean for success status.
-   */
-  public func triggerInitialLoad(shouldShowTableView: Bool) -> Bool {
-    guard !state.isLoading else { return false }
-
-    if shouldShowTableView {
-      self.setState(.InitialLoadingTableView)
-    } else {
-      self.setState(.InitialLoading)
-    }
-
-    if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginInitialLoad(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        dispatch_async(dispatch_get_main_queue(), {
-          self?.setHasFinishedInitialLoad(tableIsEmpty, error: errorOrNil)
-        })
-      })
-    }
-
-    return true
-  }
-
-  func setHasFinishedInitialLoad(tableIsEmpty: Bool, error: NSError?) {
-    guard state.isInitialLoading else { return }
-
-    if tableIsEmpty {
-      self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
-    } else {
-      self.setState(.Idle)
-    }
-  }
-}
-
-// MARK: - Load more
-extension StatefulTableView {
-  /**
-   Tiggers loading more of data. Also called when the scroll content offset reaches the `loadMoreTriggerThreshold`.
-   */
-  public func triggerLoadMore() {
-    guard !state.isLoading else { return }
-
-    loadMoreViewIsErrorView = false
-    lastLoadMoreError = nil
-    updateLoadMoreView()
-
-    setState(.LoadingMore)
-
-    if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginLoadingMore(self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
-        dispatch_async(dispatch_get_main_queue(), {
-          self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
-        })
-      })
-    }
-  }
-
-  func updateLoadMoreView() {
-    if watchForLoadMore || lastLoadMoreError != nil {
-      tableView.tableFooterView = viewForLoadingMore(withError: (loadMoreViewIsErrorView ? lastLoadMoreError : nil))
-    } else {
-      tableView.tableFooterView = UIView()
-    }
-  }
-
-  func viewForLoadingMore(withError error: NSError?) -> UIView {
-    if let view = statefulDelegate?.statefulTableViewView(self, forLoadMoreError: error) { return view }
-
-    let container = UIView(frame: CGRect(origin: .zero, size: CGSize(width: tableView.bounds.width, height: 44)))
-
-    let sub: UIView
-
-    if let error = error {
-      let label = UILabel()
-      label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = error.localizedDescription
-      label.font = UIFont.systemFontOfSize(12)
-      label.textAlignment = .Center
-      sub = label
-    } else {
-      let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-      activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-      activityIndicator.startAnimating()
-      sub = activityIndicator
-    }
-
-    container.addSubview(sub)
-    centerView(sub, inContainer: container)
-
-    return container
-  }
-
-  func setHasFinishedLoadingMore(canLoadMore: Bool, error: NSError?, showErrorView: Bool) {
-    guard state == .LoadingMore else { return }
-
-    self.canLoadMore = canLoadMore
-    loadMoreViewIsErrorView = (error != nil) && showErrorView
-    lastLoadMoreError = error
-
-    setState(.Idle)
-  }
-
-  func watchForLoadMoreIfApplicable(watch: Bool) {
-    var watch = watch
-
-    if (watch && !canLoadMore) {
-      watch = false
-    }
-    watchForLoadMore = watch
-    updateLoadMoreView()
-
-    triggerLoadMoreIfApplicable(tableView)
-  }
-
-  /**
-   Should be called when scrolling the tableView. This determines when to call `triggerLoadMore`
-
-   - parameter scrollView: The scrolling view.
-   */
-  public func scrollViewDidScroll(scrollView: UIScrollView) {
-    triggerLoadMoreIfApplicable(scrollView)
-  }
-
-  func triggerLoadMoreIfApplicable(scrollView: UIScrollView) {
-    guard watchForLoadMore && !loadMoreViewIsErrorView else { return }
-
-    let scrollPosition = scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y
-    if scrollPosition < loadMoreTriggerThreshold {
-      triggerLoadMore()
-    }
-  }
-}
-
-// MARK: - States
-extension StatefulTableView {
-  private func setState(newState: State) {
-    setState(newState, updateView: true, error: nil)
-  }
-
-  private func setState(newState: State, error: NSError?) {
-    setState(newState, updateView: true, error: error)
-  }
-
-  private func setState(newState: State, updateView: Bool, error: NSError?) {
-    state = newState
-
-    switch state {
-    case .InitialLoading:
-      resetStaticContentView(withChildView: viewForInitialLoad)
-    case .EmptyOrInitialLoadError:
-      resetStaticContentView(withChildView: viewForEmptyInitialLoad(withError: error))
-    default: break
-    }
-
-    switch state {
-    case .Idle:
-      watchForLoadMoreIfApplicable(true)
-    case .EmptyOrInitialLoadError:
-      watchForLoadMoreIfApplicable(false)
-    default: break
-    }
-
-    if updateView {
-      let mode: ViewMode
-
-      switch state {
-      case .InitialLoading: fallthrough
-      case .EmptyOrInitialLoadError:
-        mode = .Static
-      default: mode = .Table
-      }
-
-      viewMode = mode
-    }
-  }
-}
-
-// MARK: - Views
-extension StatefulTableView {
-  func resetStaticContentView(withChildView childView: UIView) {
-    staticContentView.subviews.forEach { $0.removeFromSuperview() }
-    staticContentView.addSubview(childView)
-
-    childView.translatesAutoresizingMaskIntoConstraints = false
-
-    pinView(childView, toContainer: staticContentView)
-  }
-
-  var viewForInitialLoad: UIView {
-    if let view = statefulDelegate?.statefulTableViewViewForInitialLoad(self) {
-      return view
-    }
-
-    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-    activityIndicatorView.startAnimating()
-
-    return activityIndicatorView
-  }
-
-  func viewForEmptyInitialLoad(withError error: NSError?) -> UIView {
-    if let view = statefulDelegate?.statefulTableViewView(self, forInitialLoadError: error) { return view }
-
-    let container = UIView(frame: .zero)
-
-    var centeredSize: CGSize = .zero
-
-    let centered = UIView(frame: .zero)
-    centered.translatesAutoresizingMaskIntoConstraints = false
-
-    let label = UILabel()
-    label.translatesAutoresizingMaskIntoConstraints = false
-    label.textAlignment = .Center
-    label.text = error?.localizedDescription ?? "No records found"
-    label.sizeToFit()
-
-    label.setWidthConstraintToCurrent()
-    label.setHeightConstraintToCurrent()
-
-    centered.addSubview(label)
-
-    apply([.Top, .CenterX], ofView: label, toView: centered)
-
-    centeredSize.width = label.bounds.width
-    centeredSize.height = label.bounds.height
-
-    if let _ = error {
-      let button = UIButton(type: .System)
-      button.translatesAutoresizingMaskIntoConstraints = false
-      button.setTitle("Try Again", forState: .Normal)
-      button.addTarget(self, action: #selector(triggerInitialLoad(_:)), forControlEvents: .TouchUpInside)
-      button.sizeToFit()
-
-      button.setWidthConstraintToCurrent()
-      button.setHeightConstraintToCurrent()
-
-      centeredSize.width = max(centeredSize.width, button.bounds.width)
-      centeredSize.height = label.bounds.height + button.bounds.height + 5
-
-      centered.addSubview(button)
-
-      apply([.Bottom, .CenterX], ofView: button, toView: centered)
-    }
-
-    centered.setWidthConstraint(centeredSize.width)
-    centered.setHeightConstraint(centeredSize.height)
-
-    container.addSubview(centered)
-
-    centerView(centered, inContainer: container)
-
-    return container
-  }
-}
-
 // MARK: - Helpers
-extension StatefulTableView {
-  func pinView(view: UIView, toContainer container: UIView) {
+private extension StatefulTableView {
+  private func pinView(view: UIView, toContainer container: UIView) {
     let attributes: [NSLayoutAttribute] = [.Top, .Bottom, .Leading, .Trailing]
     apply(attributes, ofView: view, toView: container)
   }
 
-  func centerView(view: UIView, inContainer container: UIView) {
+  private func centerView(view: UIView, inContainer container: UIView) {
     let attributes: [NSLayoutAttribute] = [.CenterX, .CenterY]
     apply(attributes, ofView: view, toView: container)
   }
 
-  func centerViewHorizontally(view: UIView, inContainer container: UIView) {
+  private func centerViewHorizontally(view: UIView, inContainer container: UIView) {
     apply([.CenterX], ofView: view, toView: container)
   }
 
-  func centerViewVertically(view: UIView, inContainer container: UIView) {
+  private func centerViewVertically(view: UIView, inContainer container: UIView) {
     apply([.CenterY], ofView: view, toView: container)
   }
 
-  func apply(attributes: [NSLayoutAttribute], ofView childView: UIView, toView containerView: UIView) {
+  private func apply(attributes: [NSLayoutAttribute], ofView childView: UIView, toView containerView: UIView) {
     let constraints = attributes.map {
       return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .Equal,
         toItem: containerView, attribute: $0, multiplier: 1, constant: 0)
@@ -882,21 +858,21 @@ extension StatefulTableView {
   }
 }
 
-extension UIView {
-  func setWidthConstraintToCurrent() {
+private extension UIView {
+  private func setWidthConstraintToCurrent() {
     setWidthConstraint(bounds.width)
   }
 
-  func setHeightConstraintToCurrent() {
+  private func setHeightConstraintToCurrent() {
     setHeightConstraint(bounds.height)
   }
 
-  func setWidthConstraint(width: CGFloat) {
+  private func setWidthConstraint(width: CGFloat) {
     addConstraint(NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal, toItem: nil,
       attribute: .NotAnAttribute, multiplier: 1, constant: width))
   }
 
-  func setHeightConstraint(height: CGFloat) {
+  private func setHeightConstraint(height: CGFloat) {
     addConstraint(NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal, toItem: nil,
       attribute: .NotAnAttribute, multiplier: 1, constant: height))
   }
