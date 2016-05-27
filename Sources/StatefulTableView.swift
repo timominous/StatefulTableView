@@ -145,7 +145,7 @@ public final class StatefulTableView: UIView {
 extension StatefulTableView {
   // MARK: - Pull to refresh
 
-  private func refreshControlValueChanged() {
+  func refreshControlValueChanged() {
     if state != .LoadingFromPullToRefresh && !state.isLoading {
       if (!triggerPullToRefresh()) {
         refreshControl.endRefreshing()
