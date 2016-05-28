@@ -52,8 +52,8 @@ To show custom views, return them through the following statefulDelegate methods
 
 ```swift
 func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView?
-func statefulTableViewView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView?
-func statefulTableViewView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
+func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView?
+func func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
 ```
 
 ## Installation
@@ -63,7 +63,7 @@ func statefulTableViewView(tvc: StatefulTableView, forLoadMoreError: NSError?) -
 Add this to your Podfile.
 
 ```ruby
-pod 'StatefulTableView', '0.0.12'
+pod 'StatefulTableView', '0.0.13'
 ```
 
 ### Credits
