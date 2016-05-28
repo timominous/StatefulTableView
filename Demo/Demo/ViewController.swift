@@ -74,26 +74,26 @@ extension ViewController: StatefulTableDelegate {
     }
   }
 
-  func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView? {
+  // Uncomment to use a custom initial loading view
+//  func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView? {
 //    let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
 //    view.backgroundColor = .blueColor()
 //    return view
-    return nil
-  }
+//  }
 
-  func statefulTableViewView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
-//    let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
-//    view.backgroundColor = .redColor()
-//    return view
-    return nil
-  }
+  // Uncomment to use a custom initial loading error view
+//  func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView? {
+//  let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
+//  view.backgroundColor = .redColor()
+//  return view
+//  }
 
-  func statefulTableViewView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView? {
+  // Uncommen to use a custom load more error view
+//  func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView? {
 //    let view = UIView(frame: CGRect(origin: .zero, size: CGSize(width: 100, height: 100)))
 //    view.backgroundColor = .greenColor()
 //    return view
-    return nil
-  }
+//  }
 }
 
 extension ViewController: UITableViewDataSource {
