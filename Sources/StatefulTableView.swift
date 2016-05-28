@@ -271,8 +271,10 @@ extension StatefulTableView {
     }
   }
 
-  private func viewForLoadingMore(withError error: NSError?) -> UIView {
-    if let view = statefulDelegate?.statefulTableViewView(self, forLoadMoreError: error) { return view }
+  private func viewForLoadingMore(withError error: NSError?) -> UIView? {
+    if let delegateMethod = statefulDelegate?.statefulTableViewLoadMoreErrorView where error != nil {
+      return delegateMethod(self, forLoadMoreError: error)
+    }
 
     let container = UIView(frame: CGRect(origin: .zero, size: CGSize(width: tableView.bounds.width, height: 44)))
 
@@ -385,8 +387,11 @@ extension StatefulTableView {
 
 // MARK: - Views
 extension StatefulTableView {
-  private func resetStaticContentView(withChildView childView: UIView) {
+  private func resetStaticContentView(withChildView childView: UIView?) {
     staticContentView.subviews.forEach { $0.removeFromSuperview() }
+
+    guard let childView = childView else { return }
+
     staticContentView.addSubview(childView)
 
     childView.translatesAutoresizingMaskIntoConstraints = false
@@ -394,9 +399,9 @@ extension StatefulTableView {
     pinView(childView, toContainer: staticContentView)
   }
 
-  private var viewForInitialLoad: UIView {
-    if let view = statefulDelegate?.statefulTableViewViewForInitialLoad(self) {
-      return view
+  private var viewForInitialLoad: UIView? {
+    if let delegateMethod = statefulDelegate?.statefulTableViewViewForInitialLoad {
+      return delegateMethod(self)
     }
 
     let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
@@ -405,8 +410,10 @@ extension StatefulTableView {
     return activityIndicatorView
   }
 
-  private func viewForEmptyInitialLoad(withError error: NSError?) -> UIView {
-    if let view = statefulDelegate?.statefulTableViewView(self, forInitialLoadError: error) { return view }
+  private func viewForEmptyInitialLoad(withError error: NSError?) -> UIView? {
+    if let delegateMethod = statefulDelegate?.statefulTableViewInitialErrorView {
+      return delegateMethod(self, forInitialLoadError: error)
+    }
 
     let container = UIView(frame: .zero)
 

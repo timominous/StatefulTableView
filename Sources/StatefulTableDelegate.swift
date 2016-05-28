@@ -28,7 +28,7 @@ public typealias LoadMoreCompletionHandler = (canLoadMore: Bool, errorOrNil: NSE
 /**
  This protocol represents the loading behavior of the `StatefulTableView`.
  */
-public protocol StatefulTableDelegate: class {
+@objc public protocol StatefulTableDelegate: class {
   // MARK: - Managing Loading
 
   /**
@@ -62,9 +62,9 @@ public protocol StatefulTableDelegate: class {
 
    - parameter tvc: The tableView calling the method.
 
-   - returns: An optional view to show. Defaults to built in view when nil.
+   - returns: An optional view to show.
    */
-  func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView?
+  optional func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView?
 
   /**
    This delegate method will be called when the tableView is in need of a view to show when it's done loading initially and no data/an error was found.
@@ -72,9 +72,9 @@ public protocol StatefulTableDelegate: class {
    - parameter tvc:                 The tableView calling the method.
    - parameter forInitialLoadError: The optional error found.
 
-   - returns: An optional view to show. Defaults to built in view when nil.
+   - returns: An optional view to show.
    */
-  func statefulTableViewView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView?
+  optional func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView?
 
   /**
    This delegate method will be called when the tableView failed to load more data.
@@ -82,7 +82,7 @@ public protocol StatefulTableDelegate: class {
    - parameter tvc:              The tableView calling the method.
    - parameter forLoadMoreError: The optional error found.
 
-   - returns: An optional view to show. Default to built in view when nil.
+   - returns: An optional view to show.
    */
-  func statefulTableViewView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
+  optional func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
 }
