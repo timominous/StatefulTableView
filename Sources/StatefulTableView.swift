@@ -90,6 +90,13 @@ public final class StatefulTableView: UIView {
 
   private lazy var tableView = UITableView()
 
+  /**
+   An accessor to the contained `UITableView`.
+   */
+  public var innerTable: UITableView {
+    return tableView
+  }
+
   private lazy var staticContentView: UIView = { [unowned self] in
     let view = UIView(frame: self.bounds)
     view.backgroundColor = .whiteColor()
