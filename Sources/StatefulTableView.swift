@@ -157,6 +157,8 @@ extension StatefulTableView {
       if (!triggerPullToRefresh()) {
         refreshControl.endRefreshing()
       }
+    } else {
+      refreshControl.endRefreshing()
     }
   }
 
