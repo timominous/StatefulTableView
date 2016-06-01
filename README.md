@@ -53,7 +53,7 @@ To show custom views, return them through the following statefulDelegate methods
 ```swift
 func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView?
 func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView?
-func func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
+func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
 ```
 
 ## Installation
