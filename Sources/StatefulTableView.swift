@@ -72,7 +72,7 @@ public final class StatefulTableView: UIView {
 
   func commonInit() {
     addSubview(tableView)
-    addSubview(staticContentView)
+    addSubview(dynamicContentView)
 
     refreshControl.addTarget(self,
       action: #selector(refreshControlValueChanged), forControlEvents: .ValueChanged)
@@ -85,7 +85,7 @@ public final class StatefulTableView: UIView {
   override public func layoutSubviews() {
     super.layoutSubviews()
     tableView.frame = bounds
-    staticContentView.frame = bounds
+    dynamicContentView.frame = bounds
   }
 
   internal lazy var tableView = UITableView()
@@ -97,7 +97,7 @@ public final class StatefulTableView: UIView {
     return tableView
   }
 
-  internal lazy var staticContentView: UIView = { [unowned self] in
+  internal lazy var dynamicContentView: UIView = { [unowned self] in
     let view = UIView(frame: self.bounds)
     view.backgroundColor = .whiteColor()
     view.hidden = true
@@ -133,8 +133,8 @@ public final class StatefulTableView: UIView {
     didSet {
       let hidden = viewMode == .Table
 
-      guard staticContentView.hidden != hidden else { return }
-      staticContentView.hidden = hidden
+      guard dynamicContentView.hidden != hidden else { return }
+      dynamicContentView.hidden = hidden
     }
   }
 

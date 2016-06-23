@@ -11,16 +11,16 @@ import UIKit
 extension StatefulTableView {
   // MARK: - Views
 
-  internal func resetStaticContentView(withChildView childView: UIView?) {
-    staticContentView.subviews.forEach { $0.removeFromSuperview() }
+  internal func resetdynamicContentView(withChildView childView: UIView?) {
+    dynamicContentView.subviews.forEach { $0.removeFromSuperview() }
 
     guard let childView = childView else { return }
 
-    staticContentView.addSubview(childView)
+    dynamicContentView.addSubview(childView)
 
     childView.translatesAutoresizingMaskIntoConstraints = false
 
-    pinView(childView, toContainer: staticContentView)
+    pinView(childView, toContainer: dynamicContentView)
   }
 
   internal var viewForInitialLoad: UIView? {

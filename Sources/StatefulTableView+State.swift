@@ -24,9 +24,9 @@ extension StatefulTableView {
     
     switch state {
     case .InitialLoading:
-      resetStaticContentView(withChildView: viewForInitialLoad)
+      resetdynamicContentView(withChildView: viewForInitialLoad)
     case .EmptyOrInitialLoadError:
-      resetStaticContentView(withChildView: viewForEmptyInitialLoad(withError: error))
+      resetdynamicContentView(withChildView: viewForEmptyInitialLoad(withError: error))
     default: break
     }
     
