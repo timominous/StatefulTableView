@@ -41,7 +41,7 @@ public final class StatefulTableView: UIView {
     }
   }
 
-  private enum ViewMode {
+  internal enum ViewMode {
     case Table
     case Static
   }
@@ -129,7 +129,7 @@ public final class StatefulTableView: UIView {
 
   internal var state: State = .Idle
 
-  private var viewMode: ViewMode = .Table {
+  internal var viewMode: ViewMode = .Table {
     didSet {
       let hidden = viewMode == .Table
 
@@ -149,55 +149,10 @@ public final class StatefulTableView: UIView {
 
 }
 
-
-
-// MARK: - States
 extension StatefulTableView {
-  internal func setState(newState: State) {
-    setState(newState, updateView: true, error: nil)
-  }
+  // MARK: - Views
 
-  internal func setState(newState: State, error: NSError?) {
-    setState(newState, updateView: true, error: error)
-  }
-
-  internal func setState(newState: State, updateView: Bool, error: NSError?) {
-    state = newState
-
-    switch state {
-    case .InitialLoading:
-      resetStaticContentView(withChildView: viewForInitialLoad)
-    case .EmptyOrInitialLoadError:
-      resetStaticContentView(withChildView: viewForEmptyInitialLoad(withError: error))
-    default: break
-    }
-
-    switch state {
-    case .Idle:
-      watchForLoadMoreIfApplicable(true)
-    case .EmptyOrInitialLoadError:
-      watchForLoadMoreIfApplicable(false)
-    default: break
-    }
-
-    if updateView {
-      let mode: ViewMode
-
-      switch state {
-      case .InitialLoading: fallthrough
-      case .EmptyOrInitialLoadError:
-        mode = .Static
-      default: mode = .Table
-      }
-
-      viewMode = mode
-    }
-  }
-}
-
-// MARK: - Views
-extension StatefulTableView {
-  private func resetStaticContentView(withChildView childView: UIView?) {
+  internal func resetStaticContentView(withChildView childView: UIView?) {
     staticContentView.subviews.forEach { $0.removeFromSuperview() }
 
     guard let childView = childView else { return }
@@ -209,7 +164,7 @@ extension StatefulTableView {
     pinView(childView, toContainer: staticContentView)
   }
 
-  private var viewForInitialLoad: UIView? {
+  internal var viewForInitialLoad: UIView? {
     if let delegateMethod = statefulDelegate?.statefulTableViewViewForInitialLoad {
       return delegateMethod(self)
     }
@@ -220,7 +175,7 @@ extension StatefulTableView {
     return activityIndicatorView
   }
 
-  private func viewForEmptyInitialLoad(withError error: NSError?) -> UIView? {
+  internal func viewForEmptyInitialLoad(withError error: NSError?) -> UIView? {
     if let delegateMethod = statefulDelegate?.statefulTableViewInitialErrorView {
       return delegateMethod(self, forInitialLoadError: error)
     }
@@ -277,8 +232,9 @@ extension StatefulTableView {
   }
 }
 
-// MARK: - Helpers
 internal extension StatefulTableView {
+  // MARK: - Helpers
+
   internal func pinView(view: UIView, toContainer container: UIView) {
     let attributes: [NSLayoutAttribute] = [.Top, .Bottom, .Leading, .Trailing]
     apply(attributes, ofView: view, toView: container)
