@@ -123,9 +123,9 @@ public final class StatefulTableView: UIView {
    */
   public var loadMoreTriggerThreshold: CGFloat = 64
 
-  private var loadMoreViewIsErrorView = false
-  private var lastLoadMoreError: NSError?
-  private var watchForLoadMore = false
+  internal var loadMoreViewIsErrorView = false
+  internal var lastLoadMoreError: NSError?
+  internal var watchForLoadMore = false
 
   internal var state: State = .Idle
 
@@ -149,107 +149,7 @@ public final class StatefulTableView: UIView {
 
 }
 
-extension StatefulTableView {
-  // MARK: - Load more
 
-  /**
-   Tiggers loading more of data. Also called when the scroll content offset reaches the `loadMoreTriggerThreshold`.
-   */
-  public func triggerLoadMore() {
-    guard !state.isLoading else { return }
-
-    loadMoreViewIsErrorView = false
-    lastLoadMoreError = nil
-    updateLoadMoreView()
-
-    setState(.LoadingMore)
-
-    if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginLoadingMore(self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
-        dispatch_async(dispatch_get_main_queue(), {
-          self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
-        })
-      })
-    }
-  }
-
-  private func updateLoadMoreView() {
-    if watchForLoadMore || lastLoadMoreError != nil {
-      tableView.tableFooterView = viewForLoadingMore(withError: (loadMoreViewIsErrorView ? lastLoadMoreError : nil))
-    } else {
-      tableView.tableFooterView = UIView()
-    }
-  }
-
-  private func viewForLoadingMore(withError error: NSError?) -> UIView? {
-    if let delegateMethod = statefulDelegate?.statefulTableViewLoadMoreErrorView where error != nil {
-      return delegateMethod(self, forLoadMoreError: error)
-    }
-
-    let container = UIView(frame: CGRect(origin: .zero, size: CGSize(width: tableView.bounds.width, height: 44)))
-
-    let sub: UIView
-
-    if let error = error {
-      let label = UILabel()
-      label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = error.localizedDescription
-      label.font = UIFont.systemFontOfSize(12)
-      label.textAlignment = .Center
-      sub = label
-    } else {
-      let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
-      activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-      activityIndicator.startAnimating()
-      sub = activityIndicator
-    }
-
-    container.addSubview(sub)
-    centerView(sub, inContainer: container)
-
-    return container
-  }
-
-  private func setHasFinishedLoadingMore(canLoadMore: Bool, error: NSError?, showErrorView: Bool) {
-    guard state == .LoadingMore else { return }
-
-    self.canLoadMore = canLoadMore
-    loadMoreViewIsErrorView = (error != nil) && showErrorView
-    lastLoadMoreError = error
-
-    setState(.Idle)
-  }
-
-  private func watchForLoadMoreIfApplicable(watch: Bool) {
-    var watch = watch
-
-    if (watch && !canLoadMore) {
-      watch = false
-    }
-    watchForLoadMore = watch
-    updateLoadMoreView()
-
-    triggerLoadMoreIfApplicable(tableView)
-  }
-
-  /**
-   Should be called when scrolling the tableView. This determines when to call `triggerLoadMore`
-
-   - parameter scrollView: The scrolling view.
-   */
-  public func scrollViewDidScroll(scrollView: UIScrollView) {
-    triggerLoadMoreIfApplicable(scrollView)
-  }
-
-  private func triggerLoadMoreIfApplicable(scrollView: UIScrollView) {
-    guard watchForLoadMore && !loadMoreViewIsErrorView else { return }
-
-    let scrollPosition = scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y
-    if scrollPosition < loadMoreTriggerThreshold {
-      triggerLoadMore()
-    }
-  }
-}
 
 // MARK: - States
 extension StatefulTableView {
@@ -378,26 +278,26 @@ extension StatefulTableView {
 }
 
 // MARK: - Helpers
-private extension StatefulTableView {
-  private func pinView(view: UIView, toContainer container: UIView) {
+internal extension StatefulTableView {
+  internal func pinView(view: UIView, toContainer container: UIView) {
     let attributes: [NSLayoutAttribute] = [.Top, .Bottom, .Leading, .Trailing]
     apply(attributes, ofView: view, toView: container)
   }
 
-  private func centerView(view: UIView, inContainer container: UIView) {
+  internal func centerView(view: UIView, inContainer container: UIView) {
     let attributes: [NSLayoutAttribute] = [.CenterX, .CenterY]
     apply(attributes, ofView: view, toView: container)
   }
 
-  private func centerViewHorizontally(view: UIView, inContainer container: UIView) {
+  internal func centerViewHorizontally(view: UIView, inContainer container: UIView) {
     apply([.CenterX], ofView: view, toView: container)
   }
 
-  private func centerViewVertically(view: UIView, inContainer container: UIView) {
+  internal func centerViewVertically(view: UIView, inContainer container: UIView) {
     apply([.CenterY], ofView: view, toView: container)
   }
 
-  private func apply(attributes: [NSLayoutAttribute], ofView childView: UIView, toView containerView: UIView) {
+  internal func apply(attributes: [NSLayoutAttribute], ofView childView: UIView, toView containerView: UIView) {
     let constraints = attributes.map {
       return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .Equal,
         toItem: containerView, attribute: $0, multiplier: 1, constant: 0)
@@ -407,21 +307,21 @@ private extension StatefulTableView {
   }
 }
 
-private extension UIView {
-  private func setWidthConstraintToCurrent() {
+internal extension UIView {
+  internal func setWidthConstraintToCurrent() {
     setWidthConstraint(bounds.width)
   }
 
-  private func setHeightConstraintToCurrent() {
+  internal func setHeightConstraintToCurrent() {
     setHeightConstraint(bounds.height)
   }
 
-  private func setWidthConstraint(width: CGFloat) {
+  internal func setWidthConstraint(width: CGFloat) {
     addConstraint(NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal, toItem: nil,
       attribute: .NotAnAttribute, multiplier: 1, constant: width))
   }
 
-  private func setHeightConstraint(height: CGFloat) {
+  internal func setHeightConstraint(height: CGFloat) {
     addConstraint(NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal, toItem: nil,
       attribute: .NotAnAttribute, multiplier: 1, constant: height))
   }
