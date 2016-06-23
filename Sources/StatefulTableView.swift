@@ -12,7 +12,7 @@ import UIKit
  Drop-in replacement for `UITableView` that supports pull-to-refresh, load-more, initial load, and empty states.
  */
 public final class StatefulTableView: UIView {
-  private enum State {
+  internal enum State {
     case Idle
     case InitialLoading
     case InitialLoadingTableView
@@ -104,7 +104,7 @@ public final class StatefulTableView: UIView {
     return view
   }()
 
-  private lazy var refreshControl = UIRefreshControl()
+  internal lazy var refreshControl = UIRefreshControl()
 
   // MARK: - Properties
 
@@ -127,7 +127,7 @@ public final class StatefulTableView: UIView {
   private var lastLoadMoreError: NSError?
   private var watchForLoadMore = false
 
-  private var state: State = .Idle
+  internal var state: State = .Idle
 
   private var viewMode: ViewMode = .Table {
     didSet {
@@ -147,55 +147,6 @@ public final class StatefulTableView: UIView {
    */
   weak public var statefulDelegate: StatefulTableDelegate?
 
-}
-
-extension StatefulTableView {
-  // MARK: - Pull to refresh
-
-  func refreshControlValueChanged() {
-    if state != .LoadingFromPullToRefresh && !state.isLoading {
-      if (!triggerPullToRefresh()) {
-        refreshControl.endRefreshing()
-      }
-    } else {
-      refreshControl.endRefreshing()
-    }
-  }
-
-  /**
-   Triggers pull to refresh programatically. Also called when the user pulls down to refresh on the tableView.
-
-   - returns: Boolean for success status.
-   */
-  public func triggerPullToRefresh() -> Bool {
-    guard !state.isLoading && canPullToRefresh else { return false }
-
-    self.setState(.LoadingFromPullToRefresh, updateView: false, error: nil)
-
-    if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginLoadingFromRefresh(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        dispatch_async(dispatch_get_main_queue(), {
-          self?.setHasFinishedLoadingFromPullToRefresh(tableIsEmpty, error: errorOrNil)
-        })
-      })
-    }
-
-    refreshControl.beginRefreshing()
-
-    return true
-  }
-
-  private func setHasFinishedLoadingFromPullToRefresh(tableIsEmpty: Bool, error: NSError?) {
-    guard state == .LoadingFromPullToRefresh else { return }
-
-    refreshControl.endRefreshing()
-
-    if tableIsEmpty {
-      self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
-    } else {
-      self.setState(.Idle)
-    }
-  }
 }
 
 extension StatefulTableView {
@@ -352,15 +303,15 @@ extension StatefulTableView {
 
 // MARK: - States
 extension StatefulTableView {
-  private func setState(newState: State) {
+  internal func setState(newState: State) {
     setState(newState, updateView: true, error: nil)
   }
 
-  private func setState(newState: State, error: NSError?) {
+  internal func setState(newState: State, error: NSError?) {
     setState(newState, updateView: true, error: error)
   }
 
-  private func setState(newState: State, updateView: Bool, error: NSError?) {
+  internal func setState(newState: State, updateView: Bool, error: NSError?) {
     state = newState
 
     switch state {
