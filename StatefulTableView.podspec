@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 	s.name = 'StatefulTableView'
-	s.version = '0.0.14'
+	s.version = '0.0.15'
 	s.license = {
 		:type => 'MIT',
 		:file => 'LICENSE'
