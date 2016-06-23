@@ -150,56 +150,6 @@ public final class StatefulTableView: UIView {
 }
 
 extension StatefulTableView {
-  // MARK: - Initial load
-
-  /**
-   Triggers initial load of data programatically. Defaults to hiding the tableView.
-
-   - returns: Boolean for success status.
-   */
-  public func triggerInitialLoad() -> Bool {
-    return triggerInitialLoad(false)
-  }
-
-  /**
-   Triggers initial load of data programatically.
-
-   - parameter shouldShowTableView: Control if the container should show the tableView or not.
-
-   - returns: Boolean for success status.
-   */
-  public func triggerInitialLoad(shouldShowTableView: Bool) -> Bool {
-    guard !state.isLoading else { return false }
-
-    if shouldShowTableView {
-      self.setState(.InitialLoadingTableView)
-    } else {
-      self.setState(.InitialLoading)
-    }
-
-    if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginInitialLoad(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        dispatch_async(dispatch_get_main_queue(), {
-          self?.setHasFinishedInitialLoad(tableIsEmpty, error: errorOrNil)
-        })
-      })
-    }
-
-    return true
-  }
-
-  private func setHasFinishedInitialLoad(tableIsEmpty: Bool, error: NSError?) {
-    guard state.isInitialLoading else { return }
-
-    if tableIsEmpty {
-      self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
-    } else {
-      self.setState(.Idle)
-    }
-  }
-}
-
-extension StatefulTableView {
   // MARK: - Load more
 
   /**
