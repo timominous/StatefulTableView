@@ -3,6 +3,7 @@
 [![License](https://img.shields.io/cocoapods/l/StatefulTableView.svg?style=flat)](http://cocoadocs.org/docsets/StatefulTableView)
 [![Platform](https://img.shields.io/cocoapods/p/StatefulTableView.svg?style=flat)](http://cocoadocs.org/docsets/StatefulTableView)
 [![Platform](https://img.shields.io/cocoapods/metrics/doc-percent/StatefulTableView.svg?style=flat)](http://cocoadocs.org/docsets/StatefulTableView)
+[![Build Status](https://travis-ci.org/timominous/StatefulTableView.svg?branch=master)](https://travis-ci.org/timominous/StatefulTableView)
 
 Custom UITableView container class that supports pull-to-refresh, load-more, initial load, and empty states. This library aims to be a drop in replacement for `UITableView`. Swift port of [SKStatefulTableViewController](http://github.com/shiki/SKStatefulTableViewController).
 
@@ -63,7 +64,7 @@ func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError
 Add this to your Podfile.
 
 ```ruby
-pod 'StatefulTableView', '0.0.15'
+pod 'StatefulTableView', '0.0.16'
 ```
 
 ### Credits
