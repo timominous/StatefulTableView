@@ -16,8 +16,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/numberOfRowsInSection:) for more details.
    */
-  public func numberOfRowsInSection(section: Int) -> Int {
-    return tableView.numberOfRowsInSection(section)
+  public func numberOfRowsInSection(_ section: Int) -> Int {
+    return tableView.numberOfRows(inSection: section)
   }
 
   /**
@@ -102,8 +102,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/registerNib:forCellReuseIdentifier:) for more details.
    */
   @available(iOS 5.0, *)
-  public func registerNib(nib: UINib?, forCellReuseIdentifier identifier: String) {
-    tableView.registerNib(nib, forCellReuseIdentifier: identifier)
+  public func registerNib(_ nib: UINib?, forCellReuseIdentifier identifier: String) {
+    tableView.register(nib, forCellReuseIdentifier: identifier)
   }
 
   /**
@@ -112,8 +112,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/registerClass:forCellReuseIdentifier:) for more details.
    */
   @available(iOS 6.0, *)
-  public func registerClass(cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
-    tableView.registerClass(cellClass, forCellReuseIdentifier: identifier)
+  public func registerClass(_ cellClass: AnyClass?, forCellReuseIdentifier identifier: String) {
+    tableView.register(cellClass, forCellReuseIdentifier: identifier)
   }
 
   /**
@@ -122,8 +122,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/dequeueReusableCellWithIdentifier:forIndexPath:) for more details.
    */
   @available(iOS 6.0, *)
-  public func dequeueReusableCellWithIdentifier(identifier: String, forIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    return tableView.dequeueReusableCellWithIdentifier(identifier, forIndexPath: indexPath)
+  public func dequeueReusableCellWithIdentifier(_ identifier: String, forIndexPath indexPath: IndexPath) -> UITableViewCell {
+    return tableView.dequeueReusableCell(withIdentifier: identifier, for: indexPath)
   }
 
   /**
@@ -131,8 +131,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/dequeueReusableCellWithIdentifier:) for more details.
    */
-  public func dequeueReusableCellWithIdentifier(identifier: String) -> UITableViewCell? {
-    return tableView.dequeueReusableCellWithIdentifier(identifier)
+  public func dequeueReusableCellWithIdentifier(_ identifier: String) -> UITableViewCell? {
+    return tableView.dequeueReusableCell(withIdentifier: identifier)
   }
 }
 
@@ -145,8 +145,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/registerNib:forHeaderFooterViewReuseIdentifier:) for more details.
    */
   @available(iOS 6.0, *)
-  public func registerNib(nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
-    tableView.registerNib(nib, forHeaderFooterViewReuseIdentifier: identifier)
+  public func registerNib(_ nib: UINib?, forHeaderFooterViewReuseIdentifier identifier: String) {
+    tableView.register(nib, forHeaderFooterViewReuseIdentifier: identifier)
   }
 
   /**
@@ -155,8 +155,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/registerClass:forHeaderFooterViewReuseIdentifier:) for more details.
    */
   @available(iOS 6.0, *)
-  public func registerClass(aClass: AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
-    tableView.registerClass(aClass, forHeaderFooterViewReuseIdentifier: identifier)
+  public func registerClass(_ aClass: AnyClass?, forHeaderFooterViewReuseIdentifier identifier: String) {
+    tableView.register(aClass, forHeaderFooterViewReuseIdentifier: identifier)
   }
 
   /**
@@ -165,8 +165,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/dequeueReusableHeaderFooterViewWithIdentifier:) for more details.
    */
   @available(iOS 6.0, *)
-  public func dequeueReusableHeaderFooterViewWithIdentifier(identifier: String) -> UITableViewHeaderFooterView? {
-    return tableView.dequeueReusableHeaderFooterViewWithIdentifier(identifier)
+  public func dequeueReusableHeaderFooterViewWithIdentifier(_ identifier: String) -> UITableViewHeaderFooterView? {
+    return tableView.dequeueReusableHeaderFooterView(withIdentifier: identifier)
   }
 
   /**
@@ -215,8 +215,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/headerViewForSection:) for more details.
    */
   @available(iOS 6.0, *)
-  public func headerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
-    return tableView.headerViewForSection(section)
+  public func headerViewForSection(_ section: Int) -> UITableViewHeaderFooterView? {
+    return tableView.headerView(forSection: section)
   }
 
   /**
@@ -225,8 +225,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/footerViewForSection:) for more details.
    */
   @available(iOS 6.0, *)
-  public func footerViewForSection(section: Int) -> UITableViewHeaderFooterView? {
-    return tableView.footerViewForSection(section)
+  public func footerViewForSection(_ section: Int) -> UITableViewHeaderFooterView? {
+    return tableView.footerView(forSection: section)
   }
 }
 
@@ -238,8 +238,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/cellForRowAtIndexPath:) for more details.
    */
-  public func cellForRowAtIndexPath(indexPath: NSIndexPath) -> UITableViewCell? {
-    return tableView.cellForRowAtIndexPath(indexPath)
+  public func cellForRowAtIndexPath(_ indexPath: IndexPath) -> UITableViewCell? {
+    return tableView.cellForRow(at: indexPath)
   }
 
   /**
@@ -247,8 +247,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/indexPathForCell:) for more details.
    */
-  public func indexPathForCell(cell: UITableViewCell) -> NSIndexPath? {
-    return tableView.indexPathForCell(cell)
+  public func indexPathForCell(_ cell: UITableViewCell) -> IndexPath? {
+    return tableView.indexPath(for: cell)
   }
 
   /**
@@ -256,8 +256,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/indexPathForRowAtPoint:) for more details.
    */
-  public func indexPathForRowAtPoint(point: CGPoint) -> NSIndexPath? {
-    return tableView.indexPathForRowAtPoint(point)
+  public func indexPathForRowAtPoint(_ point: CGPoint) -> IndexPath? {
+    return tableView.indexPathForRow(at: point)
   }
 
   /**
@@ -265,8 +265,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/indexPathsForRowsInRect:) for more details.
    */
-  public func indexPathsForRowsInRect(rect: CGRect) -> [NSIndexPath]? {
-    return tableView.indexPathsForRowsInRect(rect)
+  public func indexPathsForRowsInRect(_ rect: CGRect) -> [IndexPath]? {
+    return tableView.indexPathsForRows(in: rect)
   }
 
   /**
@@ -283,7 +283,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/indexPathsForVisibleRows) for more details.
    */
-  public var indexPathsForVisibleRows: [NSIndexPath]? {
+  public var indexPathsForVisibleRows: [IndexPath]? {
     return tableView.indexPathsForVisibleRows;
   }
 }
@@ -333,8 +333,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/scrollToRowAtIndexPath:atScrollPosition:animated:) for more details.
    */
-  public func scrollToRowAtIndexPath(indexPath: NSIndexPath, atScrollPosition scrollPosition: UITableViewScrollPosition, animated: Bool) {
-    tableView.scrollToRowAtIndexPath(indexPath, atScrollPosition: scrollPosition, animated: animated)
+  public func scrollToRowAtIndexPath(_ indexPath: IndexPath, atScrollPosition scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
   }
 
   /**
@@ -342,8 +342,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/scrollToNearestSelectedRowAtScrollPosition:animated:) for more details.
    */
-  public func scrollToNearestSelectedRowAtScrollPosition(scrollPosition: UITableViewScrollPosition, animated: Bool) {
-    tableView.scrollToNearestSelectedRowAtScrollPosition(scrollPosition, animated: animated)
+  public func scrollToNearestSelectedRowAtScrollPosition(_ scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    tableView.scrollToNearestSelectedRow(at: scrollPosition, animated: animated)
   }
 }
 
@@ -355,7 +355,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/indexPathForSelectedRow) for more details.
    */
-  public var indexPathForSelectedRow: NSIndexPath? {
+  public var indexPathForSelectedRow: IndexPath? {
     return tableView.indexPathForSelectedRow
   }
 
@@ -365,7 +365,7 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/indexPathsForSelectedRows) for more details.
    */
   @available(iOS 5.0, *)
-  public var indexPathsForSelectedRows: [NSIndexPath]? {
+  public var indexPathsForSelectedRows: [IndexPath]? {
     return tableView.indexPathsForSelectedRows
   }
 
@@ -374,8 +374,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/selectRowAtIndexPath:animated:scrollPosition:) for more details.
    */
-  public func selectRowAtIndexPath(indexPath: NSIndexPath?, animated: Bool, scrollPosition: UITableViewScrollPosition) {
-    tableView.selectRowAtIndexPath(indexPath, animated: animated, scrollPosition: scrollPosition)
+  public func selectRowAtIndexPath(_ indexPath: IndexPath?, animated: Bool, scrollPosition: UITableViewScrollPosition) {
+    tableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
   }
 
   /**
@@ -383,8 +383,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/deselectRowAtIndexPath:animated:) for more details.
    */
-  public func deselectRowAtIndexPath(indexPath: NSIndexPath, animated: Bool) {
-    tableView.deselectRowAtIndexPath(indexPath, animated: animated)
+  public func deselectRowAtIndexPath(_ indexPath: IndexPath, animated: Bool) {
+    tableView.deselectRow(at: indexPath, animated: animated)
   }
 
   /**
@@ -457,8 +457,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/insertRowsAtIndexPaths:withRowAnimation:) for more details.
    */
-  public func insertRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.insertRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+  public func insertRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.insertRows(at: indexPaths, with: animation)
   }
 
   /**
@@ -466,8 +466,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/deleteRowsAtIndexPaths:withRowAnimation:) for more details.
    */
-  public func deleteRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.deleteRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+  public func deleteRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.deleteRows(at: indexPaths, with: animation)
   }
 
   /**
@@ -476,8 +476,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/moveRowAtIndexPath:toIndexPath:) for more details.
    */
   @available(iOS 5.0, *)
-  public func moveRowAtIndexPath(indexPath: NSIndexPath, toIndexPath newIndexPath: NSIndexPath) {
-    tableView.moveRowAtIndexPath(indexPath, toIndexPath: newIndexPath)
+  public func moveRowAtIndexPath(_ indexPath: IndexPath, toIndexPath newIndexPath: IndexPath) {
+    tableView.moveRow(at: indexPath, to: newIndexPath)
   }
 
   /**
@@ -485,8 +485,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/insertSections:withRowAnimation:) for more details.
    */
-  public func insertSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.insertSections(sections, withRowAnimation: animation)
+  public func insertSections(_ sections: IndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.insertSections(sections, with: animation)
   }
 
   /**
@@ -494,8 +494,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/deleteSections:withRowAnimation:) for more details.
    */
-  public func deleteSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.deleteSections(sections, withRowAnimation: animation)
+  public func deleteSections(_ sections: IndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.deleteSections(sections, with: animation)
   }
 
   /**
@@ -504,7 +504,7 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/moveSection:toSection:) for more details.
    */
   @available(iOS 5.0, *)
-  public func moveSection(section: Int, toSection newSection: Int) {
+  public func moveSection(_ section: Int, toSection newSection: Int) {
     tableView.moveSection(section, toSection: newSection)
   }
 }
@@ -518,8 +518,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/editing) for more details.
    */
   public var editing: Bool {
-    set { tableView.editing = newValue }
-    get { return tableView.editing }
+    set { tableView.isEditing = newValue }
+    get { return tableView.isEditing }
   }
 
   /**
@@ -527,7 +527,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/setEditing:animated:) for more details.
    */
-  public func setEditing(editing: Bool, animated: Bool) {
+  public func setEditing(_ editing: Bool, animated: Bool) {
     tableView.setEditing(editing, animated: animated)
   }
 }
@@ -541,7 +541,7 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/reloadData) for more details.
    */
   public func reloadData() {
-    dispatch_async(dispatch_get_main_queue()) {
+    DispatchQueue.main.async {
       self.tableView.reloadData()
     }
   }
@@ -552,8 +552,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/reloadRowsAtIndexPaths:withRowAnimation:) for more details.
    */
   @available(iOS 3.0, *)
-  public func reloadRowsAtIndexPaths(indexPaths: [NSIndexPath], withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.reloadRowsAtIndexPaths(indexPaths, withRowAnimation: animation)
+  public func reloadRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.reloadRows(at: indexPaths, with: animation)
   }
 
   /**
@@ -562,8 +562,8 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/reloadSections:withRowAnimation:) for more details.
    */
   @available(iOS 3.0, *)
-  public func reloadSections(sections: NSIndexSet, withRowAnimation animation: UITableViewRowAnimation) {
-    tableView.reloadSections(sections, withRowAnimation: animation)
+  public func reloadSections(_ sections: IndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    tableView.reloadSections(sections, with: animation)
   }
 
   /**
@@ -573,7 +573,7 @@ extension StatefulTableView {
    */
   @available(iOS 3.0, *)
   public func reloadSectionIndexTitles() {
-    dispatch_async(dispatch_get_main_queue()) {
+    DispatchQueue.main.async {
       self.tableView.reloadSectionIndexTitles()
     }
   }
@@ -587,8 +587,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/rectForSection:) for more details.
    */
-  public func rectForSection(section: Int) -> CGRect {
-    return tableView.rectForSection(section)
+  public func rectForSection(_ section: Int) -> CGRect {
+    return tableView.rect(forSection: section)
   }
 
   /**
@@ -596,8 +596,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/rectForRowAtIndexPath:) for more details.
    */
-  public func rectForRowRowAtIndexPath(indexPath: NSIndexPath) -> CGRect {
-    return tableView.rectForRowAtIndexPath(indexPath)
+  public func rectForRowRowAtIndexPath(_ indexPath: IndexPath) -> CGRect {
+    return tableView.rectForRow(at: indexPath)
   }
 
   /**
@@ -605,8 +605,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/rectForFooterInSection:) for more details.
    */
-  public func rectForFooterInSection(section: Int) -> CGRect {
-    return tableView.rectForFooterInSection(section)
+  public func rectForFooterInSection(_ section: Int) -> CGRect {
+    return tableView.rectForFooter(inSection: section)
   }
 
   /**
@@ -614,8 +614,8 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](Returns the drawing area for the header of the specified section.) for more details.
    */
-  public func rectFotHeaderInSection(section: Int) -> CGRect {
-    return tableView.rectForHeaderInSection(section)
+  public func rectFotHeaderInSection(_ section: Int) -> CGRect {
+    return tableView.rectForHeader(inSection: section)
   }
 }
 

@@ -13,19 +13,19 @@ import UIKit
  */
 public final class StatefulTableView: UIView {
   internal enum State {
-    case Idle
-    case InitialLoading
-    case InitialLoadingTableView
-    case EmptyOrInitialLoadError
-    case LoadingFromPullToRefresh
-    case LoadingMore
+    case idle
+    case initialLoading
+    case initialLoadingTableView
+    case emptyOrInitialLoadError
+    case loadingFromPullToRefresh
+    case loadingMore
 
     var isLoading: Bool {
       switch self {
-      case .InitialLoading: fallthrough
-      case .InitialLoadingTableView: fallthrough
-      case .LoadingFromPullToRefresh: fallthrough
-      case .LoadingMore:
+      case .initialLoading: fallthrough
+      case .initialLoadingTableView: fallthrough
+      case .loadingFromPullToRefresh: fallthrough
+      case .loadingMore:
         return true
       default: return false
       }
@@ -33,8 +33,8 @@ public final class StatefulTableView: UIView {
 
     var isInitialLoading: Bool {
       switch self {
-      case .InitialLoading: fallthrough
-      case .InitialLoadingTableView:
+      case .initialLoading: fallthrough
+      case .initialLoadingTableView:
         return true
       default: return false
       }
@@ -42,8 +42,8 @@ public final class StatefulTableView: UIView {
   }
 
   internal enum ViewMode {
-    case Table
-    case Static
+    case table
+    case `static`
   }
 
   /**
@@ -75,7 +75,7 @@ public final class StatefulTableView: UIView {
     addSubview(dynamicContentView)
 
     refreshControl.addTarget(self,
-      action: #selector(refreshControlValueChanged), forControlEvents: .ValueChanged)
+      action: #selector(refreshControlValueChanged), for: .valueChanged)
     tableView.addSubview(refreshControl)
   }
 
@@ -99,8 +99,8 @@ public final class StatefulTableView: UIView {
 
   internal lazy var dynamicContentView: UIView = { [unowned self] in
     let view = UIView(frame: self.bounds)
-    view.backgroundColor = .whiteColor()
-    view.hidden = true
+    view.backgroundColor = .white
+    view.isHidden = true
     return view
   }()
 
@@ -127,14 +127,14 @@ public final class StatefulTableView: UIView {
   internal var lastLoadMoreError: NSError?
   internal var watchForLoadMore = false
 
-  internal var state: State = .Idle
+  internal var state: State = .idle
 
-  internal var viewMode: ViewMode = .Table {
+  internal var viewMode: ViewMode = .table {
     didSet {
-      let hidden = viewMode == .Table
+      let hidden = viewMode == .table
 
-      guard dynamicContentView.hidden != hidden else { return }
-      dynamicContentView.hidden = hidden
+      guard dynamicContentView.isHidden != hidden else { return }
+      dynamicContentView.isHidden = hidden
     }
   }
 
