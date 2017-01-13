@@ -1,0 +1,8 @@
+language: objective-c
+
+branches:
+  only:
+    - master
+
+script:
+  - xctool -workspace ./Demo/Demo.xcworkspace -scheme Demo -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
