@@ -14,7 +14,7 @@ import UIKit
  - parameter tableIsEmpty: Describes if the table is empty.
  - parameter errorOrNil:   Describes the error received from loading. May be nil.
  */
-public typealias InitialLoadCompletionHandler = (tableIsEmpty: Bool, errorOrNil: NSError?) -> Void
+public typealias InitialLoadCompletionHandler = (_ isTableEmpty: Bool, _ errorOrNil: NSError?) -> Void
 
 /**
  A closure declaration describing if the table can load more, received an error, and should show an error view.
@@ -23,7 +23,7 @@ public typealias InitialLoadCompletionHandler = (tableIsEmpty: Bool, errorOrNil:
  - parameter errorOrNil:    Describes the error received from loading. May be nil.
  - parameter showErrorView: Describes if an error view should be shown.
  */
-public typealias LoadMoreCompletionHandler = (canLoadMore: Bool, errorOrNil: NSError?, showErrorView: Bool) -> Void
+public typealias LoadMoreCompletionHandler = (_ canLoadMore: Bool, _ errorOrNil: NSError?, _ showErrorView: Bool) -> Void
 
 /**
  This protocol represents the loading behavior of the `StatefulTableView`.
