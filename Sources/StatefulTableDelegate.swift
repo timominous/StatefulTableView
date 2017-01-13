@@ -64,7 +64,7 @@ public typealias LoadMoreCompletionHandler = (_ canLoadMore: Bool, _ errorOrNil:
 
    - returns: An optional view to show.
    */
-  optional func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView?
+  @objc optional func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView?
 
   /**
    This delegate method will be called when the tableView is in need of a view to show when it's done loading initially and no data/an error was found.
@@ -74,7 +74,7 @@ public typealias LoadMoreCompletionHandler = (_ canLoadMore: Bool, _ errorOrNil:
 
    - returns: An optional view to show.
    */
-  optional func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView?
+  @objc optional func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView?
 
   /**
    This delegate method will be called when the tableView failed to load more data.
@@ -84,5 +84,5 @@ public typealias LoadMoreCompletionHandler = (_ canLoadMore: Bool, _ errorOrNil:
 
    - returns: An optional view to show.
    */
-  optional func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
+  @objc optional func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
 }
