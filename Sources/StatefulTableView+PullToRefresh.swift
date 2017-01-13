@@ -32,8 +32,8 @@ extension StatefulTableView {
     self.setState(.LoadingFromPullToRefresh, updateView: false, error: nil)
 
     if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginLoadingFromRefresh(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        dispatch_async(dispatch_get_main_queue(), {
+      delegate.statefulTableViewWillBeginLoadingFromRefresh(tvc: self, handler: { [weak self](tableIsEmpty, errorOrNil) in
+        DispatchQueue.main.async(execute: {
           self?.setHasFinishedLoadingFromPullToRefresh(tableIsEmpty, error: errorOrNil)
         })
       })

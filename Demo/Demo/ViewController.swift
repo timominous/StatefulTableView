@@ -38,12 +38,12 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: StatefulTableDelegate {
-  func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: InitialLoadCompletionHandler) {
+  func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping (Bool, NSError?) -> Void) {
     items = Int(arc4random_uniform(15))
     let empty = items == 0
 
-    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * NSEC_PER_SEC))
-    dispatch_after(time, dispatch_get_main_queue()) {
+    let time = DispatchTime.now() + Double(Int64(3 * NSEC_PER_SEC)) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: time) {
       let error = NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
       tvc.reloadData()
       handler(tableIsEmpty: empty, errorOrNil: error)
@@ -54,8 +54,8 @@ extension ViewController: StatefulTableDelegate {
     items = Int(arc4random_uniform(15))
     let empty = items == 0
 
-    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * NSEC_PER_SEC))
-    dispatch_after(time, dispatch_get_main_queue()) {
+    let time = DispatchTime.now() + Double(Int64(3 * NSEC_PER_SEC)) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: time) {
       let error = NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
       tvc.reloadData()
       handler(tableIsEmpty: empty, errorOrNil: error)
@@ -66,8 +66,8 @@ extension ViewController: StatefulTableDelegate {
     items += Int(arc4random_uniform(20))
     let loadMore = items < 50
 
-    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(3 * NSEC_PER_SEC))
-    dispatch_after(time, dispatch_get_main_queue()) {
+    let time = DispatchTime.now() + Double(Int64(3 * NSEC_PER_SEC)) / Double(NSEC_PER_SEC)
+    DispatchQueue.main.asyncAfter(deadline: time) {
       let error = NSError(domain: "test", code: 1, userInfo: [NSLocalizedDescriptionKey: "Unknown error"])
       tvc.reloadData()
       handler(canLoadMore: loadMore, errorOrNil: error, showErrorView: !loadMore)

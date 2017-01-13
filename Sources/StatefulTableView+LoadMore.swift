@@ -24,8 +24,8 @@ extension StatefulTableView {
     setState(.LoadingMore)
 
     if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginLoadingMore(self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
-        dispatch_async(dispatch_get_main_queue(), {
+      delegate.statefulTableViewWillBeginLoadingMore(tvc: self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
+        DispatchQueue.main.async(execute: {
           self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
         })
       })
