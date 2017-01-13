@@ -47,7 +47,7 @@ extension StatefulTableView {
     return true
   }
 
-  private func setHasFinishedInitialLoad(tableIsEmpty: Bool, error: NSError?) {
+  fileprivate func setHasFinishedInitialLoad(_ tableIsEmpty: Bool, error: NSError?) {
     guard state.isInitialLoading else { return }
 
     if tableIsEmpty {

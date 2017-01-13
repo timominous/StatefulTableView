@@ -41,8 +41,8 @@ extension StatefulTableView {
   }
 
   internal func viewForLoadingMore(withError error: NSError?) -> UIView? {
-    if let delegateMethod = statefulDelegate?.statefulTableViewLoadMoreErrorView where error != nil {
-      return delegateMethod(self, forLoadMoreError: error)
+    if let delegateMethod = statefulDelegate?.statefulTableViewLoadMoreErrorView, error != nil {
+      return delegateMethod(self, error)
     }
 
     let container = UIView(frame: CGRect(origin: .zero, size: CGSize(width: tableView.bounds.width, height: 44)))
@@ -79,7 +79,7 @@ extension StatefulTableView {
     setState(.idle)
   }
 
-  internal func watchForLoadMoreIfApplicable(watch: Bool) {
+  internal func watchForLoadMoreIfApplicable(_ watch: Bool) {
     var watch = watch
 
     if (watch && !canLoadMore) {
@@ -96,11 +96,11 @@ extension StatefulTableView {
 
    - parameter scrollView: The scrolling view.
    */
-  public func scrollViewDidScroll(scrollView: UIScrollView) {
+  public func scrollViewDidScroll(_ scrollView: UIScrollView) {
     triggerLoadMoreIfApplicable(scrollView)
   }
 
-  internal func triggerLoadMoreIfApplicable(scrollView: UIScrollView) {
+  internal func triggerLoadMoreIfApplicable(_ scrollView: UIScrollView) {
     guard watchForLoadMore && !loadMoreViewIsErrorView else { return }
 
     let scrollPosition = scrollView.contentSize.height - scrollView.frame.size.height - scrollView.contentOffset.y

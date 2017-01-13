@@ -11,15 +11,15 @@ import Foundation
 extension StatefulTableView {
   // MARK: - States
   
-  internal func setState(newState: State) {
+  internal func setState(_ newState: State) {
     setState(newState, updateView: true, error: nil)
   }
   
-  internal func setState(newState: State, error: NSError?) {
+  internal func setState(_ newState: State, error: NSError?) {
     setState(newState, updateView: true, error: error)
   }
   
-  internal func setState(newState: State, updateView: Bool, error: NSError?) {
+  internal func setState(_ newState: State, updateView: Bool, error: NSError?) {
     state = newState
     
     switch state {

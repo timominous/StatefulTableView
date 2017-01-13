@@ -36,7 +36,7 @@ extension StatefulTableView {
 
   internal func viewForEmptyInitialLoad(withError error: NSError?) -> UIView? {
     if let delegateMethod = statefulDelegate?.statefulTableViewInitialErrorView {
-      return delegateMethod(self, forInitialLoadError: error)
+      return delegateMethod(self, error)
     }
 
     let container = UIView(frame: .zero)
