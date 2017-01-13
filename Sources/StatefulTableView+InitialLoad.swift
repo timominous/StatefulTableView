@@ -27,18 +27,18 @@ extension StatefulTableView {
 
    - returns: Boolean for success status.
    */
-  public func triggerInitialLoad(shouldShowTableView: Bool) -> Bool {
+  public func triggerInitialLoad(_ shouldShowTableView: Bool) -> Bool {
     guard !state.isLoading else { return false }
 
     if shouldShowTableView {
-      self.setState(.InitialLoadingTableView)
+      self.setState(.initialLoadingTableView)
     } else {
-      self.setState(.InitialLoading)
+      self.setState(.initialLoading)
     }
 
     if let delegate = statefulDelegate {
       delegate.statefulTableViewWillBeginInitialLoad(self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        dispatch_async(dispatch_get_main_queue(), {
+        DispatchQueue.main.async(execute: {
           self?.setHasFinishedInitialLoad(tableIsEmpty, error: errorOrNil)
         })
       })
@@ -47,13 +47,13 @@ extension StatefulTableView {
     return true
   }
 
-  private func setHasFinishedInitialLoad(tableIsEmpty: Bool, error: NSError?) {
+  fileprivate func setHasFinishedInitialLoad(_ tableIsEmpty: Bool, error: NSError?) {
     guard state.isInitialLoading else { return }
 
     if tableIsEmpty {
-      self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
+      self.setState(.emptyOrInitialLoadError, updateView: true, error: error)
     } else {
-      self.setState(.Idle)
+      self.setState(.idle)
     }
   }
 }
