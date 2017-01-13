@@ -37,7 +37,7 @@ public typealias LoadMoreCompletionHandler = (_ canLoadMore: Bool, _ errorOrNil:
    - parameter tvc:     The tableView calling the method.
    - parameter handler: The completion handler describing if the table is empty and if there is an error.
    */
-  func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: InitialLoadCompletionHandler)
+  func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler)
 
   /**
    This delegate method will be called when the user pulls down to refresh.
@@ -45,7 +45,7 @@ public typealias LoadMoreCompletionHandler = (_ canLoadMore: Bool, _ errorOrNil:
    - parameter tvc:     The tableView calling the method.
    - parameter handler: The completion handler describing if the table is empty and if there is an error.
    */
-  func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: InitialLoadCompletionHandler)
+  func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping InitialLoadCompletionHandler)
 
   /**
    This delegate method will be called when the user scrolls to load more.
@@ -53,7 +53,7 @@ public typealias LoadMoreCompletionHandler = (_ canLoadMore: Bool, _ errorOrNil:
    - parameter tvc:     The tableView calling the method.
    - parameter handler: The completion handler describing if the table can load more, has an error, and should show an error view.
    */
-  func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: LoadMoreCompletionHandler)
+  func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: @escaping LoadMoreCompletionHandler)
 
   // MARK: - Using Custom Views
 
