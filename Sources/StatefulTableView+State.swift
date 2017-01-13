@@ -23,17 +23,17 @@ extension StatefulTableView {
     state = newState
     
     switch state {
-    case .InitialLoading:
+    case .initialLoading:
       resetdynamicContentView(withChildView: viewForInitialLoad)
-    case .EmptyOrInitialLoadError:
+    case .emptyOrInitialLoadError:
       resetdynamicContentView(withChildView: viewForEmptyInitialLoad(withError: error))
     default: break
     }
     
     switch state {
-    case .Idle:
+    case .idle:
       watchForLoadMoreIfApplicable(true)
-    case .EmptyOrInitialLoadError:
+    case .emptyOrInitialLoadError:
       watchForLoadMoreIfApplicable(false)
     default: break
     }
@@ -42,10 +42,10 @@ extension StatefulTableView {
       let mode: ViewMode
       
       switch state {
-      case .InitialLoading: fallthrough
-      case .EmptyOrInitialLoadError:
-        mode = .Static
-      default: mode = .Table
+      case .initialLoading: fallthrough
+      case .emptyOrInitialLoadError:
+        mode = .static
+      default: mode = .table
       }
       
       viewMode = mode

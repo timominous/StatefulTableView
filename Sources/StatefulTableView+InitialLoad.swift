@@ -31,9 +31,9 @@ extension StatefulTableView {
     guard !state.isLoading else { return false }
 
     if shouldShowTableView {
-      self.setState(.InitialLoadingTableView)
+      self.setState(.initialLoadingTableView)
     } else {
-      self.setState(.InitialLoading)
+      self.setState(.initialLoading)
     }
 
     if let delegate = statefulDelegate {
@@ -51,9 +51,9 @@ extension StatefulTableView {
     guard state.isInitialLoading else { return }
 
     if tableIsEmpty {
-      self.setState(.EmptyOrInitialLoadError, updateView: true, error: error)
+      self.setState(.emptyOrInitialLoadError, updateView: true, error: error)
     } else {
-      self.setState(.Idle)
+      self.setState(.idle)
     }
   }
 }

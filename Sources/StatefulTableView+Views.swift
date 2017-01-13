@@ -28,7 +28,7 @@ extension StatefulTableView {
       return delegateMethod(self)
     }
 
-    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
     activityIndicatorView.startAnimating()
 
     return activityIndicatorView
@@ -48,7 +48,7 @@ extension StatefulTableView {
 
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.textAlignment = .Center
+    label.textAlignment = .center
     label.text = error?.localizedDescription ?? "No records found"
     label.sizeToFit()
 
@@ -57,16 +57,16 @@ extension StatefulTableView {
 
     centered.addSubview(label)
 
-    apply([.Top, .CenterX], ofView: label, toView: centered)
+    apply([.top, .centerX], ofView: label, toView: centered)
 
     centeredSize.width = label.bounds.width
     centeredSize.height = label.bounds.height
 
     if let _ = error {
-      let button = UIButton(type: .System)
+      let button = UIButton(type: .system)
       button.translatesAutoresizingMaskIntoConstraints = false
-      button.setTitle("Try Again", forState: .Normal)
-      button.addTarget(self, action: #selector(triggerInitialLoad(_:)), forControlEvents: .TouchUpInside)
+      button.setTitle("Try Again", for: UIControlState())
+      button.addTarget(self, action: #selector(triggerInitialLoad(_:)), for: .touchUpInside)
       button.sizeToFit()
 
       button.setWidthConstraintToCurrent()
@@ -77,7 +77,7 @@ extension StatefulTableView {
 
       centered.addSubview(button)
 
-      apply([.Bottom, .CenterX], ofView: button, toView: centered)
+      apply([.bottom, .centerX], ofView: button, toView: centered)
     }
 
     centered.setWidthConstraint(centeredSize.width)
@@ -94,27 +94,27 @@ extension StatefulTableView {
 internal extension StatefulTableView {
   // MARK: - Helpers
 
-  internal func pinView(view: UIView, toContainer container: UIView) {
-    let attributes: [NSLayoutAttribute] = [.Top, .Bottom, .Leading, .Trailing]
+  internal func pinView(_ view: UIView, toContainer container: UIView) {
+    let attributes: [NSLayoutAttribute] = [.top, .bottom, .leading, .trailing]
     apply(attributes, ofView: view, toView: container)
   }
 
-  internal func centerView(view: UIView, inContainer container: UIView) {
-    let attributes: [NSLayoutAttribute] = [.CenterX, .CenterY]
+  internal func centerView(_ view: UIView, inContainer container: UIView) {
+    let attributes: [NSLayoutAttribute] = [.centerX, .centerY]
     apply(attributes, ofView: view, toView: container)
   }
 
-  internal func centerViewHorizontally(view: UIView, inContainer container: UIView) {
-    apply([.CenterX], ofView: view, toView: container)
+  internal func centerViewHorizontally(_ view: UIView, inContainer container: UIView) {
+    apply([.centerX], ofView: view, toView: container)
   }
 
-  internal func centerViewVertically(view: UIView, inContainer container: UIView) {
-    apply([.CenterY], ofView: view, toView: container)
+  internal func centerViewVertically(_ view: UIView, inContainer container: UIView) {
+    apply([.centerY], ofView: view, toView: container)
   }
 
-  internal func apply(attributes: [NSLayoutAttribute], ofView childView: UIView, toView containerView: UIView) {
+  internal func apply(_ attributes: [NSLayoutAttribute], ofView childView: UIView, toView containerView: UIView) {
     let constraints = attributes.map {
-      return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .Equal,
+      return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .equal,
         toItem: containerView, attribute: $0, multiplier: 1, constant: 0)
     }
 
@@ -131,13 +131,13 @@ internal extension UIView {
     setHeightConstraint(bounds.height)
   }
 
-  internal func setWidthConstraint(width: CGFloat) {
-    addConstraint(NSLayoutConstraint(item: self, attribute: .Width, relatedBy: .Equal, toItem: nil,
-      attribute: .NotAnAttribute, multiplier: 1, constant: width))
+  internal func setWidthConstraint(_ width: CGFloat) {
+    addConstraint(NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil,
+      attribute: .notAnAttribute, multiplier: 1, constant: width))
   }
 
-  internal func setHeightConstraint(height: CGFloat) {
-    addConstraint(NSLayoutConstraint(item: self, attribute: .Height, relatedBy: .Equal, toItem: nil,
-      attribute: .NotAnAttribute, multiplier: 1, constant: height))
+  internal func setHeightConstraint(_ height: CGFloat) {
+    addConstraint(NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil,
+      attribute: .notAnAttribute, multiplier: 1, constant: height))
   }
 }

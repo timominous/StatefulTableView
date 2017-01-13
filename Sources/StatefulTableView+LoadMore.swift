@@ -21,7 +21,7 @@ extension StatefulTableView {
     lastLoadMoreError = nil
     updateLoadMoreView()
 
-    setState(.LoadingMore)
+    setState(.loadingMore)
 
     if let delegate = statefulDelegate {
       delegate.statefulTableViewWillBeginLoadingMore(tvc: self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
@@ -53,11 +53,11 @@ extension StatefulTableView {
       let label = UILabel()
       label.translatesAutoresizingMaskIntoConstraints = false
       label.text = error.localizedDescription
-      label.font = UIFont.systemFontOfSize(12)
-      label.textAlignment = .Center
+      label.font = UIFont.systemFont(ofSize: 12)
+      label.textAlignment = .center
       sub = label
     } else {
-      let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .Gray)
+      let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
       activityIndicator.translatesAutoresizingMaskIntoConstraints = false
       activityIndicator.startAnimating()
       sub = activityIndicator
@@ -69,14 +69,14 @@ extension StatefulTableView {
     return container
   }
 
-  internal func setHasFinishedLoadingMore(canLoadMore: Bool, error: NSError?, showErrorView: Bool) {
-    guard state == .LoadingMore else { return }
+  internal func setHasFinishedLoadingMore(_ canLoadMore: Bool, error: NSError?, showErrorView: Bool) {
+    guard state == .loadingMore else { return }
 
     self.canLoadMore = canLoadMore
     loadMoreViewIsErrorView = (error != nil) && showErrorView
     lastLoadMoreError = error
 
-    setState(.Idle)
+    setState(.idle)
   }
 
   internal func watchForLoadMoreIfApplicable(watch: Bool) {
