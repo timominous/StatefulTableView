@@ -123,6 +123,11 @@ public final class StatefulTableView: UIView {
    */
   public var loadMoreTriggerThreshold: CGFloat = 64
 
+  /**
+   The pluralized name of the items to be displayed. This will be used when the table is empty and no error view has been provided.
+   */
+  public var pluralType = "records"
+
   internal var loadMoreViewIsErrorView = false
   internal var lastLoadMoreError: NSError?
   internal var watchForLoadMore = false

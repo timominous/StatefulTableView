@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     super.viewDidLoad()
     statefulTableView.canPullToRefresh = true
     statefulTableView.canLoadMore = true
+    statefulTableView.pluralType = "items"
 
     statefulTableView.statefulDelegate = self
     statefulTableView.dataSource = self

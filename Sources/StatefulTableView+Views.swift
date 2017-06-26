@@ -49,7 +49,7 @@ extension StatefulTableView {
     let label = UILabel()
     label.translatesAutoresizingMaskIntoConstraints = false
     label.textAlignment = .center
-    label.text = error?.localizedDescription ?? "No records found"
+    label.text = error?.localizedDescription ?? "No \(pluralType) found."
     label.sizeToFit()
 
     label.setWidthConstraintToCurrent()
