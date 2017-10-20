@@ -67,6 +67,14 @@ Add this to your Podfile.
 pod 'StatefulTableView', '0.0.18'
 ```
 
+## Contibuting
+
+Pull Requests for fixes and additional functionalities are always welcome. Contributions to the project's roadmap are also appreciated.
+
+### TODO
+
+  * Swift 4
+
 ### Credits
 
 * [SKStatefulTableViewController](http://github.com/shiki/SKStatefulTableViewController) by [shiki](http://github.com/shiki)
