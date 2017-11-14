@@ -11,6 +11,7 @@ import UIKit
 extension StatefulTableView {
   // MARK: - Pull to refresh
 
+  @objc
   func refreshControlValueChanged() {
     if state != .loadingFromPullToRefresh && !state.isLoading {
       if (!triggerPullToRefresh()) {

@@ -16,7 +16,9 @@ extension StatefulTableView {
 
    - returns: Boolean for success status.
    */
-  @discardableResult public func triggerInitialLoad() -> Bool {
+  @discardableResult
+  @objc
+  public func triggerInitialLoad() -> Bool {
     return triggerInitialLoad(false)
   }
 
@@ -27,7 +29,9 @@ extension StatefulTableView {
 
    - returns: Boolean for success status.
    */
-  @discardableResult public func triggerInitialLoad(_ shouldShowTableView: Bool) -> Bool {
+  @discardableResult
+  @objc
+  public func triggerInitialLoad(_ shouldShowTableView: Bool) -> Bool {
     guard !state.isLoading else { return false }
 
     if shouldShowTableView {
