@@ -23,13 +23,12 @@ extension StatefulTableView {
 
     setState(.loadingMore)
 
-    if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginLoadingMore(tvc: self, handler: { [weak self](canLoadMore, errorOrNil, showErrorView) in
-        DispatchQueue.main.async(execute: {
-          self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
-        })
+    guard let delegate = statefulDelegate else { return }
+    delegate.statefulTable(self, loadMoreCompletion: { [weak self] canLoadMore, errorOrNil, showErrorView in
+      DispatchQueue.main.async(execute: {
+        self?.setHasFinishedLoadingMore(canLoadMore, error: errorOrNil, showErrorView: showErrorView)
       })
-    }
+    })
   }
 
   internal func updateLoadMoreView() {
@@ -38,35 +37,6 @@ extension StatefulTableView {
     } else {
       tableView.tableFooterView = UIView()
     }
-  }
-
-  internal func viewForLoadingMore(withError error: NSError?) -> UIView? {
-    if let delegateMethod = statefulDelegate?.statefulTableViewLoadMoreErrorView, error != nil {
-      return delegateMethod(self, error)
-    }
-
-    let container = UIView(frame: CGRect(origin: .zero, size: CGSize(width: tableView.bounds.width, height: 44)))
-
-    let sub: UIView
-
-    if let error = error {
-      let label = UILabel()
-      label.translatesAutoresizingMaskIntoConstraints = false
-      label.text = error.localizedDescription
-      label.font = UIFont.systemFont(ofSize: 12)
-      label.textAlignment = .center
-      sub = label
-    } else {
-      let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: .gray)
-      activityIndicator.translatesAutoresizingMaskIntoConstraints = false
-      activityIndicator.startAnimating()
-      sub = activityIndicator
-    }
-
-    container.addSubview(sub)
-    centerView(sub, inContainer: container)
-
-    return container
   }
 
   internal func setHasFinishedLoadingMore(_ canLoadMore: Bool, error: NSError?, showErrorView: Bool) {

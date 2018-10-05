@@ -126,6 +126,7 @@ public final class StatefulTableView: UIView {
   /**
    The pluralized name of the items to be displayed. This will be used when the table is empty and no error view has been provided.
    */
+  @available(*, deprecated, message: "Use the delegate: statefulTable(tableView:initialLoadWithError:errorView:) instead, and customise the label of the default errorView.")
   public var pluralType = "records"
 
   internal var loadMoreViewIsErrorView = false
@@ -150,6 +151,5 @@ public final class StatefulTableView: UIView {
 
    - Discussion: The stateful delegate must adopt the `StatefulTableDelegate` protocol. The stateful delegate is not retained.
    */
-  weak public var statefulDelegate: StatefulTableDelegate?
-
+  public var statefulDelegate: StatefulTableDelegate?
 }

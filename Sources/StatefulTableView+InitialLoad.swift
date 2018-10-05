@@ -40,14 +40,12 @@ extension StatefulTableView {
       self.setState(.initialLoading)
     }
 
-    if let delegate = statefulDelegate {
-      delegate.statefulTableViewWillBeginInitialLoad(tvc: self, handler: { [weak self](tableIsEmpty, errorOrNil) in
-        DispatchQueue.main.async(execute: {
-          self?.setHasFinishedInitialLoad(tableIsEmpty, error: errorOrNil)
-        })
+    guard let delegate = statefulDelegate else { return true }
+    delegate.statefulTable(self, initialLoadCompletion: { [weak self] isEmpty, errorOrNil in
+      DispatchQueue.main.async(execute: {
+        self?.setHasFinishedInitialLoad(isEmpty, error: errorOrNil)
       })
-    }
-
+    })
     return true
   }
 
