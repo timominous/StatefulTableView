@@ -44,17 +44,56 @@ tableView.statefulDelegate = self // Conforms to StatefulTableDelegate
 For initial loading, pull-to-refresh, and load more, you have to implement the following statefulDelegate methods:
 
 ```swift
-func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, handler: InitialLoadCompletionHandler)
-func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: InitialLoadCompletionHandler)
-func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, handler: LoadMoreCompletionHandler)
+// Initial Load
+func statefulTable(_ tableView: StatefulTableView,
+                   initialLoadCompletion completion: @escaping InitialLoadCompletion)
+
+// Pull-to-Refresh
+func statefulTable(_ tableView: StatefulTableView,
+                   pullToRefreshCompletion completion: @escaping InitialLoadCompletion)
+
+// Loading More
+func statefulTable(_ tableView: StatefulTableView,
+                   loadMoreCompletion completion: @escaping LoadMoreCompletion)
+
+//////////////////////////////
+// RENAMED from the ff:
+// MARK: Unavailable – Renamed as declared above...
+func statefulTableViewWillBeginInitialLoad(tvc: StatefulTableView, 
+                                           handler: @escaping InitialLoadCompletionHandler)
+                   
+func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, 
+                                                  handler: @escaping InitialLoadCompletionHandler)
+                   
+func statefulTableViewWillBeginLoadingMore(tvc: StatefulTableView, 
+                                           handler: @escaping LoadMoreCompletionHandler)
 ```
 
-To show custom views, return them through the following statefulDelegate methods. Otherwise, return `nil`.
+#### (Optional)
+To show custom views, return them through the following statefulDelegate methods –
+or you can return a UIView subclass of your own, or return `nil` otherwise.
 
 ```swift
-func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView?
-func statefulTableViewInitialErrorView(tvc: StatefulTableView, forInitialLoadError: NSError?) -> UIView?
-func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError: NSError?) -> UIView?
+func statefulTable(_ tableView: StatefulTableView,
+                   initialLoadWithError errorOrNil: NSError?,
+                   errorView: InitialLoadErrorView) -> UIView?
+
+func statefulTable(_ tableView: StatefulTableView,
+                   initialLoadWithError errorOrNil: NSError?,
+                   errorView: InitialLoadErrorView) -> UIView?
+                   
+func statefulTable(_ tableView: StatefulTableView,
+                   loadMoreWithError: NSError?,
+                   errorView: UIView) -> UIView?
+                   
+//////////////////////////////
+// RENAMED from the ff:
+// MARK: Unavailable – Renamed as declared above...
+@objc optional func statefulTableViewViewForInitialLoad(tvc: StatefulTableView) -> UIView?
+@objc optional func statefulTableViewInitialErrorView(tvc: StatefulTableView, 
+                                                      forInitialLoadError: NSError?) -> UIView?
+@objc optional func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, 
+                                                       forLoadMoreError: NSError?) -> UIView?
 ```
 
 ## Installation
