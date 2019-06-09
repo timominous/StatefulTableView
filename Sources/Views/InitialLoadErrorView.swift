@@ -100,7 +100,7 @@ public class InitialLoadErrorView: UIView {
   fileprivate func constrainedButton() -> UIButton {
     let button = UIButton(type: .system)
     button.translatesAutoresizingMaskIntoConstraints = false
-    button.setTitle("Try Again", for: UIControlState())
+    button.setTitle("Try Again", for: UIControl.State())
     button.addTarget(self, action: #selector(didTapErrorButton(_:)), for: .touchUpInside)
     button.sizeToFit()
     

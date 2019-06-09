@@ -110,18 +110,18 @@ public protocol StatefulTableDelegate {
 // MARK: Delegate Optionality
 public extension StatefulTableDelegate {
   
-  public func statefulTable(_ tableView: StatefulTableView,
+  func statefulTable(_ tableView: StatefulTableView,
                      viewForInitialLoad defaultView: UIActivityIndicatorView) -> UIView? {
     return defaultView
   }
   
-  public func statefulTable(_ tableView: StatefulTableView,
+  func statefulTable(_ tableView: StatefulTableView,
                      initialLoadWithError errorOrNil: NSError?,
                      errorView: InitialLoadErrorView) -> UIView? {
     return errorView
   }
   
-  public func statefulTable(_ tableView: StatefulTableView,
+  func statefulTable(_ tableView: StatefulTableView,
                      loadMoreWithError: NSError?,
                      errorView: LoadMoreErrorView) -> UIView? {
     return errorView

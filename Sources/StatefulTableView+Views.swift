@@ -24,7 +24,7 @@ extension StatefulTableView {
   }
 
   internal var viewForInitialLoad: UIView? {
-    let activityIndicatorView = UIActivityIndicatorView(activityIndicatorStyle: .gray)
+    let activityIndicatorView = UIActivityIndicatorView(style: .gray)
     activityIndicatorView.startAnimating()
     guard let statefulDelegate = statefulDelegate else {
       return activityIndicatorView
@@ -58,25 +58,25 @@ extension StatefulTableView: InitialLoadErrorViewDelegate {
 
 internal extension UIView {
   
-  internal func pinView(_ view: UIView, toContainer container: UIView) {
-    let attributes: [NSLayoutAttribute] = [.top, .bottom, .leading, .trailing]
+  func pinView(_ view: UIView, toContainer container: UIView) {
+    let attributes: [NSLayoutConstraint.Attribute] = [.top, .bottom, .leading, .trailing]
     apply(attributes, ofView: view, toView: container)
   }
   
-  internal func centerView(_ view: UIView, inContainer container: UIView) {
-    let attributes: [NSLayoutAttribute] = [.centerX, .centerY]
+  func centerView(_ view: UIView, inContainer container: UIView) {
+    let attributes: [NSLayoutConstraint.Attribute] = [.centerX, .centerY]
     apply(attributes, ofView: view, toView: container)
   }
   
-  internal func centerViewHorizontally(_ view: UIView, inContainer container: UIView) {
+  func centerViewHorizontally(_ view: UIView, inContainer container: UIView) {
     apply([.centerX], ofView: view, toView: container)
   }
   
-  internal func centerViewVertically(_ view: UIView, inContainer container: UIView) {
+  func centerViewVertically(_ view: UIView, inContainer container: UIView) {
     apply([.centerY], ofView: view, toView: container)
   }
   
-  internal func apply(_ attributes: [NSLayoutAttribute], ofView childView: UIView, toView containerView: UIView) {
+  func apply(_ attributes: [NSLayoutConstraint.Attribute], ofView childView: UIView, toView containerView: UIView) {
     let constraints = attributes.map {
       return NSLayoutConstraint(item: childView, attribute: $0, relatedBy: .equal,
                                 toItem: containerView, attribute: $0, multiplier: 1, constant: 0)
@@ -84,20 +84,20 @@ internal extension UIView {
     containerView.addConstraints(constraints)
   }
   
-  internal func setWidthConstraintToCurrent() {
+  func setWidthConstraintToCurrent() {
     setWidthConstraint(bounds.width)
   }
 
-  internal func setHeightConstraintToCurrent() {
+  func setHeightConstraintToCurrent() {
     setHeightConstraint(bounds.height)
   }
 
-  internal func setWidthConstraint(_ width: CGFloat) {
+  func setWidthConstraint(_ width: CGFloat) {
     addConstraint(NSLayoutConstraint(item: self, attribute: .width, relatedBy: .equal, toItem: nil,
       attribute: .notAnAttribute, multiplier: 1, constant: width))
   }
 
-  internal func setHeightConstraint(_ height: CGFloat) {
+  func setHeightConstraint(_ height: CGFloat) {
     addConstraint(NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil,
       attribute: .notAnAttribute, multiplier: 1, constant: height))
   }
