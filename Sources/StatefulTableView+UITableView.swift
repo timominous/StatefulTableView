@@ -44,7 +44,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instp/UITableView/separatorStyle) for more details.
    */
-  public var separatorStyle: UITableViewCellSeparatorStyle {
+    public var separatorStyle: UITableViewCell.SeparatorStyle {
     set { tableView.separatorStyle = newValue }
     get { return tableView.separatorStyle }
   }
@@ -333,7 +333,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/scrollToRowAtIndexPath:atScrollPosition:animated:) for more details.
    */
-  public func scrollToRowAtIndexPath(_ indexPath: IndexPath, atScrollPosition scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    public func scrollToRowAtIndexPath(_ indexPath: IndexPath, atScrollPosition scrollPosition: UITableView.ScrollPosition, animated: Bool) {
     tableView.scrollToRow(at: indexPath, at: scrollPosition, animated: animated)
   }
 
@@ -342,7 +342,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/scrollToNearestSelectedRowAtScrollPosition:animated:) for more details.
    */
-  public func scrollToNearestSelectedRowAtScrollPosition(_ scrollPosition: UITableViewScrollPosition, animated: Bool) {
+    public func scrollToNearestSelectedRowAtScrollPosition(_ scrollPosition: UITableView.ScrollPosition, animated: Bool) {
     tableView.scrollToNearestSelectedRow(at: scrollPosition, animated: animated)
   }
 }
@@ -374,7 +374,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/selectRowAtIndexPath:animated:scrollPosition:) for more details.
    */
-  public func selectRowAtIndexPath(_ indexPath: IndexPath?, animated: Bool, scrollPosition: UITableViewScrollPosition) {
+    public func selectRowAtIndexPath(_ indexPath: IndexPath?, animated: Bool, scrollPosition: UITableView.ScrollPosition) {
     tableView.selectRow(at: indexPath, animated: animated, scrollPosition: scrollPosition)
   }
 
@@ -457,7 +457,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/insertRowsAtIndexPaths:withRowAnimation:) for more details.
    */
-  public func insertRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    public func insertRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableView.RowAnimation) {
     tableView.insertRows(at: indexPaths, with: animation)
   }
 
@@ -466,7 +466,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/deleteRowsAtIndexPaths:withRowAnimation:) for more details.
    */
-  public func deleteRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    public func deleteRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableView.RowAnimation) {
     tableView.deleteRows(at: indexPaths, with: animation)
   }
 
@@ -485,7 +485,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/insertSections:withRowAnimation:) for more details.
    */
-  public func insertSections(_ sections: IndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    public func insertSections(_ sections: IndexSet, withRowAnimation animation: UITableView.RowAnimation) {
     tableView.insertSections(sections, with: animation)
   }
 
@@ -494,7 +494,7 @@ extension StatefulTableView {
 
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/deleteSections:withRowAnimation:) for more details.
    */
-  public func deleteSections(_ sections: IndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    public func deleteSections(_ sections: IndexSet, withRowAnimation animation: UITableView.RowAnimation) {
     tableView.deleteSections(sections, with: animation)
   }
 
@@ -552,7 +552,7 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/reloadRowsAtIndexPaths:withRowAnimation:) for more details.
    */
   @available(iOS 3.0, *)
-  public func reloadRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableViewRowAnimation) {
+    public func reloadRowsAtIndexPaths(_ indexPaths: [IndexPath], withRowAnimation animation: UITableView.RowAnimation) {
     tableView.reloadRows(at: indexPaths, with: animation)
   }
 
@@ -562,7 +562,7 @@ extension StatefulTableView {
    - Discussion: Visit this [link](https://developer.apple.com/library/ios/documentation/UIKit/Reference/UITableView_Class/#//apple_ref/occ/instm/UITableView/reloadSections:withRowAnimation:) for more details.
    */
   @available(iOS 3.0, *)
-  public func reloadSections(_ sections: IndexSet, withRowAnimation animation: UITableViewRowAnimation) {
+    public func reloadSections(_ sections: IndexSet, withRowAnimation animation: UITableView.RowAnimation) {
     tableView.reloadSections(sections, with: animation)
   }
 
