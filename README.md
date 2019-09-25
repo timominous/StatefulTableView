@@ -64,7 +64,7 @@ func statefulTableViewLoadMoreErrorView(tvc: StatefulTableView, forLoadMoreError
 Add this to your Podfile.
 
 ```ruby
-pod 'StatefulTableView', '0.1.2'
+pod 'StatefulTableView', '0.1.3'
 ```
 
 ## Contibuting
