@@ -1,11 +1,11 @@
-language: objective-c
+language: swift
 
 branches:
   only:
     - master
 
 podfile: ./Demo/Podfile
-osx_image: xcode8.2
+osx_image: xcode11
 cache: cocoapods
 
 script:
