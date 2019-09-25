@@ -97,6 +97,11 @@ public final class StatefulTableView: UIView {
     return tableView
   }
 
+  /**
+   Determines whether or not to show dynamic initial load and empty views. Defaults to true
+   */
+  public var shouldShowDynamicContent = true
+    
   internal lazy var dynamicContentView: UIView = { [unowned self] in
     let view = UIView(frame: self.bounds)
     view.backgroundColor = .white
@@ -137,9 +142,11 @@ public final class StatefulTableView: UIView {
   internal var viewMode: ViewMode = .table {
     didSet {
       let hidden = viewMode == .table
+        
+      let shouldHide = hidden || !shouldShowDynamicContent
 
-      guard dynamicContentView.isHidden != hidden else { return }
-      dynamicContentView.isHidden = hidden
+      guard dynamicContentView.isHidden != shouldHide else { return }
+      dynamicContentView.isHidden = shouldHide
     }
   }
 
