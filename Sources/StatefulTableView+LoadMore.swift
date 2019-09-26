@@ -33,6 +33,8 @@ extension StatefulTableView {
   }
 
   internal func updateLoadMoreView() {
+    guard !preventTableFooterViewOverriding else { return }
+    
     if watchForLoadMore || lastLoadMoreError != nil {
       tableView.tableFooterView = viewForLoadingMore(withError: (loadMoreViewIsErrorView ? lastLoadMoreError : nil))
     } else {
