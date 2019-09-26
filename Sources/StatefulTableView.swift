@@ -132,6 +132,11 @@ public final class StatefulTableView: UIView {
    The pluralized name of the items to be displayed. This will be used when the table is empty and no error view has been provided.
    */
   public var pluralType = "records"
+    
+  /**
+    Prevents the tableview to add loading more views to the footer, allowing the user to use a custom table footer view.
+   */
+  public var preventTableFooterViewOverriding = false
 
   internal var loadMoreViewIsErrorView = false
   internal var lastLoadMoreError: NSError?
