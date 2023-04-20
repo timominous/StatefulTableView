@@ -38,6 +38,12 @@ class ViewController: UIViewController {
 
 }
 
+extension ViewController {
+    @IBAction func triggerRefreshButtonTapped(_ sender: UIButton) {
+        statefulTableView.triggerPullToRefresh()
+    }
+}
+
 extension ViewController: StatefulTableDelegate {
   func statefulTableViewWillBeginLoadingFromRefresh(tvc: StatefulTableView, handler: @escaping (Bool, NSError?) -> Void) {
     items = Int(arc4random_uniform(15))
