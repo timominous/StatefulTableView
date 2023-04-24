@@ -1,8 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -14,17 +16,31 @@
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KNY-LE-d9n" customClass="StatefulTableView" customModule="StatefulTableView">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5P-pM-pwU">
+                                <rect key="frame" x="46" y="713" width="301" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="55" id="E2c-pU-IRn"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Trigger refresh"/>
+                                <connections>
+                                    <action selector="triggerRefreshButtonTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="50M-Xl-CJI"/>
+                                </connections>
+                            </button>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="W5P-pM-pwU" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="30" id="11n-Pb-zIU"/>
+                            <constraint firstAttribute="bottomMargin" secondItem="W5P-pM-pwU" secondAttribute="bottom" constant="50" id="45n-BJ-EHu"/>
                             <constraint firstAttribute="trailing" secondItem="KNY-LE-d9n" secondAttribute="trailing" id="8PJ-sz-4y5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="W5P-pM-pwU" secondAttribute="trailing" constant="30" id="E9n-Jx-xJJ"/>
                             <constraint firstItem="KNY-LE-d9n" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Lac-Nm-vGf"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="KNY-LE-d9n" secondAttribute="bottom" id="ULQ-ok-TSD"/>
                             <constraint firstItem="KNY-LE-d9n" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="hmP-xU-5uv"/>
@@ -36,7 +52,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="125" y="264"/>
+            <point key="canvasLocation" x="124.42748091603053" y="263.38028169014086"/>
         </scene>
     </scenes>
 </document>
